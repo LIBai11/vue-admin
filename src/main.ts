@@ -1,4 +1,19 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import { createApp } from 'vue'
+import App from './App.vue'
+import registerGlobalApp from '@/global'
+import { store } from '@/store'
+import router from '@/router'
+import kxRequest from '@/service'
+import '@/assets/css/base.css'
 
-createApp(App).mount("#app");
+const app = createApp(App)
+registerGlobalApp(app)
+
+app.use(store)
+app.use(router)
+kxRequest.post({
+    url: '/report',
+    data: '',
+})
+
+app.mount('#app')
