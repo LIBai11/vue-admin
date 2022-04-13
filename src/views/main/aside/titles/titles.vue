@@ -1,15 +1,16 @@
 <template>
     <div class="title">
-        <img src="https://www.naiveui.com/assets/naivelogo.93278402.svg" alt="" class="logo" />
+        <img alt="" class="logo" src="https://www.naiveui.com/assets/naivelogo.93278402.svg" />
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .title {
     display: flex;
     justify-content: center;
+
     img {
         width: 50px;
         height: 50px;

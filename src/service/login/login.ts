@@ -8,6 +8,7 @@ enum LoginAPI {
     AccountLogin = '/login',
     MenuList = 'admin/menus',
 }
+
 export function accountLoginRequest(loginData: ILoginData) {
     return kxRequest.post<ICommonState<ILoginState>>({
         url: LoginAPI.AccountLogin,

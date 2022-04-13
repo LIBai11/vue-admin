@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
     {
         name: 'main',
         path: '/main',
-        component: () => import('@/views/main/Main.vue'),
+        component: () => import('@/views/main/main.vue'),
         children: [],
     },
     {
@@ -31,7 +31,6 @@ const router = createRouter({
 
 //导航守卫
 router.beforeEach((to) => {
-    console.log(routes)
     if (to.path !== '/login') {
         const userData = useSessionCache.getCache('userData')
         if (userData) {

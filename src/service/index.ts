@@ -1,5 +1,6 @@
 import KXRequest from './request'
-import { BASE_URL, TIMEOUT, DEFAULT_SHOW_LOADING } from './request/config'
+import { BASE_URL, DEFAULT_SHOW_LOADING, TIMEOUT } from './request/config'
+
 const kxRequest = new KXRequest({
     baseURL: BASE_URL,
     timeout: TIMEOUT,

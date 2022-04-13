@@ -7,25 +7,27 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IUserData } from '@/store/login/types'
-import { useLocalCache, useSessionCache } from '@/utils/use-storage'
+import { useSessionCache } from '@/utils/use-storage'
 
 const userData: IUserData = useSessionCache.getCache('userData')
 const avatar = userData.avatar
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .header {
     display: flex;
     justify-content: space-between;
 
     align-items: center;
 }
+
 .foldIcon {
     font-size: 25px;
     line-height: 55px;
 }
+
 .avatar {
     width: 50px;
 

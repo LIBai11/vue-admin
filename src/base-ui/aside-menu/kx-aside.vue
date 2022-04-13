@@ -5,7 +5,7 @@
     </el-aside>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import Menus from '@/base-ui/aside-menu/menus/menus.vue'
 import Titles from '@/views/main/aside/titles/titles.vue'
 import { ref, toRefs } from 'vue'
@@ -26,4 +26,4 @@ const handleFoldMenu = (collapsed: boolean) => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

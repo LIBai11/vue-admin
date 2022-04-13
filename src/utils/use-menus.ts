@@ -4,6 +4,7 @@ import { ElIcon } from 'element-plus'
 import { RouteRecordRaw } from 'vue-router'
 
 const naiMenuList: any = []
+
 function renderIcon(icon: any) {
     return () => h(ElIcon, null, { default: () => h(icon) })
 }
@@ -16,7 +17,6 @@ export function getMenuList(userMenus: IMenuState) {
                 label: menuC.name,
                 key: menuC.id,
                 href: menuC.path,
-
                 icon: renderIcon(menuC.icon),
             })
         } else if (menuC.children.length !== 0) {
@@ -68,14 +68,12 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
     //只找当前文件夹,不向下查找就是false
     const routeFiles = require.context('../router/main/main-content', true, /\.ts/)
     routeFiles.keys().forEach((key) => {
-        // console.log(key)
         const route = require('../router/main/main-content' + key.split('.')[1])
         allRoutes.push(route.default)
     })
     allRoutes.forEach((item, index) => {
         allRoutes[index].path = item.path.split('/main/main-content')[1]
     })
-    // console.log(allRoutes[0])
 
     //2.根据菜单获取需要添加的routes
     const _recurseGetRoute = (menus: IMenuState) => {

@@ -16,6 +16,7 @@ export interface ILoginState {
 }
 
 export type IMenuState = RootObjectChild[]
+
 export interface RootObjectChild {
     id: number
     name: string
@@ -37,10 +38,12 @@ export interface IUserData {
     nickname: string
     userMenuList: RootObjectUserMenuList[]
 }
+
 interface RootObjectTabList {
     name: string
     path: string
 }
+
 interface RootObjectUserMenuList {
     id: number
     name: string

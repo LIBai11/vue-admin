@@ -6,11 +6,11 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import LoginPanel from './loginPanel/login-panel.vue'
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .bac {
     display: flex;
     justify-content: end;

@@ -1,18 +1,18 @@
-import { create } from 'naive-ui'
 import {
+    create,
     NButton,
-    NLoadingBarProvider,
-    NH3,
-    NGradientText,
-    NInput,
-    NIcon,
-    NSwitch,
-    NFormItem,
     NForm,
-    NMenu,
+    NFormItem,
+    NGradientText,
+    NH3,
+    NIcon,
+    NInput,
     NLayout,
     NLayoutSider,
+    NLoadingBarProvider,
+    NMenu,
     NScrollbar,
+    NSwitch,
 } from 'naive-ui'
 
 const naive = create({

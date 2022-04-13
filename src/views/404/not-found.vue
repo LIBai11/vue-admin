@@ -4,11 +4,9 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { mapMenusToRoutes } from '@/utils/use-menus'
-</script>
+<script lang="ts" setup></script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .not-found {
     display: flex;
     justify-content: center;
@@ -16,6 +14,7 @@ import { mapMenusToRoutes } from '@/utils/use-menus'
     height: 100vh;
     background-image: url('~@/assets/img/404.jpg');
 }
+
 .title {
     color: white;
 }

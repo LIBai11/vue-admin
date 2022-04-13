@@ -1,4 +1,4 @@
-<template>api</template>
+<template>links</template>
 
 <script lang="ts" setup></script>
 

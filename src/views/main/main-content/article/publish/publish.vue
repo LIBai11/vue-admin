@@ -1,5 +1,5 @@
 <template>publish.vue</template>
 
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>
