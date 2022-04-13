@@ -13,3 +13,9 @@ export const store = createStore<IRootState>({
 export function useStore(): Store<IStore> {
     return useVuexStore()
 }
+
+export function setupStore() {
+    store.dispatch('loginModule/getLocalCache').then((r) => {
+        return r
+    })
+}

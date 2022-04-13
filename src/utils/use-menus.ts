@@ -16,6 +16,7 @@ export function getMenuList(userMenus: IMenuState) {
                 label: menuC.name,
                 key: menuC.id,
                 href: menuC.path,
+
                 icon: renderIcon(menuC.icon),
             })
         } else if (menuC.children.length !== 0) {
@@ -74,9 +75,28 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
     allRoutes.forEach((item, index) => {
         allRoutes[index].path = item.path.split('/main/main-content')[1]
     })
-    console.log(allRoutes[0])
+    // console.log(allRoutes[0])
 
     //2.根据菜单获取需要添加的routes
+    const _recurseGetRoute = (menus: IMenuState) => {
+        for (const menu of menus) {
+            if (menu.children === null) {
+                //find:找到后停止
+                const route = allRoutes.find((route) => route.path === menu.path)
+                if (route) {
+                    routes.push(route)
+                }
+            } else if (menu.children.length === 0) {
+                const route = allRoutes.find((route) => route.path === menu.path)
+                if (route) {
+                    routes.push(route)
+                }
+            } else {
+                _recurseGetRoute(menu.children)
+            }
+        }
+    }
+    _recurseGetRoute(userMenuList)
 
     return routes
 }

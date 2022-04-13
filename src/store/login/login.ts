@@ -7,6 +7,7 @@ import { ElMessage } from 'element-plus'
 import { useSessionCache } from '@/utils/use-storage'
 import { useRouter } from 'vue-router'
 import router from '@/router'
+import { mapMenusToRoutes } from '@/utils/use-menus'
 
 export const loginModule: Module<ILoginState, IRootState> = {
     namespaced: true,
@@ -116,7 +117,21 @@ export const loginModule: Module<ILoginState, IRootState> = {
                 //将数据存到localstorage中
                 useSessionCache.setCache('userData', cacheData)
 
-                router.push('/main')
+                await router.push('/main')
+                // console.log(routes)
+            }
+        },
+
+        getLocalCache() {
+            if (useSessionCache.getCache('userData')) {
+                const userData: IUserData = useSessionCache.getCache('userData')
+                const menuListData: IMenuState = userData.userMenuList
+                const routes = mapMenusToRoutes(menuListData)
+                console.log(routes)
+                routes.forEach((route) => {
+                    router.addRoute('main', route)
+                })
+                console.log(router.getRoutes())
             }
         },
     },

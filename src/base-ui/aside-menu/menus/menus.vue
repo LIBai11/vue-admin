@@ -18,6 +18,7 @@
                         :collapsed-icon-size="22"
                         :collapsed-width="64"
                         :options="naiMenuList"
+                        @update:value="handleUpdateValue"
                     />
                 </n-layout-sider>
             </n-layout>
@@ -27,6 +28,7 @@
 
 <script lang="ts" setup>
 import { ref, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits(['handleFoldMenu'])
@@ -41,6 +43,15 @@ const handleFoldMenu = () => {
     collapsed.value = !collapsed.value
     emits('handleFoldMenu', collapsed)
     return collapsed.value
+}
+
+const router = useRouter()
+
+const handleUpdateValue = (key: any, item: any) => {
+    // console.log(item.href)
+    router.push({
+        path: item.href ?? 'not-found',
+    })
 }
 
 const { naiMenuList } = toRefs(props)
