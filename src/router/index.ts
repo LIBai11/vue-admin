@@ -4,7 +4,7 @@ import { useSessionCache } from '@/utils/use-storage'
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        redirect: '/main',
+        redirect: '/home',
     },
     {
         name: 'login',

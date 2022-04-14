@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-container>
-            <kx-aside :naiMenuList="naiMenuList" />
+            <kx-aside :menuConfig="menuConfig" />
             <el-container>
                 <el-header class="header">
                     <a-header />
@@ -17,14 +17,7 @@
 <script lang="ts" setup>
 import KxAside from '@/base-ui/aside-menu/kx-aside.vue'
 import AHeader from './header/a-header.vue'
-import { useSessionCache } from '@/utils/use-storage'
-import { IMenuState, IUserData } from '@/store/login/types'
-import { getMenuList } from '@/utils/use-menus'
-
-const userData: IUserData = useSessionCache.getCache('userData')
-const menuListData: IMenuState = userData.userMenuList
-// console.log(menuListData)
-const naiMenuList = getMenuList(menuListData)
+import { menuConfig } from './config'
 </script>
 
 <style lang="less" scoped>

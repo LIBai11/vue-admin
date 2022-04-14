@@ -7,7 +7,6 @@ import { ElMessage } from 'element-plus'
 import { useSessionCache } from '@/utils/use-storage'
 import router from '@/router'
 import { mapMenusToRoutes } from '@/utils/use-menus'
-import modify from '@/router/main/main-content/article/modify/modify'
 
 export const loginModule: Module<ILoginState, IRootState> = {
     namespaced: true,
@@ -131,7 +130,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
                     console.log(route)
                     router.addRoute('main', route)
                 })
-                router.addRoute('main', modify)
+
                 console.log(router.getRoutes())
             }
         },

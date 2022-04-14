@@ -4,20 +4,18 @@
             <n-layout has-sider>
                 <n-layout-sider
                     :collapsed="collapsed"
-                    :collapsed-width="64"
-                    :width="200"
-                    bordered
+                    :collapsed-width="menuConfig.collapsedWidth || '70'"
+                    :width="menuConfig.width || '200'"
+                    :bordered="menuConfig.bordered || true"
                     collapse-mode="width"
-                    show-trigger
+                    :show-trigger="menuConfig.showTrigger || true"
                     @collapse="handleFoldMenu"
                     @expand="handleFoldMenu"
                 >
                     <n-menu
                         v-model:value="activeKey"
-                        :collapsed="collapsed"
-                        :collapsed-icon-size="22"
-                        :collapsed-width="64"
-                        :options="naiMenuList"
+                        :collapsed-icon-size="menuConfig.collapsedIconSize"
+                        :options="menuConfig.options"
                         @update:value="handleUpdateValue"
                     />
                 </n-layout-sider>
@@ -27,15 +25,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs } from 'vue'
+import { PropType, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
+import { IMenuConfig } from '@/views/main/config/menu-config/type'
 
 // eslint-disable-next-line no-undef
 const emits = defineEmits(['handleFoldMenu'])
 // eslint-disable-next-line no-undef
 const props = defineProps({
-    naiMenuList: {
-        type: Array,
+    menuConfig: {
+        type: Object as PropType<IMenuConfig>,
         required: true,
     },
 })
