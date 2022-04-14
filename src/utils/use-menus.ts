@@ -104,3 +104,34 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
 
     return routes
 }
+/*
+        if (menu.type === 1) {
+          console.log(menu.children)
+          const findMenu = pathMapToMenu(menu.cildren ?? [], currentPath)
+          if (findMenu) {
+            return findMenu
+          }
+        } else if (menu.type === 2 && menu.url === currentPath) {
+          return menu
+        }
+        */
+//获取面包屑数据
+export function pathMapToMenu(menus: IMenuState, currentPath: string) {
+    for (const menuC of menus) {
+        if (menuC.children.length === 0) {
+            if (menuC.path == currentPath) {
+                return menuC
+            }
+        } else if (menuC.children.length !== 0) {
+            if (menuC.path == currentPath) {
+                return menuC
+            }
+            //遍历二级菜单
+            for (const menuCC of menuC.children) {
+                if (menuCC.path == currentPath) {
+                    return menuCC
+                }
+            }
+        }
+    }
+}

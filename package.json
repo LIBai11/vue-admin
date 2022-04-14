@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --progress --watch --colors --profile",
+    "serve": "vue-cli-service serve ",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "analyze": "cross-env NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
     "axios": "^0.20.0-0",
@@ -25,6 +26,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "cross-env": "^7.0.3",
     "element-plus": "^2.1.8",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",

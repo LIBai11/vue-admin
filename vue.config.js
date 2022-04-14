@@ -13,6 +13,8 @@ module.exports = {
                 changeOrigin: true,
             },
         },
+        port: 5000, // 启动端口号
+        open: true, // 启动后是否自动打开网页
     },
     configureWebpack: {
         plugins: [
