@@ -2,9 +2,9 @@ import { IMenuState } from '@/store/login/types'
 
 export interface IMenuConfig {
     options: IMenuState
-    width?: string
-    collapsedWidth?: string
-    collapsedIconSize?: string
+    width?: number
+    collapsedWidth?: number
+    collapsedIconSize?: number
     showTrigger?: boolean
     bordered?: boolean
 }

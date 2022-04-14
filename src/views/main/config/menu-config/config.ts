@@ -9,9 +9,9 @@ const naiMenuList = getMenuList(menuListData)
 
 export const menuConfig: IMenuConfig = {
     options: naiMenuList,
-    width: '200',
-    collapsedWidth: '70',
-    collapsedIconSize: '22',
+    width: 200,
+    collapsedWidth: 64,
+    collapsedIconSize: 22,
     showTrigger: true,
     bordered: true,
 }

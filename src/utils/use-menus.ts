@@ -2,9 +2,15 @@ import { IMenuState } from '@/store/login/types'
 import { h } from 'vue'
 import { ElIcon } from 'element-plus'
 import { RouteRecordRaw } from 'vue-router'
+import { Albums } from '@vicons/ionicons5'
 
 const naiMenuList: any = []
 
+export function getAssetsImages(iconName: string) {
+    const iconComponent = require('@vicons/ionicons5/' + iconName).default
+    return iconComponent
+}
+getAssetsImages('Albums')
 function renderIcon(icon: any) {
     return () => h(ElIcon, null, { default: () => h(icon) })
 }
@@ -17,7 +23,7 @@ export function getMenuList(userMenus: IMenuState) {
                 label: menuC.name,
                 key: menuC.id,
                 href: menuC.path,
-                icon: renderIcon(menuC.icon),
+                icon: renderIcon(getAssetsImages(menuC.icon)),
             })
         } else if (menuC.children.length !== 0) {
             const index = naiMenuList.length
@@ -25,7 +31,7 @@ export function getMenuList(userMenus: IMenuState) {
                 label: menuC.name,
                 key: menuC.id,
                 href: menuC.path,
-                icon: renderIcon(menuC.icon),
+                icon: renderIcon(getAssetsImages(menuC.icon)),
                 children: [],
             })
             //遍历二级菜单
@@ -34,7 +40,7 @@ export function getMenuList(userMenus: IMenuState) {
                     label: menuCC.name,
                     key: menuCC.id,
                     href: menuCC.path,
-                    icon: renderIcon(menuCC.icon),
+                    icon: renderIcon(getAssetsImages(menuCC.icon)),
                 })
             }
         }

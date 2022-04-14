@@ -116,7 +116,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
                 //将数据存到localstorage中
                 useSessionCache.setCache('userData', cacheData)
 
-                await router.push('/main')
+                await router.push('/home')
                 // console.log(routes)
             }
         },
@@ -127,11 +127,11 @@ export const loginModule: Module<ILoginState, IRootState> = {
                 const menuListData: IMenuState = userData.userMenuList
                 const routes = mapMenusToRoutes(menuListData)
                 routes.forEach((route) => {
-                    console.log(route)
+                    // console.log(route)
                     router.addRoute('main', route)
                 })
 
-                console.log(router.getRoutes())
+                // console.log(router.getRoutes())
             }
         },
     },

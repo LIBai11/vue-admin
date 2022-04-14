@@ -4,8 +4,8 @@
             <n-layout has-sider>
                 <n-layout-sider
                     :collapsed="collapsed"
-                    :collapsed-width="menuConfig.collapsedWidth || '70'"
-                    :width="menuConfig.width || '200'"
+                    :collapsed-width="menuConfig.collapsedWidth || 64"
+                    :width="menuConfig.width || 200"
                     :bordered="menuConfig.bordered || true"
                     collapse-mode="width"
                     :show-trigger="menuConfig.showTrigger || true"
@@ -14,7 +14,7 @@
                 >
                     <n-menu
                         v-model:value="activeKey"
-                        :collapsed-icon-size="menuConfig.collapsedIconSize"
+                        :collapsed-icon-size="menuConfig.collapsedIconSize || 22"
                         :options="menuConfig.options"
                         @update:value="handleUpdateValue"
                     />
@@ -53,8 +53,6 @@ const handleUpdateValue = (key: any, item: any) => {
     })
 }
 
-const { naiMenuList } = toRefs(props)
-
 const collapsed = ref<boolean>(false)
 const activeKey = ref<string | null>(null)
 </script>
@@ -62,5 +60,16 @@ const activeKey = ref<string | null>(null)
 <style lang="less" scoped>
 .menus {
     float: right;
+}
+</style>
+<style>
+.el-icon {
+    margin-left: 15px;
+}
+.n-layout-toggle-button {
+    margin-right: 5px !important;
+}
+.n-menu-item-content-header {
+    margin-left: 15px;
 }
 </style>
