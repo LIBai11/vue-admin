@@ -72,4 +72,7 @@ const activeKey = ref<string | null>(null)
 .n-menu-item-content-header {
     margin-left: 15px;
 }
+#tab-\/home {
+    color: green !important;
+}
 </style>
