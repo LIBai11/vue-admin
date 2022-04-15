@@ -40,7 +40,6 @@
     "unplugin-auto-import": "^0.6.9",
     "unplugin-vue-components": "^0.18.5",
     "vfonts": "^0.0.3",
-    "vue-cli-plugin-vuetify": "~2.4.8",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
   }

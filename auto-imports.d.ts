@@ -7,5 +7,7 @@ declare global {
   const ElContainer: typeof import('element-plus/es')['ElContainer']
   const ElHeader: typeof import('element-plus/es')['ElHeader']
   const ElMain: typeof import('element-plus/es')['ElMain']
+  const ElTabPane: typeof import('element-plus/es')['ElTabPane']
+  const ElTabs: typeof import('element-plus/es')['ElTabs']
 }
 export {}

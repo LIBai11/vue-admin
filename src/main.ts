@@ -4,10 +4,10 @@ import registerGlobalApp from '@/global'
 import { setupStore, store } from '@/store'
 import router from '@/router'
 import '@/assets/css/base.css'
-
+setupStore()
 const app = createApp(App)
 registerGlobalApp(app)
-setupStore()
+
 app.use(store)
 app.use(router)
 

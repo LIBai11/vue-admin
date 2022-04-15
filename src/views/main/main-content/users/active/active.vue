@@ -1,4 +1,4 @@
-<template>article</template>
+<template>active</template>
 
 <script lang="ts" setup></script>
 

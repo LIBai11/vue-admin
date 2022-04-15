@@ -6,7 +6,7 @@
                 <el-header class="header">
                     <a-header />
                 </el-header>
-                <el-main>
+                <el-main class="main">
                     <router-view />
                 </el-main>
             </el-container>
@@ -26,11 +26,14 @@ import { menuConfig } from './config'
 }
 
 .header {
-    height: 50px;
+    height: 80px;
 }
 
 .aside {
     height: 100vh;
+}
+.main {
+    padding: 20px;
 }
 </style>
 <style></style>
