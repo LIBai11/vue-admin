@@ -19,14 +19,13 @@
         <el-tabs
             v-model="handleTab.path"
             type="card"
-            closable
             @tab-change="handleTabChange"
             @tab-remove="removeTab"
         >
             <el-tab-pane
                 v-for="tab in currentTabs"
                 :key="tab.path"
-                closable
+                :closable="tab.path !== '/home'"
                 :label="tab.name"
                 :name="tab.path"
             >
@@ -99,12 +98,16 @@ watch(
 //移除tab
 const removeTab = (handle: any) => {
     for (let i = 0; i < currentTabs.value.length; i++) {
-        console.log(currentTabs.value)
         if (currentTabs.value[i].path === handle) {
             if (handle !== '/home') {
                 currentTabs.value.splice(i, 1)
-                // console.log(currentTabs.value[i].path)
-                handleTab.value.path = currentTabs.value[i - 1].path
+                if (i !== currentTabs.value.length - 1) {
+                    console.log('if')
+                    handleTab.value.path = currentTabs.value[i - 1].path
+                } else {
+                    console.log('else')
+                    handleTab.value.path = currentTabs.value[i].path
+                }
             }
         }
     }
@@ -141,5 +144,15 @@ const handleTabChange = (handle: any) => {
 
 .header-tabs {
     height: 30px;
+}
+</style>
+<style>
+#tab-\/home {
+    font-weight: bold;
+    color: green !important;
+}
+
+.el-tabs__item {
+    color: green !important;
 }
 </style>

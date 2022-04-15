@@ -6,9 +6,11 @@
                 <el-header class="header">
                     <a-header />
                 </el-header>
-                <el-main class="main">
-                    <router-view />
-                </el-main>
+                <transition name="el-zoom-in-center">
+                    <el-main class="main">
+                        <router-view />
+                    </el-main>
+                </transition>
             </el-container>
         </el-container>
     </div>
@@ -32,6 +34,7 @@ import { menuConfig } from './config'
 .aside {
     height: 100vh;
 }
+
 .main {
     padding: 20px;
 }

@@ -47,7 +47,7 @@ const handleFoldMenu = () => {
 const router = useRouter()
 
 const handleUpdateValue = (key: any, item: any) => {
-    // console.log(item.href)
+    // console.log(activeKey.value)
     router.push({
         path: item.href ?? 'not-found',
     })
@@ -71,8 +71,5 @@ const activeKey = ref<string | null>(null)
 }
 .n-menu-item-content-header {
     margin-left: 15px;
-}
-#tab-\/home {
-    color: green !important;
 }
 </style>
