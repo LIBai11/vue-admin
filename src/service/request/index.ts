@@ -2,6 +2,8 @@ import axios, { AxiosInstance } from 'axios'
 import 'nprogress/nprogress.css'
 import { KXConfig, KXInterceptor } from '@/service/request/type'
 import * as nprogress from 'nprogress'
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 class KXRequest {
     instance: AxiosInstance
@@ -32,20 +34,32 @@ class KXRequest {
             (err) => {
                 if (this.isShowLoading) {
                     nprogress.set(0.7)
+                    ElMessage.error('网络错误!')
                 }
                 return err
             }
         )
+
         this.instance.interceptors.response.use(
             (res) => {
                 if (this.isShowLoading) {
                     nprogress.done()
                 }
-                return res.data
+                if (res.data.code === 51000) {
+                    ElMessage.warning('系统错误,请稍后再试')
+                    router.push('/login')
+                    return res.data
+                } else if (res.data.code === 20000) {
+                    ElMessage.success('获取成功')
+                    return res.data
+                } else {
+                    ElMessage.error('网络错误!')
+                }
             },
             (err) => {
                 if (this.isShowLoading) {
                     nprogress.set(0.7)
+                    ElMessage.error('网络错误!')
                 }
 
                 return err

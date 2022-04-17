@@ -2,7 +2,6 @@ import { IMenuState } from '@/store/login/types'
 import { h } from 'vue'
 import { ElIcon } from 'element-plus'
 import { RouteRecordRaw } from 'vue-router'
-import { Albums } from '@vicons/ionicons5'
 
 const naiMenuList: any = []
 
@@ -10,7 +9,9 @@ export function getAssetsImages(iconName: string) {
     const iconComponent = require('@vicons/ionicons5/' + iconName).default
     return iconComponent
 }
+
 getAssetsImages('Albums')
+
 function renderIcon(icon: any) {
     return () => h(ElIcon, null, { default: () => h(icon) })
 }
@@ -104,6 +105,7 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
 
     return routes
 }
+
 /*
         if (menu.type === 1) {
           console.log(menu.children)
@@ -115,6 +117,7 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
           return menu
         }
         */
+
 //获取面包屑数据
 export function pathMapToMenu(menus: IMenuState, currentPath: string) {
     for (const menuC of menus) {

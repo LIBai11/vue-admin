@@ -29,48 +29,48 @@ export const loginModule: Module<ILoginState, IRootState> = {
         }
     },
     mutations: {
-        changeArticleLikeSet(state, articleLikeSet) {
-            state.articleLikeSet = articleLikeSet
-        },
-        changeAvatar(state, avatar) {
-            state.avatar = avatar
-        },
-        changeCommentLikeSet(state, commentLikeSet) {
-            state.commentLikeSet = commentLikeSet
-        },
-        changeEmail(state, email) {
-            state.email = email
-        },
-        changeId(state, id) {
-            state.id = id
-        },
-        changeIntro(state, intro) {
-            state.intro = intro
-        },
-        changeIpAddress(state, ipAddress) {
-            state.ipAddress = ipAddress
-        },
-        changeIpSource(state, ipSource) {
-            state.ipSource = ipSource
-        },
-        changeLastLoginTime(state, lastLoginTime) {
-            state.lastLoginTime = lastLoginTime
-        },
-        changeLoginType(state, loginType) {
-            state.loginType = loginType
-        },
-        changeNickname(state, nickName) {
-            state.nickname = nickName
-        },
-        changeTalkLikeSet(state, talkLikeSet) {
-            state.talkLikeSet = talkLikeSet
-        },
-        changeUserInfoId(state, userInfoId) {
-            state.userInfoId = userInfoId
-        },
-        changeUsername(state, username) {
-            state.username = username
-        },
+        // changeArticleLikeSet(state, articleLikeSet) {
+        //     state.articleLikeSet = articleLikeSet
+        // },
+        // changeAvatar(state, avatar) {
+        //     state.avatar = avatar
+        // },
+        // changeCommentLikeSet(state, commentLikeSet) {
+        //     state.commentLikeSet = commentLikeSet
+        // },
+        // changeEmail(state, email) {
+        //     state.email = email
+        // },
+        // changeId(state, id) {
+        //     state.id = id
+        // },
+        // changeIntro(state, intro) {
+        //     state.intro = intro
+        // },
+        // changeIpAddress(state, ipAddress) {
+        //     state.ipAddress = ipAddress
+        // },
+        // changeIpSource(state, ipSource) {
+        //     state.ipSource = ipSource
+        // },
+        // changeLastLoginTime(state, lastLoginTime) {
+        //     state.lastLoginTime = lastLoginTime
+        // },
+        // changeLoginType(state, loginType) {
+        //     state.loginType = loginType
+        // },
+        // changeNickname(state, nickName) {
+        //     state.nickname = nickName
+        // },
+        // changeTalkLikeSet(state, talkLikeSet) {
+        //     state.talkLikeSet = talkLikeSet
+        // },
+        // changeUserInfoId(state, userInfoId) {
+        //     state.userInfoId = userInfoId
+        // },
+        // changeUsername(state, username) {
+        //     state.username = username
+        // },
     },
     getters: {},
     actions: {
@@ -86,15 +86,6 @@ export const loginModule: Module<ILoginState, IRootState> = {
             // commit('commonModule/changeData', loginResData.data, { root: true })
             // commit('commonModule/changeFlag', loginResData.flag, { root: true })
             // commit('commonModule/changeMessage', loginResData.message, { root: true })
-            if (flag) {
-                if (code === 20000) {
-                    ElMessage.success(message)
-                } else {
-                    ElMessage.error(message)
-                }
-            } else {
-                ElMessage.error(message)
-            }
 
             /**
              *  获取菜单

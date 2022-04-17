@@ -1,11 +1,8 @@
 <template>
     <div class="header">
         <div class="breadcrumb">
-            <el-breadcrumb separator=">" replace>
+            <el-breadcrumb replace separator=">">
                 <el-breadcrumb-item :to="{ path: '/' }"> 首页</el-breadcrumb-item>
-                <el-breadcrumb-item v-if="superBreadData"
-                    >{{ superBreadData.name }}
-                </el-breadcrumb-item>
                 <el-breadcrumb-item v-if="breadData.name !== '首页'">
                     {{ breadData.name }}
                 </el-breadcrumb-item>
@@ -18,7 +15,7 @@
     <div class="header-tabs">
         <el-tabs
             v-model="handleTab.path"
-            type="card"
+            stretch
             @tab-change="handleTabChange"
             @tab-remove="removeTab"
         >
@@ -31,6 +28,15 @@
             >
             </el-tab-pane>
         </el-tabs>
+        <n-button
+            class="close-btn"
+            size="small"
+            tertiary
+            type="warning"
+            @click="handleCloseTabsBtn"
+        >
+            全部关闭
+        </n-button>
     </div>
 </template>
 
@@ -40,6 +46,7 @@ import { useSessionCache } from '@/utils/use-storage'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { pathMapToMenu } from '@/utils/use-menus'
+import { ITab } from '@/views/main/header/types'
 
 const route = useRoute()
 const router = useRouter()
@@ -56,14 +63,14 @@ const breadData = ref<any>('')
 //一级菜单
 const superBreadData = ref<any>('')
 
-const currentTabs = ref([
+const currentTabs = ref<ITab[]>([
     {
         name: '首页',
         path: '/home',
     },
 ])
 //新添加的标签
-const handleTab = ref<any>({
+const handleTab = ref<ITab>({
     name: '首页',
     path: '/home',
 })
@@ -96,24 +103,34 @@ watch(
 )
 
 //移除tab
-const removeTab = (handle: any) => {
+const removeTab = (handle: string) => {
     for (let i = 0; i < currentTabs.value.length; i++) {
         if (currentTabs.value[i].path === handle) {
             if (handle !== '/home') {
                 currentTabs.value.splice(i, 1)
-                if (i !== currentTabs.value.length - 1) {
+                if (i - 1 !== currentTabs.value.length - 1) {
                     console.log('if')
-                    handleTab.value.path = currentTabs.value[i - 1].path
+                    handleTab.value.path = currentTabs.value[i].path
                 } else {
                     console.log('else')
-                    handleTab.value.path = currentTabs.value[i].path
+                    handleTab.value.path = currentTabs.value[i - 1].path
                 }
             }
         }
     }
 }
 
-const handleTabChange = (handle: any) => {
+const handleCloseTabsBtn = () => {
+    currentTabs.value = [
+        {
+            name: '首页',
+            path: '/home',
+        },
+    ]
+    router.push('/home')
+}
+
+const handleTabChange = (handle: string) => {
     router.push(handle)
 }
 </script>
@@ -143,11 +160,21 @@ const handleTabChange = (handle: any) => {
 }
 
 .header-tabs {
-    height: 30px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+
+    box-shadow: 10px 10px 20px 10px #e8e8e8;
+}
+
+.close-btn {
+    margin-top: 10px;
+    margin-right: 20px;
 }
 </style>
 <style>
 #tab-\/home {
+    margin-left: 10px;
     font-weight: bold;
     color: green !important;
 }

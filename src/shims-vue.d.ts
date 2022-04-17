@@ -6,4 +6,3 @@ declare module '*.vue' {
 }
 
 declare module 'nprogress'
-declare module 'Vuetify'

@@ -1,31 +1,31 @@
 <template>
     <div class="menus">
-        <n-scrollbar style="max-height: 90vh">
-            <n-layout has-sider>
-                <n-layout-sider
-                    :collapsed="collapsed"
-                    :collapsed-width="menuConfig.collapsedWidth || 64"
-                    :width="menuConfig.width || 200"
-                    :bordered="menuConfig.bordered || true"
-                    collapse-mode="width"
-                    :show-trigger="menuConfig.showTrigger || true"
-                    @collapse="handleFoldMenu"
-                    @expand="handleFoldMenu"
-                >
+        <n-layout has-sider v-once>
+            <n-layout-sider
+                :bordered="menuConfig.bordered || true"
+                :collapsed="collapsed"
+                :collapsed-width="menuConfig.collapsedWidth || 64"
+                :show-trigger="menuConfig.showTrigger || true"
+                :width="menuConfig.width || 200"
+                collapse-mode="width"
+                @collapse="handleFoldMenu"
+                @expand="handleFoldMenu"
+            >
+                <n-scrollbar style="max-height: 90vh">
                     <n-menu
                         v-model:value="activeKey"
                         :collapsed-icon-size="menuConfig.collapsedIconSize || 22"
                         :options="menuConfig.options"
                         @update:value="handleUpdateValue"
                     />
-                </n-layout-sider>
-            </n-layout>
-        </n-scrollbar>
+                </n-scrollbar>
+            </n-layout-sider>
+        </n-layout>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, toRefs } from 'vue'
+import { PropType, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { IMenuConfig } from '@/views/main/config/menu-config/type'
 
@@ -66,9 +66,11 @@ const activeKey = ref<string | null>(null)
 .el-icon {
     margin-left: 15px;
 }
+
 .n-layout-toggle-button {
     margin-right: 5px !important;
 }
+
 .n-menu-item-content-header {
     margin-left: 15px;
 }

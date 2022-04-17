@@ -76,8 +76,7 @@ if (cacheRemPas) {
 }
 
 //登陆事件
-const handleLoginButton = (e: MouseEvent) => {
-    e.preventDefault()
+const handleLoginButton = () => {
     // console.log({ ...loginData.value })
     loginFormRef.value?.validate((errors) => {
         if (!errors) {

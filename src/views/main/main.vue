@@ -8,7 +8,9 @@
                 </el-header>
                 <transition name="el-zoom-in-center">
                     <el-main class="main">
-                        <router-view />
+                        <n-scrollbar>
+                            <router-view />
+                        </n-scrollbar>
                     </el-main>
                 </transition>
             </el-container>
@@ -24,7 +26,8 @@ import { menuConfig } from './config'
 
 <style lang="less" scoped>
 .main {
-    float: left;
+    margin: 35px 20px;
+    background-color: #f7f9fb;
 }
 
 .header {
@@ -37,6 +40,7 @@ import { menuConfig } from './config'
 
 .main {
     padding: 20px;
+    height: 100vh;
 }
 </style>
 <style></style>
