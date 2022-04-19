@@ -1,5 +1,5 @@
 <template>
-    <el-card class="box-card">
+    <el-card class="box-card" :cardConfig="props.cardConfig" ref="bar">
         <template #header>
             <div class="card-header">
                 <span>{{ title }}</span>
@@ -21,8 +21,14 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    cardConfig: {
+        type: Object,
+    },
 })
+const bar = ref()
+// console.log(bar)
 const title = ref(props.title)
+// console.log(cardConfig.value)
 </script>
 
 <style scoped lang="less"></style>

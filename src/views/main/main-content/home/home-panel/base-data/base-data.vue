@@ -1,7 +1,7 @@
 <template>
     <div class="base-data">
         <el-row :gutter="10">
-            <el-col :span="6">
+            <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
                     shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
@@ -17,7 +17,7 @@
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="6">
+            <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
                     shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
@@ -31,7 +31,7 @@
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="6">
+            <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
                     shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
@@ -45,7 +45,7 @@
                     </div>
                 </el-card>
             </el-col>
-            <el-col :span="6">
+            <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
                     shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
@@ -64,7 +64,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount } from 'vue'
 import { useStore } from '@/store'
 import useState from '@/utils/useState'
 
@@ -100,5 +99,8 @@ const { viewCounts, userCount, articleCount, messageCount } = useState({
     color: #aaabaa;
 }
 .cards-header {
+}
+.el-card {
+    margin-bottom: 10px;
 }
 </style>

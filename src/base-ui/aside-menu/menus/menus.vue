@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref } from 'vue'
+import { onMounted, PropType, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { IMenuConfig } from '@/views/main/config/menu-config/type'
 
@@ -55,6 +55,15 @@ const handleUpdateValue = (key: any, item: any) => {
 
 const collapsed = ref<boolean>(false)
 const activeKey = ref<string | null>(null)
+
+const height = ref<number>(0)
+height.value = document.documentElement.clientWidth
+onMounted(() => {
+    window.onresize = () => {
+        collapsed.value = height.value <= 730
+        return (height.value = document.documentElement.clientWidth)
+    }
+})
 </script>
 
 <style lang="less" scoped>

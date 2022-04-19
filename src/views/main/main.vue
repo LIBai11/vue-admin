@@ -35,12 +35,11 @@ import { menuConfig } from './config'
 }
 
 .aside {
-    height: 100vh;
 }
 
 .main {
+    height: 600px;
     padding: 20px;
-    height: 100vh;
 }
 </style>
 <style></style>

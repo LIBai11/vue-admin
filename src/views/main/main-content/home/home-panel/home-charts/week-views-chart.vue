@@ -21,18 +21,14 @@ import { IUniqueViewDTOList } from '@/components/page-echarts/types'
 
 const store = useStore()
 const weekViewTitle = '一周访问量'
-const xData: any = []
-const yData: any = []
 
 const lineData = computed(() => {
-    return store.state.homeModule.uniqueViewDTOList.map((key: IUniqueViewDTOList) => {
-        xData.push(key.day)
-        yData.push(key.viewsCount)
-        return {
-            xData,
-            yData,
-        }
+    const data: any[] = [[], []]
+    store.state.homeModule.uniqueViewDTOList.forEach((key: IUniqueViewDTOList) => {
+        data[0].push(key.day)
+        data[1].push(key.viewsCount)
     })
+    return data
 })
 </script>
 

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { useSessionCache } from '@/utils/use-storage'
+import { ElMessage } from 'element-plus'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -36,7 +37,7 @@ router.beforeEach((to) => {
         if (userData) {
             return true
         } else {
-            router.push('/login')
+            router.push('/login').then(() => ElMessage.error('登录已失效,请重新登陆'))
             return false
         }
     }

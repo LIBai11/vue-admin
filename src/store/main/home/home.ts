@@ -36,7 +36,8 @@ export const homeModule: Module<IHomeBseState, IRootState> = {
                 },
             ],
             uniqueViewDTOList: [],
-            articleRankDTOList: 0,
+            articleRankDTOList: [],
+            //下面是用户地域,考虑将来分成单独的文件夹
         }
     },
     mutations: {
@@ -77,9 +78,6 @@ export const homeModule: Module<IHomeBseState, IRootState> = {
         },
         getUserCount(state) {
             return state.userCount
-        },
-        getArticleCount(state) {
-            return state.articleCount
         },
     },
     actions: {

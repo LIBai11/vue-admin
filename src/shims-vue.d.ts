@@ -6,3 +6,5 @@ declare module '*.vue' {
 }
 
 declare module 'nprogress'
+declare module '*.json'
+declare module 'TagCloud/src/index.js'

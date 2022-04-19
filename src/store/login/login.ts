@@ -3,7 +3,6 @@ import { ILoginState, IMenuState, IUserData } from '@/store/login/types'
 import { ICommonState, IRootState } from '@/store/types'
 import { ILoginData } from '@/views/login/types'
 import { accountLoginRequest, menuListRequest } from '@/service/login/login'
-import { ElMessage } from 'element-plus'
 import { useSessionCache } from '@/utils/use-storage'
 import router from '@/router'
 import { mapMenusToRoutes } from '@/utils/use-menus'
@@ -74,7 +73,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
     },
     getters: {},
     actions: {
-        async handleLoginAction({ commit }, payload: ILoginData) {
+        async handleLoginAction({ commit, dispatch }, payload: ILoginData) {
             /**
              * 登录请求
              * */
@@ -106,7 +105,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
 
                 //将数据存到localstorage中
                 useSessionCache.setCache('userData', cacheData)
-
+                dispatch('getLocalCache')
                 await router.push('/home')
                 // console.log(routes)
             }

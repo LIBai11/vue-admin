@@ -30,7 +30,7 @@ const options = computed<EChartsOption>(() => {
             type: 'piecewise',
             orient: 'horizontal',
             left: 'center',
-            top: 65,
+            top: 0,
         },
         tooltip: {
             formatter: function (arg: any) {
@@ -39,13 +39,13 @@ const options = computed<EChartsOption>(() => {
             },
         },
         calendar: {
-            top: 120,
+            top: 60,
             left: 30,
             right: 30,
-            cellSize: ['auto', 13],
-            range: ['2022-01', '2022-12'],
+            cellSize: ['auto', 18],
+            range: ['2022'],
             itemStyle: {
-                borderWidth: 0,
+                borderWidth: 0.4,
             },
             yearLabel: { show: false },
         },

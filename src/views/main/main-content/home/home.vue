@@ -4,12 +4,20 @@
             <base-data></base-data>
             <week-views-chart></week-views-chart>
             <contribute-cart></contribute-cart>
+            <view-cate-charts></view-cate-charts>
+            <map-tag-charts></map-tag-charts>
         </div>
     </n-scrollbar>
 </template>
 
 <script lang="ts" setup>
-import { BaseData, WeekViewsChart, ContributeCart } from './home-panel/index'
+import {
+    BaseData,
+    ContributeCart,
+    MapTagCharts,
+    ViewCateCharts,
+    WeekViewsChart,
+} from './home-panel/index'
 </script>
 
 <style lang="less" scoped>

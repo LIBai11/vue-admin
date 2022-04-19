@@ -1,5 +1,7 @@
 import * as Echarts from 'echarts'
+import chinaJSON from '@/assets/map/china.json'
 
+Echarts.registerMap('china', chinaJSON)
 export default function useEchart(el: HTMLElement) {
     const echartInstance = Echarts.init(el)
 
@@ -16,5 +18,6 @@ export default function useEchart(el: HTMLElement) {
     return {
         echartInstance,
         setOptions,
+        updateSize,
     }
 }

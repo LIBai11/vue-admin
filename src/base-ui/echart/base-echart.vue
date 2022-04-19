@@ -1,11 +1,11 @@
 <template>
     <div class="base-echarts">
-        <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
+        <div ref="echartDivRef" :style="{ width: props.width, height: props.height }"></div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, withDefaults, defineProps, watchEffect } from 'vue'
+import { defineProps, onMounted, ref, watchEffect, withDefaults } from 'vue'
 import { EChartsOption } from 'echarts'
 import useEchart from '@/utils/use-echart'
 
@@ -27,6 +27,7 @@ onMounted(() => {
     //非空断言,排除null和undefined
     const { setOptions } = useEchart(echartDivRef.value!)
     watchEffect(() => {
+        // console.log(props.options.series)
         setOptions(props.options)
     })
 })
