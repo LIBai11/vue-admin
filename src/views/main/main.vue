@@ -6,7 +6,7 @@
                 <el-header class="header">
                     <a-header />
                 </el-header>
-                <transition name="el-zoom-in-center">
+                <transition name="el-fade-in-linear">
                     <el-main class="main">
                         <n-scrollbar>
                             <router-view />

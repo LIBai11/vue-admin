@@ -2,7 +2,7 @@
     <div class="header">
         <div class="breadcrumb">
             <el-breadcrumb replace separator=">">
-                <el-breadcrumb-item :to="{ path: '/' }"> 首页</el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                 <el-breadcrumb-item v-if="breadData.name !== '首页'">
                     {{ breadData.name }}
                 </el-breadcrumb-item>
@@ -25,8 +25,7 @@
                 :closable="tab.path !== '/home'"
                 :label="tab.name"
                 :name="tab.path"
-            >
-            </el-tab-pane>
+            ></el-tab-pane>
         </el-tabs>
         <n-button
             class="close-btn"

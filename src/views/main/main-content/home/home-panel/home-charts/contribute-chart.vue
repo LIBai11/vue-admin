@@ -25,7 +25,7 @@ const store = useStore()
 
 const config: IkxCard = {
     shadow: 'always',
-    bodyStyle: { height: '300px' },
+    bodyStyle: { height: '200px' },
 }
 
 const contributeTitle = '文章贡献表'

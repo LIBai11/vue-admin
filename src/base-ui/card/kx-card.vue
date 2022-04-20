@@ -1,5 +1,10 @@
 <template>
-    <el-card class="box-card" :cardConfig="props.cardConfig" ref="bar">
+    <el-card
+        class="box-card"
+        :body-style="props.cardConfig?.bodyStyle"
+        :shadow="props.cardConfig?.shadow"
+        ref="bar"
+    >
         <template #header>
             <div class="card-header">
                 <span>{{ title }}</span>
@@ -14,17 +19,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { IkxCard } from '@/views/main/main-content/home/home-panel/base-data/types'
 
 // eslint-disable-next-line no-undef
-const props = defineProps({
-    title: {
-        type: String,
-        default: '',
-    },
-    cardConfig: {
-        type: Object,
-    },
-})
+const props = defineProps<{
+    title?: string
+    cardConfig?: IkxCard
+}>()
 const bar = ref()
 // console.log(bar)
 const title = ref(props.title)

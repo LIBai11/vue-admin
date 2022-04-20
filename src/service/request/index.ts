@@ -45,15 +45,12 @@ class KXRequest {
                 if (this.isShowLoading) {
                     nprogress.done()
                 }
-                if (res.data.code === 51000) {
+                if (res.data.code !== 20000) {
                     ElMessage.warning('系统错误,请稍后再试')
                     router.push('/login')
                     return res.data
-                } else if (res.data.code === 20000) {
-                    ElMessage.success('获取成功')
-                    return res.data
                 } else {
-                    ElMessage.error('网络错误!')
+                    return res.data
                 }
             },
             (err) => {

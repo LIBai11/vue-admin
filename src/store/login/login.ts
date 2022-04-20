@@ -6,6 +6,7 @@ import { accountLoginRequest, menuListRequest } from '@/service/login/login'
 import { useSessionCache } from '@/utils/use-storage'
 import router from '@/router'
 import { mapMenusToRoutes } from '@/utils/use-menus'
+import { ElMessage } from 'element-plus'
 
 export const loginModule: Module<ILoginState, IRootState> = {
     namespaced: true,
@@ -92,6 +93,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
             const menuList: ICommonState<IMenuState> = await menuListRequest()
             // console.log(menuList.data)
             if (code === 20000) {
+                ElMessage.success('登录成功!')
                 //将数据拼接起来
                 const cacheData: IUserData = Object.assign(
                     {},

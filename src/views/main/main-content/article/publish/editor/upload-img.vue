@@ -1,0 +1,107 @@
+<template>
+    <div class="upload-img">
+        <el-upload
+            action="http://localhost:5000/api/admin/articles/images"
+            list-type="picture-card"
+            :auto-upload="true"
+            :limit="limit"
+            :on-success="uploadSuccess"
+            :on-remove="handleRemove"
+            :on-preview="handlePictureCardPreview"
+            :on-error="handleError"
+        >
+            <el-icon class="icon">
+                <Plus />
+            </el-icon>
+        </el-upload>
+
+        <el-dialog
+            title="预览图片"
+            destroy-on-close
+            v-model="dialogVisible"
+            :width="imgInfo.width + 'px'"
+            append-to-body
+        >
+            <div class="imgPreviewDiv">
+                <img
+                    :style="{ width: imgInfo.width + 'px', height: imgInfo.height + 'px' }"
+                    :src="dialogImageUrl"
+                    alt=""
+                />
+            </div>
+        </el-dialog>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+
+import type { UploadFile, UploadProps } from 'element-plus'
+import { ElMessage } from 'element-plus'
+
+const dialogImageUrl = ref('')
+const dialogVisible = ref(false)
+const disabled = ref(false)
+const imgUrl = ref('')
+const limit = ref(1)
+
+//定义隐藏变量
+const isShowUploadBtn = ref('inline')
+
+const imgInfo = reactive({
+    width: 0,
+    height: 0,
+})
+const getImgInfo = () => {
+    let img = new Image()
+    img.src = imgUrl.value
+
+    img.onload = function () {
+        imgInfo.width = img.width * 0.3
+        imgInfo.height = img.height * 0.3
+        console.log(img.height)
+        console.log(imgInfo.height)
+    }
+}
+
+const uploadSuccess = (response: any) => {
+    imgUrl.value = response.data
+    isShowUploadBtn.value = 'none'
+}
+
+//图片预览下载删除
+const handleRemove: UploadProps['onRemove'] = (file: UploadFile) => {
+    isShowUploadBtn.value = 'inline'
+}
+
+const handlePictureCardPreview: UploadProps['onPreview'] = (file: UploadFile) => {
+    getImgInfo()
+    dialogImageUrl.value = imgUrl.value
+    dialogVisible.value = true
+}
+const handleError = () => {
+    ElMessage.error('上传失败!')
+}
+</script>
+
+<style scoped lang="less">
+.imgPreviewDiv {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+.icon {
+    margin-top: 40%;
+    margin-left: 40%;
+}
+.img {
+    width: v-bind('imgInfo.width') px;
+    height: v-bind('imgInfo.height') px;
+}
+</style>
+<style lang="less">
+.el-upload--picture-card {
+    display: v-bind('isShowUploadBtn');
+}
+</style>
