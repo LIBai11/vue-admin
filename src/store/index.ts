@@ -4,6 +4,7 @@ import { commonModule } from '@/store/common'
 import { loginModule } from '@/store/login/login'
 import { homeModule } from '@/store/main/home/home'
 import { userModule } from '@/store/main/user/user'
+import { publishSearchModule } from '@/store/publish/search/publish-search'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -11,6 +12,7 @@ export const store = createStore<IRootState>({
         loginModule,
         homeModule,
         userModule,
+        publishSearchModule,
     },
 })
 

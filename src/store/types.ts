@@ -1,6 +1,7 @@
 import { ILoginState, IMenuState } from '@/store/login/types'
+import { ICategoryState, ITagState } from '@/store/publish/search/types'
 
-export type T = ILoginState | IMenuState | any
+export type T = ILoginState | IMenuState | ICategoryState | ITagState | any
 
 export interface ICommonState<T> {
     code: number

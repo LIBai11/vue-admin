@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { KxCard } from '@/base-ui/index'
 import { config } from './kx-card-config/kx-card-config'
 import { ArticleHeader, ContentEdit } from './editor/index'
-import { ref } from 'vue'
 
 const textContent = ref<string>('')
 const handleTextContent = (text: string) => {

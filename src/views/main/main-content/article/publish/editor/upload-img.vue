@@ -34,15 +34,18 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { defineEmits, reactive, ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
 import type { UploadFile, UploadProps } from 'element-plus'
 import { ElMessage } from 'element-plus'
 
+//向父组件传值
+const emits = defineEmits(['pushImgUrl'])
+
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-const disabled = ref(false)
+
 const imgUrl = ref('')
 const limit = ref(1)
 
@@ -56,26 +59,25 @@ const imgInfo = reactive({
 const getImgInfo = () => {
     let img = new Image()
     img.src = imgUrl.value
-
     img.onload = function () {
         imgInfo.width = img.width * 0.3
         imgInfo.height = img.height * 0.3
-        console.log(img.height)
-        console.log(imgInfo.height)
     }
 }
 
 const uploadSuccess = (response: any) => {
     imgUrl.value = response.data
+    emits('pushImgUrl', imgUrl.value)
     isShowUploadBtn.value = 'none'
 }
 
 //图片预览下载删除
-const handleRemove: UploadProps['onRemove'] = (file: UploadFile) => {
+const handleRemove: UploadProps['onRemove'] = () => {
     isShowUploadBtn.value = 'inline'
+    emits('pushImgUrl', '')
 }
 
-const handlePictureCardPreview: UploadProps['onPreview'] = (file: UploadFile) => {
+const handlePictureCardPreview: UploadProps['onPreview'] = () => {
     getImgInfo()
     dialogImageUrl.value = imgUrl.value
     dialogVisible.value = true
