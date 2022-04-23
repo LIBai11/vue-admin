@@ -19,14 +19,14 @@ function renderIcon(icon: any) {
 //循环实现
 export function getMenuList(userMenus: IMenuState) {
     for (const menuC of userMenus) {
-        if (menuC.children.length === 0) {
+        if (menuC.children.length === 0 && menuC.isHidden === 0) {
             naiMenuList.push({
                 label: menuC.name,
                 key: menuC.id,
                 href: menuC.path,
                 icon: renderIcon(getAssetsImages(menuC.icon)),
             })
-        } else if (menuC.children.length !== 0) {
+        } else if (menuC.children.length !== 0 && menuC.isHidden === 0) {
             const index = naiMenuList.length
             naiMenuList.push({
                 label: menuC.name,
@@ -37,12 +37,14 @@ export function getMenuList(userMenus: IMenuState) {
             })
             //遍历二级菜单
             for (const menuCC of menuC.children) {
-                naiMenuList[index].children.push({
-                    label: menuCC.name,
-                    key: menuCC.id,
-                    href: menuCC.path,
-                    icon: renderIcon(getAssetsImages(menuCC.icon)),
-                })
+                if (menuCC.isHidden === 0) {
+                    naiMenuList[index].children.push({
+                        label: menuCC.name,
+                        key: menuCC.id,
+                        href: menuCC.path,
+                        icon: renderIcon(getAssetsImages(menuCC.icon)),
+                    })
+                }
             }
         }
     }

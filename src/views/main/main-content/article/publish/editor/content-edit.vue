@@ -18,7 +18,7 @@ import 'md-editor-v3/lib/style.css'
 const emits = defineEmits(['handleTextContent'])
 
 //主体内容
-const textContent = ref('test')
+const textContent = ref('')
 
 //自定义md编辑器工具栏(不展示)
 //是否启用prettier

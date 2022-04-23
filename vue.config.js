@@ -9,13 +9,14 @@ module.exports = {
     devServer: {
         proxy: {
             '^/api': {
-                target: 'http://localhost:3000',
+                target: 'http://localhost:3030',
                 pathRewrite: {
                     '^/api': '',
                 },
                 changeOrigin: false,
             },
         },
+
         port: 5000, // 启动端口号
         open: false, // 启动后是否自动打开网页
     },
@@ -33,5 +34,11 @@ module.exports = {
                 resolvers: [ElementPlusResolver()],
             }),
         ],
+    },
+    chainWebpack: (config) => {
+        config.plugin(`html`).tap((args) => {
+            args[0].title = 'Blog博客后台管理系统'
+            return args
+        })
     },
 }

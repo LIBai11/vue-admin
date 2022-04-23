@@ -13,6 +13,8 @@ import {
     NMenu,
     NScrollbar,
     NSwitch,
+    NH5,
+    NText,
 } from 'naive-ui'
 
 const naive = create({
@@ -30,6 +32,8 @@ const naive = create({
         NLayout,
         NLayoutSider,
         NScrollbar,
+        NH5,
+        NText,
     ],
 })
 export default naive

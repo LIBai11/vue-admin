@@ -13,6 +13,7 @@
             >
                 <n-scrollbar style="max-height: 90vh">
                     <n-menu
+                        ref="menuInstRef"
                         v-model:value="activeKey"
                         :collapsed-icon-size="menuConfig.collapsedIconSize || 22"
                         :options="menuConfig.options"
@@ -25,19 +26,23 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, PropType, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, defineEmits, defineProps, onMounted, PropType, ref } from 'vue'
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { IMenuConfig } from '@/views/main/config/menu-config/type'
+import { MenuInst } from 'naive-ui'
+import { useStore } from '@/store'
 
-// eslint-disable-next-line no-undef
+const store = useStore()
+const menuInstRef = ref<MenuInst | null>(null)
+
 const emits = defineEmits(['handleFoldMenu'])
-// eslint-disable-next-line no-undef
 const props = defineProps({
     menuConfig: {
         type: Object as PropType<IMenuConfig>,
         required: true,
     },
 })
+
 const handleFoldMenu = () => {
     collapsed.value = !collapsed.value
     emits('handleFoldMenu', collapsed)
@@ -45,23 +50,47 @@ const handleFoldMenu = () => {
 }
 
 const router = useRouter()
-
+const collapsed = ref<boolean>(false)
+const activeKey = ref<number | null>(null)
+//getCurrent->route->state
+//getCache->state->
 const handleUpdateValue = (key: any, item: any) => {
+    sessionStorage.setItem('_MENU_KEY', key)
     // console.log(activeKey.value)
     router.push({
         path: item.href ?? 'not-found',
     })
 }
 
-const collapsed = ref<boolean>(false)
-const activeKey = ref<string | null>(null)
-
 const height = ref<number>(0)
 height.value = document.documentElement.clientWidth
+
+//菜单选中状态更新
+const updateSelectManu = () => {
+    const currentKey = Number(sessionStorage.getItem('_MENU_KEY'))
+    activeKey.value = currentKey
+    menuInstRef.value?.showOption(currentKey)
+}
+
+//监控路由操作菜单选中
+onBeforeRouteUpdate((to: any) => {
+    // console.log(to)
+    const currentKey = props.menuConfig.routeKeysMap.get(to?.href)
+    activeKey.value = currentKey
+    menuInstRef.value?.showOption(currentKey)
+})
+let windowHeight = store.state.noAsyncModule.menuStatus
+
+console.log('window', windowHeight)
+collapsed.value = windowHeight.value <= 730
+windowHeight = 0
 onMounted(() => {
+    updateSelectManu()
     window.onresize = () => {
         collapsed.value = height.value <= 730
-        return (height.value = document.documentElement.clientWidth)
+        height.value = document.documentElement.clientWidth
+
+        return height.value
     }
 })
 </script>

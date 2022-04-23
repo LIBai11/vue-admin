@@ -1,5 +1,81 @@
-<template>Article</template>
+<template>
+    <div class="articles">
+        <div class="articles-search">
+            <kx-card>
+                <template #header>
+                    <page-title title="发布文章"></page-title>
+                    <el-link
+                        target="_blank"
+                        v-for="(option, index) in articleOptions"
+                        :key="option.key"
+                        @click="handleLink(index)"
+                        class="articles-status"
+                        :class="{ bold: checked === index }"
+                    >
+                        {{ option.name }}
+                    </el-link>
+                </template>
+                <template #body>
+                    <div class="articles-content">
+                        <keep-alive>
+                            <component :is="currentContent[linkIndex]"></component>
+                        </keep-alive>
+                    </div>
+                </template>
+            </kx-card>
+        </div>
+    </div>
+</template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { KxCard, PageTitle } from '@/base-ui/index'
+import {
+    AllArticles,
+    DraftArticles,
+    RecycleArticles,
+    SecretArticles,
+    PublicArticles,
+} from './page-content/index'
+import { reactive, ref } from 'vue'
 
-<style lang="less" scoped></style>
+const currentContent = [AllArticles, DraftArticles, RecycleArticles, SecretArticles, PublicArticles]
+const linkIndex = ref(0)
+const checked = ref(0)
+const articleOptions = [
+    {
+        name: '全部',
+        key: AllArticles,
+    },
+    {
+        name: '公开',
+        key: PublicArticles,
+    },
+    {
+        name: '私密',
+        key: SecretArticles,
+    },
+    {
+        name: '草稿箱',
+        key: DraftArticles,
+    },
+    {
+        name: '回收站',
+        key: RecycleArticles,
+    },
+]
+
+const handleLink = (index: number) => {
+    linkIndex.value = index
+    checked.value = index
+}
+</script>
+
+<style lang="less" scoped>
+.articles-status {
+    margin-right: 20px;
+    margin-bottom: -20px;
+}
+.bold {
+    font-weight: bold;
+}
+</style>

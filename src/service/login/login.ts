@@ -7,6 +7,7 @@ import qs from 'qs'
 enum LoginAPI {
     AccountLogin = '/login',
     MenuList = 'admin/menus',
+    Fresh = '/report',
 }
 
 export function accountLoginRequest(loginData: ILoginData) {
@@ -19,5 +20,10 @@ export function accountLoginRequest(loginData: ILoginData) {
 export function menuListRequest() {
     return kxRequest.get<ICommonState<IMenuState>>({
         url: LoginAPI.MenuList,
+    })
+}
+export function browserFresh() {
+    return kxRequest.post<ICommonState<any>>({
+        url: LoginAPI.Fresh,
     })
 }

@@ -2,7 +2,7 @@ import { Module } from 'vuex'
 import { ILoginState, IMenuState, IUserData } from '@/store/login/types'
 import { ICommonState, IRootState } from '@/store/types'
 import { ILoginData } from '@/views/login/types'
-import { accountLoginRequest, menuListRequest } from '@/service/login/login'
+import { accountLoginRequest, browserFresh, menuListRequest } from '@/service/login/login'
 import { useSessionCache } from '@/utils/use-storage'
 import router from '@/router'
 import { mapMenusToRoutes } from '@/utils/use-menus'
@@ -113,17 +113,21 @@ export const loginModule: Module<ILoginState, IRootState> = {
             }
         },
 
-        getLocalCache() {
+        async getLocalCache({ commit, rootState }) {
             if (useSessionCache.getCache('userData')) {
                 const userData: IUserData = useSessionCache.getCache('userData')
                 const menuListData: IMenuState = userData.userMenuList
                 const routes = mapMenusToRoutes(menuListData)
                 routes.forEach((route) => {
-                    // console.log(route)
                     router.addRoute('main', route)
                 })
-
-                // console.log(router.getRoutes())
+                const data = await browserFresh()
+                if (data && data.code !== 20000) {
+                    await router.push('/login')
+                }
+                commit('noAsyncModule/changeMenuStatus', document.documentElement.clientWidth, {
+                    root: true,
+                })
             }
         },
     },

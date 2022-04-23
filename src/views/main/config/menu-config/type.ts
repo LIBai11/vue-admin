@@ -7,4 +7,5 @@ export interface IMenuConfig {
     collapsedIconSize?: number
     showTrigger?: boolean
     bordered?: boolean
+    routeKeysMap?: any
 }

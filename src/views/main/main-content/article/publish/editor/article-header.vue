@@ -1,6 +1,6 @@
 <template>
     <div class="publish-header">
-        <div class="title">发布文章</div>
+        <page-title title="发布文章"></page-title>
         <el-row class="head">
             <el-col :lg="18" :sm="18" :md="24" :xs="24" :xl="18">
                 <div>
@@ -203,11 +203,12 @@
 <script setup lang="ts">
 import { defineProps, reactive, ref } from 'vue'
 import { ElMessage, ElNotification, FormInstance, FormRules } from 'element-plus'
-import { UploadImg } from './index'
 import { useStore } from '@/store'
 import useState from '@/utils/useState'
+import { PageTitle } from '@/base-ui/index'
+import { UploadImg } from './index'
 import { CategoryButton, TagButton } from './publish-form/index'
-import { IArticleForm } from '@/views/main/main-content/article/publish/editor/publish-form/types'
+import { IArticleForm } from './publish-form/types'
 import { ICategoryState, ITagState } from '@/store/publish/search/types'
 import { issueArticle } from '@/service/publish'
 
@@ -244,7 +245,7 @@ const typeSelections = [
     },
 ]
 //文章标题
-const header = ref<string>('test')
+const header = ref<string>('')
 
 //是否置顶
 const isTop = ref(false)

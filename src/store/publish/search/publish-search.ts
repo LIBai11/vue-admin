@@ -50,7 +50,7 @@ export const publishSearchModule: Module<IPubState, IRootState> = {
             } else {
                 ElNotification({
                     title: 'Error',
-                    message: '分类信息获取失败!请检查网络或重试',
+                    message: '标签信息获取失败!请检查网络或重试',
                     type: 'error',
                 })
             }
