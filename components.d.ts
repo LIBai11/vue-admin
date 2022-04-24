@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ArticlesSearch: typeof import('./src/components/articles-search/articles-search.vue')['default']
     BarEchart: typeof import('./src/components/page-echarts/bar-echart.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']

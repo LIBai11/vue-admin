@@ -63,6 +63,7 @@
                                 v-model="articleTitle"
                                 placeholder="请输入文章名"
                                 style="width: 200px"
+                                @input="handleChangeArticleTitle"
                             ></el-input>
                         </el-form-item>
                     </el-col>
@@ -82,28 +83,33 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, defineProps, onMounted, ref } from 'vue'
 import { useStore } from '@/store'
 import { Delete, Search } from '@element-plus/icons-vue'
-import { ICategoryState, ITagState } from '@/store/publish/search/types'
+import { ICategoryState, ITagState } from '@/store/article/publish/search/types'
 
 const store = useStore()
+const props = defineProps<{
+    status?: number | undefined
+    isDelete?: number | undefined
+}>()
+//获取分类和标签
 store.dispatch('publishSearchModule/getPublishSearch')
 
 //标签列表
-const tagId = ref(0)
+const tagId = ref()
 const tagsList = computed<ITagState[]>(() => {
     return store.state.publishSearchModule.tags
 })
 
 //分类列表
-const categoryId = ref(0)
+const categoryId = ref()
 const categoryList = computed<ICategoryState[]>(() => {
     return store.state.publishSearchModule.categories
 })
 
 //文章标题
-const articleTitle = ref(0)
+const articleTitle = ref()
 
 //文章类型列表
 const typeId = ref()
@@ -121,24 +127,42 @@ const typeOptions = [
         key: 3,
     },
 ]
-
+const asyncQueryArticle = () => {
+    store.dispatch('searchArticlesModule/queryArticles', {
+        tagId: tagId.value,
+        categoryId: categoryId.value,
+        typeId: typeId.value,
+        articleTitle: articleTitle.value,
+        status: props.status,
+        isDelete: props.isDelete,
+    })
+}
+onMounted(() => {
+    articleTitle.value = store.getters['noAsyncModule/getArticleTitle']
+    categoryId.value = store.getters['noAsyncModule/getCategoryId']
+    tagId.value = store.getters['noAsyncModule/getTagId']
+    typeId.value = store.getters['noAsyncModule/getTypeId']
+    asyncQueryArticle()
+})
 //选择文章类型触发
-const handleChangeType = (val: string) => {
-    console.log('typeId:', typeId.value)
-    console.log('categoryId:', categoryId.value)
-    console.log('tagId:', tagId.value)
+const handleChangeType = (typeId: string) => {
+    store.commit('noAsyncModule/changeTypeId', typeId)
+    asyncQueryArticle()
 }
 //选择文章分类触发
-const handleChangeCategory = (val: string) => {
-    console.log('typeId:', typeId.value)
-    console.log('categoryId:', categoryId.value)
-    console.log('tagId:', tagId.value)
+const handleChangeCategory = (categoryId: string) => {
+    store.commit('noAsyncModule/changeCategoryId', categoryId)
+    asyncQueryArticle()
 }
 //选择文章标签触发
-const handleChangeTag = (val: string) => {
-    console.log('typeId:', typeId.value)
-    console.log('categoryId:', categoryId.value)
-    console.log('tagId:', tagId.value)
+const handleChangeTag = (tagId: string) => {
+    store.commit('noAsyncModule/changeTagId', tagId)
+    asyncQueryArticle()
+}
+
+//文章标题输入框中内容发生改变时
+const handleChangeArticleTitle = (title: string) => {
+    store.commit('noAsyncModule/changeArticleTitle', title)
 }
 </script>
 

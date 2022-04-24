@@ -46,7 +46,7 @@
 import { defineProps, ref, defineEmits } from 'vue'
 import { Duplicate } from '@vicons/ionicons5'
 import CategoryForm from './category-form.vue'
-import { ICategoryState } from '@/store/publish/search/types'
+import { ICategoryState } from '@/store/article/publish/search/types'
 
 //接收父组件的数据
 const props = defineProps<{

@@ -1,6 +1,6 @@
 import kxRequest from '@/service'
 import { ICommonState, IRootState } from '@/store/types'
-import { ITagState } from '@/store/publish/search/types'
+import { ITagState } from '@/store/article/publish/search/types'
 
 enum TagsAPI {
     search = 'admin/tags/search',

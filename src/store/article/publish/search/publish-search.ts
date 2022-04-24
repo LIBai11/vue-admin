@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { IRootState } from '@/store/types'
-import { ICategoryState, IPubState, ITagState } from '@/store/publish/search/types'
-import { getCategories, getTags } from '@/service/publish'
+import { ICategoryState, IPubState, ITagState } from '@/store/article/publish/search/types'
+import { getCategories, getTags } from '@/service/article'
 import { ElNotification } from 'element-plus'
 
 export const publishSearchModule: Module<IPubState, IRootState> = {

@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, watchEffect } from 'vue'
-import { ICategoryState } from '@/store/publish/search/types'
+import { ICategoryState } from '@/store/article/publish/search/types'
 import { ElTable } from 'element-plus'
 import { searchCategories } from '@/service/category'
 import { ElNotification } from 'element-plus'

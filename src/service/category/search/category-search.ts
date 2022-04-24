@@ -1,6 +1,6 @@
 import kxRequest from '@/service'
 import { ICommonState } from '@/store/types'
-import { ICategoryState } from '@/store/publish/search/types'
+import { ICategoryState } from '@/store/article/publish/search/types'
 
 enum CategoriesAPI {
     search = 'admin/categories/search',

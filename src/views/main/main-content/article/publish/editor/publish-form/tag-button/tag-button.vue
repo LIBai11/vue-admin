@@ -58,7 +58,7 @@
 import TagForm from './tag-form.vue'
 import { Pricetags, AddCircle } from '@vicons/ionicons5'
 import { defineEmits, defineProps, ref } from 'vue'
-import { ITagState } from '@/store/publish/search/types'
+import { ITagState } from '@/store/article/publish/search/types'
 
 //接收父组件的数据
 const props = defineProps<{

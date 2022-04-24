@@ -18,7 +18,7 @@
                 <template #body>
                     <div class="articles-content">
                         <keep-alive>
-                            <component :is="currentContent[linkIndex]"></component>
+                            <component :is="currentContent[linkIndex]" />
                         </keep-alive>
                     </div>
                 </template>
@@ -36,9 +36,9 @@ import {
     SecretArticles,
     PublicArticles,
 } from './page-content/index'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
-const currentContent = [AllArticles, DraftArticles, RecycleArticles, SecretArticles, PublicArticles]
+const currentContent = [AllArticles, PublicArticles, SecretArticles, DraftArticles, RecycleArticles]
 const linkIndex = ref(0)
 const checked = ref(0)
 const articleOptions = [

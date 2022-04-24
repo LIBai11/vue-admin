@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { defineEmits, defineProps, ref } from 'vue'
 import { ElTable } from 'element-plus'
-import { ITagState } from '@/store/publish/search/types'
+import { ITagState } from '@/store/article/publish/search/types'
 import { searchTags } from '@/service/tags'
 import { ElNotification } from 'element-plus'
 

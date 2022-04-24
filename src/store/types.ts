@@ -1,5 +1,5 @@
 import { ILoginState, IMenuState } from '@/store/login/types'
-import { ICategoryState, ITagState } from '@/store/publish/search/types'
+import { ICategoryState, ITagState } from '@/store/article/publish/search/types'
 
 export type T = ILoginState | IMenuState | ICategoryState | ITagState | any
 
