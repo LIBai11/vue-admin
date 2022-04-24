@@ -79,10 +79,9 @@ onBeforeRouteUpdate((to: any) => {
     activeKey.value = currentKey
     menuInstRef.value?.showOption(currentKey)
 })
-let windowHeight = store.state.noAsyncModule.menuStatus
+let windowHeight = window.innerWidth
 
-console.log('window', windowHeight)
-collapsed.value = windowHeight.value <= 730
+collapsed.value = windowHeight <= 730
 windowHeight = 0
 onMounted(() => {
     updateSelectManu()

@@ -113,7 +113,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
             }
         },
 
-        async getLocalCache({ commit, rootState }) {
+        async getLocalCache() {
             if (useSessionCache.getCache('userData')) {
                 const userData: IUserData = useSessionCache.getCache('userData')
                 const menuListData: IMenuState = userData.userMenuList
@@ -125,9 +125,6 @@ export const loginModule: Module<ILoginState, IRootState> = {
                 if (data && data.code !== 20000) {
                     await router.push('/login')
                 }
-                commit('noAsyncModule/changeMenuStatus', document.documentElement.clientWidth, {
-                    root: true,
-                })
             }
         },
     },
