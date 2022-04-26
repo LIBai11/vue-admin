@@ -87,8 +87,8 @@ watch(
         superBreadData.value = pathMapToMenu(userMenuList, `/${superCurrentUrl.value}`)
         //console.log(superBreadData.value)
         const newTab = ref({
-            name: breadData.value.name,
-            path: breadData.value.path,
+            name: breadData.value?.name,
+            path: breadData.value?.path,
         })
 
         //添加tab导航

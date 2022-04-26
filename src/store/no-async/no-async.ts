@@ -1,5 +1,6 @@
 import { IRootState } from '@/store/types'
 import { Module } from 'vuex'
+import { number } from 'echarts'
 
 export const noAsyncModule: Module<any, IRootState> = {
     namespaced: true,
@@ -12,6 +13,7 @@ export const noAsyncModule: Module<any, IRootState> = {
             articleTitle: null,
             status: null,
             isDelete: null,
+            deleteIdArr: [],
         }
     },
     mutations: {
@@ -35,6 +37,9 @@ export const noAsyncModule: Module<any, IRootState> = {
         },
         changeIsDeleteTitle(state, isDelete: number) {
             state.isDelete = isDelete
+        },
+        changeDeleteIdArr(state, deleteIdArr: any[]) {
+            state.deleteIdArr = deleteIdArr
         },
     },
     getters: {

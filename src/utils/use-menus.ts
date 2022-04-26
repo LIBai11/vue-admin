@@ -81,7 +81,7 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
         allRoutes.push(route.default)
     })
     allRoutes.forEach((item, index) => {
-        allRoutes[index].path = item.path.split('/main/main-content')[1]
+        allRoutes[index].path = item.path?.split('/main/main-content')[1]
     })
 
     //2.根据菜单获取需要添加的routes

@@ -3,7 +3,7 @@
         <div class="articles-search">
             <kx-card>
                 <template #header>
-                    <page-title title="发布文章"></page-title>
+                    <page-title title="文章列表"></page-title>
                     <el-link
                         target="_blank"
                         v-for="(option, index) in articleOptions"
@@ -17,9 +17,7 @@
                 </template>
                 <template #body>
                     <div class="articles-content">
-                        <keep-alive>
-                            <component :is="currentContent[linkIndex]" />
-                        </keep-alive>
+                        <component :is="currentContent[linkIndex]" />
                     </div>
                 </template>
             </kx-card>

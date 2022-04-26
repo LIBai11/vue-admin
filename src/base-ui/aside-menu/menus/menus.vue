@@ -98,17 +98,15 @@ onMounted(() => {
 .menus {
     float: right;
 }
-</style>
-<style>
-.el-icon {
+:deep(.el-icon) {
     margin-left: 15px;
 }
-
-.n-layout-toggle-button {
+:deep(.n-layout-toggle-button) {
     margin-right: 5px !important;
 }
 
-.n-menu-item-content-header {
+:deep(.n-menu-item-content-header) {
     margin-left: 15px;
 }
 </style>
+<style></style>

@@ -13,14 +13,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, watch, watchEffect } from 'vue'
+import { ref, defineEmits, watch, watchEffect, computed } from 'vue'
+import { useStore } from '@/store'
 import MdEditor from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
 
+const store = useStore()
 const emits = defineEmits(['handleTextContent'])
 
 //主体内容
-const textContent = ref('')
+const textContent = computed(() => store.state.editArticleModule.articleContent)
 
 //自定义md编辑器工具栏(不展示)
 //是否启用prettier

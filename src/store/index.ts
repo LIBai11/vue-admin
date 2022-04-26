@@ -6,7 +6,8 @@ import { homeModule } from '@/store/main/home/home'
 import { userModule } from '@/store/main/user/user'
 import { publishSearchModule } from '@/store/article/publish/search/publish-search'
 import { noAsyncModule } from '@/store/no-async/no-async'
-import { searchArticlesModule } from '@/store/article/articles/search/search-articles'
+import { searchArticlesModule } from '@/store/article/articles/search/articles-search'
+import { editArticleModule } from '@/store/article/articles/edit/edit-article'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -17,6 +18,7 @@ export const store = createStore<IRootState>({
         publishSearchModule,
         noAsyncModule,
         searchArticlesModule,
+        editArticleModule,
     },
 })
 

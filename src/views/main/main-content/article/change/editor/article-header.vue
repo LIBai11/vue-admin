@@ -149,7 +149,6 @@
                     <el-form-item label="文章类型">
                         <el-select
                             v-model="typeValue"
-                            model-value="原创"
                             @change="typeChange"
                             placeholder="请选择文章类型"
                             clearable
@@ -234,7 +233,16 @@ const isIssueDialog = ref<boolean>(false)
 const isDraftDialog = ref<boolean>(false)
 
 //文章类型
-const typeValue = ref<string>('')
+const defaultType = store.state.editArticleModule.type
+const typeValue = ref('')
+if (defaultType === 2) {
+    typeValue.value = '转载'
+} else if (defaultType === 1) {
+    typeValue.value = '原创'
+} else {
+    typeValue.value = '翻译'
+}
+
 const typeSelections = [
     {
         type: '1',
@@ -250,29 +258,29 @@ const typeSelections = [
     },
 ]
 //文章标题
-const header = ref<string>('')
+const header = ref<string>(store.state.editArticleModule.articleTitle)
 
 //是否置顶
-const isTop = ref(false)
+const isTop = ref(store.state.editArticleModule.isTop === 1)
 //文章发布形式的中文(展示)
-const articleStatusLabel = ref('公开')
+const articleStatusLabel = ref(store.state.editArticleModule.status === 1 ? '公开' : '私密')
 //文章发布形式:1公开,2隐藏,3草稿
-const articleStatus = ref(1)
+const articleStatus = ref(store.state.editArticleModule.status)
 
 //定义一个响应式对象来储存文章类型改变后的type:1原创,2转载,3草稿
 const hasTypeSelection = ref<number>(1)
 //存放表单数据
 const articleForm = reactive<IArticleForm>({
-    id: null,
-    articleTitle: header.value,
-    articleContent: '',
-    articleCover: '',
-    categoryName: '',
-    tagNameList: [],
-    originalUrl: '',
-    isTop: 0,
-    type: 1,
-    status: 1,
+    id: store.state.editArticleModule.id,
+    articleCover: store.state.editArticleModule.articleCover,
+    articleTitle: store.state.editArticleModule.articleTitle,
+    articleContent: store.state.editArticleModule.articleContent,
+    categoryName: store.state.editArticleModule.categoryName,
+    tagNameList: store.state.editArticleModule.tagNameList,
+    type: store.state.editArticleModule.type,
+    originalUrl: store.state.editArticleModule.originalUrl,
+    isTop: store.state.editArticleModule.isTop,
+    status: store.state.editArticleModule.status,
 })
 //表单校验规则
 const articleFormRules = reactive<FormRules>({
@@ -326,7 +334,7 @@ const getTagsData = (tagsData: ITagState[]) => {
 }
 //图片上传组件传来的数据
 const getImgUrl = (imgUrl: string) => {
-    articleForm.articleCover = imgUrl
+    articleForm.articleCover = imgUrl || store.state.editArticleModule.articleCover
 }
 //发布文章按钮事件
 const pubArticleClick = (): void => {

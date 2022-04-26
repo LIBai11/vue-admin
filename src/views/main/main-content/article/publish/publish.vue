@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { KxCard } from '@/base-ui/index'
-import { config } from './kx-card-config/kx-card-config'
+import { config } from './kx-card-config/config'
 import { ArticleHeader, ContentEdit } from './editor/index'
 
 const textContent = ref<string>('')
