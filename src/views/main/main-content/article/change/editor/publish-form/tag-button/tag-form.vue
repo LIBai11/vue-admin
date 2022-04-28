@@ -89,7 +89,6 @@ async function queryTagsAsync(keywords: any) {
         queryResult.value = res.data
     } else {
         ElNotification({
-            title: 'Error',
             message: '标签信息获取失败!请检查网络或重试',
             type: 'error',
         })

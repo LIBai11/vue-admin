@@ -8,6 +8,8 @@ import { publishSearchModule } from '@/store/article/publish/search/publish-sear
 import { noAsyncModule } from '@/store/no-async/no-async'
 import { searchArticlesModule } from '@/store/article/articles/search/articles-search'
 import { editArticleModule } from '@/store/article/articles/edit/edit-article'
+import { articleCategoriesModule } from '@/store/article/articles/categories/article-categories'
+import { articleTagsModule } from '@/store/article/articles/tags/article-tags'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -19,6 +21,8 @@ export const store = createStore<IRootState>({
         noAsyncModule,
         searchArticlesModule,
         editArticleModule,
+        articleCategoriesModule,
+        articleTagsModule,
     },
 })
 

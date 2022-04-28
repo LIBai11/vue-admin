@@ -1,6 +1,13 @@
 <template>
     <div class="articles-content">
-        <el-table :data="articleList" border stripe fit @selection-change="handleSelectColumn">
+        <el-table
+            :data="articleList"
+            border
+            stripe
+            fit
+            @selection-change="handleSelectColumn"
+            @select-all="handleSelectColumn"
+        >
             <el-table-column type="selection" width="50" align="center"></el-table-column>
             <el-table-column prop="articleCover" label="文章封面" align="center" width="220">
                 <template #default="scope">
@@ -75,7 +82,8 @@
                 </template>
             </el-table-column>
             <el-table-column label="操作" align="center">
-                <template #default="scope">
+                <!--非删除界面-->
+                <template #default="scope" v-if="!props.destroyBtn">
                     <el-popconfirm
                         confirm-button-text="确认"
                         cancel-button-text="取消"
@@ -101,7 +109,41 @@
                         :icon="Edit"
                         round
                         @click="handleEditArticle(scope.row.id)"
-                    ></el-button>
+                    />
+                </template>
+                <!--删除界面-->
+                <template #default="scope" v-else>
+                    <el-popconfirm
+                        confirm-button-text="确认"
+                        cancel-button-text="取消"
+                        :icon="InfoFilled"
+                        icon-color="red"
+                        title="确认永久删除这篇文章吗?这将不可恢复!"
+                        @confirm="handleDestroyBtn(scope.row.id)"
+                    >
+                        <template #reference>
+                            <el-button
+                                class="delete-btn"
+                                type="danger"
+                                size="small"
+                                :icon="Delete"
+                                round
+                            />
+                        </template>
+                    </el-popconfirm>
+                    <!--编辑按钮-->
+                    <el-popconfirm
+                        confirm-button-text="确认"
+                        cancel-button-text="取消"
+                        :icon="InfoFilled"
+                        icon-color="red"
+                        title="确认恢复这篇文章吗?"
+                        @confirm="handleRecoverBtn(scope.row.id)"
+                    >
+                        <template #reference>
+                            <el-button type="success" size="small" :icon="Select" round />
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
         </el-table>
@@ -110,12 +152,18 @@
 
 <script setup lang="ts">
 import { useStore } from 'vuex'
-import { computed, defineEmits, watchEffect } from 'vue'
+import { computed, defineEmits, defineProps, withDefaults } from 'vue'
 import { IRecordList } from '@/store/article/articles/search/types'
-import { Delete, Edit, InfoFilled } from '@element-plus/icons-vue'
+import { Delete, Edit, InfoFilled, Select } from '@element-plus/icons-vue'
 import router from '@/router'
 
 const emits = defineEmits(['handleDelete'])
+interface IDestroyBtn {
+    destroyBtn?: boolean
+}
+const props = withDefaults(defineProps<IDestroyBtn>(), {
+    destroyBtn: false,
+})
 
 const store = useStore()
 const articleList = computed<IRecordList>(() => store.state.searchArticlesModule.recordList)
@@ -137,19 +185,15 @@ const handleSelectColumn = (row: any) => {
     })
     store.commit('noAsyncModule/changeDeleteIdArr', selectArr)
 }
-watchEffect(() => {
-    // console.log(articleList.value)
-})
 
 //置顶状态改变
 const handleChangeTop = (articleData: any) => {
-    let newTop = null
+    let newTop = 1
     if (articleData.isTop === 1) {
-        newTop = 0
-    } else {
         newTop = 1
+    } else {
+        newTop = 0
     }
-    // console.log({ id: articleData.id, isTop: newTop })
     store.dispatch('searchArticlesModule/changeArticleTop', {
         id: articleData.id,
         isTop: newTop,
@@ -161,6 +205,20 @@ const handleConfirmDeleteBtn = (articleId: number) => {
         emits('handleDelete')
     })
 }
+//销毁文章
+const handleDestroyBtn = (articleId: number) => {
+    store.dispatch('searchArticlesModule/destroyArticleById', articleId).then(() => {
+        emits('handleDelete')
+    })
+}
+
+//恢复文章
+const handleRecoverBtn = (articleId: number) => {
+    store.dispatch('searchArticlesModule/recoverArticleById', articleId).then(() => {
+        emits('handleDelete')
+    })
+}
+
 //编辑文章
 const handleEditArticle = (articleId: number) => {
     store.dispatch('editArticleModule/getArticleDetails', articleId).then(() => {

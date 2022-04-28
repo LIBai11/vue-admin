@@ -46,7 +46,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
 import { pathMapToMenu } from '@/utils/use-menus'
 import { ITab } from '@/views/main/header/types'
+import { useStore } from '@/store'
 
+const store = useStore()
 const route = useRoute()
 const router = useRouter()
 const userData: IUserData = useSessionCache.getCache('userData')
@@ -62,12 +64,14 @@ const breadData = ref<any>('')
 //一级菜单
 const superBreadData = ref<any>('')
 
-const currentTabs = ref<ITab[]>([
-    {
-        name: '首页',
-        path: '/home',
-    },
-])
+const currentTabs = ref<ITab[]>(
+    useSessionCache.getCache('tabs') || [
+        {
+            name: '首页',
+            path: '/home',
+        },
+    ]
+)
 //新添加的标签
 const handleTab = ref<ITab>({
     name: '首页',
@@ -94,6 +98,9 @@ watch(
         //添加tab导航
         if (JSON.stringify(currentTabs.value).indexOf(JSON.stringify(newTab.value)) == -1) {
             currentTabs.value.push(newTab.value) // 进行动态的操作
+            if (newTab.value.name !== null) {
+                store.dispatch('noAsyncModule/setSessionTabs', currentTabs.value)
+            }
         }
 
         handleTab.value.path = newTab.value.path
@@ -107,11 +114,12 @@ const removeTab = (handle: string) => {
         if (currentTabs.value[i].path === handle) {
             if (handle !== '/home') {
                 currentTabs.value.splice(i, 1)
+                useSessionCache.setCache('tabs', currentTabs.value)
                 if (i - 1 !== currentTabs.value.length - 1) {
-                    console.log('if')
+                    // console.log('if')
                     handleTab.value.path = currentTabs.value[i].path
                 } else {
-                    console.log('else')
+                    // console.log('else')
                     handleTab.value.path = currentTabs.value[i - 1].path
                 }
             }

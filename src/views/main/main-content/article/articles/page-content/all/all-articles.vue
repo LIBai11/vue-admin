@@ -11,7 +11,8 @@
             <articles-content @handleDelete="handleDelete" />
         </div>
         <div class="content-pagination">
-            <articles-pagination
+            <kx-pagination
+                :counts="articleCounts"
                 @handleWatchCurrent="handleWatchCurrent"
                 @handleWatchSize="handleWatchSize"
             />
@@ -20,9 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { ArticlesSearch, ArticlesContent, ArticlesPagination } from '@/components'
+import { computed, ref } from 'vue'
+import { ArticlesSearch, ArticlesContent, KxPagination } from '@/components'
+import { useStore } from '@/store'
 
+const store = useStore()
+//获取文章数量
+const articleCounts = computed<number>(() => store.state.searchArticlesModule.count)
 //拿到头部组件的实例
 const articlesSearchRef = ref<InstanceType<typeof ArticlesSearch>>(null)
 //当前页码

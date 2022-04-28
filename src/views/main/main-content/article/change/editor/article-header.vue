@@ -1,6 +1,6 @@
 <template>
     <div class="publish-header">
-        <page-title title="发布文章"></page-title>
+        <page-title title="发布文章" />
         <el-row class="head">
             <el-col :lg="18" :sm="18" :md="24" :xs="24" :xl="18">
                 <div>
@@ -62,8 +62,7 @@
                 <el-col :span="24">
                     <el-form-item label="文章类型" prop="type">
                         <el-select
-                            v-model="typeValue"
-                            model-value="原创"
+                            v-model="modelSelect"
                             @change="typeChange"
                             placeholder="请选择文章类型"
                             clearable
@@ -73,17 +72,33 @@
                                 v-for="selection in typeSelections"
                                 :key="selection.type"
                                 :label="selection.label"
-                                :value="selection.type"
+                                :value="selection.label"
                             />
                         </el-select>
                     </el-form-item>
                 </el-col>
-
-                <el-col :span="24" v-if="hasTypeSelection == 2 || hasTypeSelection == 3">
-                    <el-form-item label="原文链接" prop="originalUrl">
-                        <el-input v-model="articleForm.originalUrl" />
-                    </el-form-item>
-                </el-col>
+                <template v-if="modelSelect === '转载'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="defaultOriginalUrl"
+                                key="reprint"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
+                <template v-if="modelSelect === '翻译'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="translate"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
 
                 <el-col :span="24">
                     <el-form-item label="上传文章封面" prop="articleCover">
@@ -129,7 +144,7 @@
         draggable
         title="保存草稿"
     >
-        <el-form label-width="120px" class="form">
+        <el-form label-width="120px" class="form" :rules="articleFormRules">
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="文章分类">
@@ -145,10 +160,11 @@
                         <tag-button :tagData="tags" @pushTagsData="getTagsData" />
                     </el-form-item>
                 </el-col>
+
                 <el-col :span="24">
-                    <el-form-item label="文章类型">
+                    <el-form-item label="文章类型" prop="type">
                         <el-select
-                            v-model="typeValue"
+                            v-model="modelSelect"
                             @change="typeChange"
                             placeholder="请选择文章类型"
                             clearable
@@ -158,17 +174,33 @@
                                 v-for="selection in typeSelections"
                                 :key="selection.type"
                                 :label="selection.label"
-                                :value="selection.type"
+                                :value="selection.label"
                             />
                         </el-select>
                     </el-form-item>
                 </el-col>
-
-                <el-col :span="24" v-if="hasTypeSelection == 2 || hasTypeSelection == 3">
-                    <el-form-item label="原文链接">
-                        <el-input v-model="articleForm.originalUrl" />
-                    </el-form-item>
-                </el-col>
+                <template v-if="modelSelect === '转载'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="reprint"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
+                <template v-if="modelSelect === '翻译'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="translate"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
 
                 <el-col :span="24">
                     <el-form-item label="上传文章封面" prop="articleCover">
@@ -205,7 +237,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, ref } from 'vue'
+import { defineProps, reactive, ref, watch } from 'vue'
 import { ElMessage, ElNotification, FormInstance, FormRules } from 'element-plus'
 import { useStore } from '@/store'
 import useState from '@/utils/useState'
@@ -232,16 +264,41 @@ const isIssueDialog = ref<boolean>(false)
 //保存草稿的对话框判断
 const isDraftDialog = ref<boolean>(false)
 
+//存放原文链接
+const defaultOriginalUrl = ref(store.state.editArticleModule.originalUrl)
+//存放表单数据
+const articleForm = reactive({
+    id: store.state.editArticleModule.id,
+    articleCover: store.state.editArticleModule.articleCover,
+    articleTitle: store.state.editArticleModule.articleTitle,
+    articleContent: store.state.editArticleModule.articleContent,
+    categoryName: store.state.editArticleModule.categoryName,
+    tagNameList: store.state.editArticleModule.tagNameList,
+    type: store.state.editArticleModule.type,
+    originalUrl: defaultOriginalUrl.value,
+    isTop: store.state.editArticleModule.isTop,
+    status: store.state.editArticleModule.status,
+})
+
 //文章类型
 const defaultType = store.state.editArticleModule.type
-const typeValue = ref('')
-if (defaultType === 2) {
-    typeValue.value = '转载'
-} else if (defaultType === 1) {
-    typeValue.value = '原创'
-} else {
-    typeValue.value = '翻译'
-}
+const modelSelect = ref()
+
+watch(
+    () => defaultType,
+    () => {
+        if (defaultType === 1) {
+            console.log(defaultType)
+            modelSelect.value = '原创'
+        } else if (defaultType === 2) {
+            modelSelect.value = '转载'
+        } else if (defaultType === 3) {
+            modelSelect.value = '翻译'
+        }
+        // console.log(articleForm.originalUrl)
+    },
+    { immediate: true }
+)
 
 const typeSelections = [
     {
@@ -257,6 +314,7 @@ const typeSelections = [
         label: '翻译',
     },
 ]
+
 //文章标题
 const header = ref<string>(store.state.editArticleModule.articleTitle)
 
@@ -268,20 +326,8 @@ const articleStatusLabel = ref(store.state.editArticleModule.status === 1 ? '公
 const articleStatus = ref(store.state.editArticleModule.status)
 
 //定义一个响应式对象来储存文章类型改变后的type:1原创,2转载,3草稿
-const hasTypeSelection = ref<number>(1)
-//存放表单数据
-const articleForm = reactive<IArticleForm>({
-    id: store.state.editArticleModule.id,
-    articleCover: store.state.editArticleModule.articleCover,
-    articleTitle: store.state.editArticleModule.articleTitle,
-    articleContent: store.state.editArticleModule.articleContent,
-    categoryName: store.state.editArticleModule.categoryName,
-    tagNameList: store.state.editArticleModule.tagNameList,
-    type: store.state.editArticleModule.type,
-    originalUrl: store.state.editArticleModule.originalUrl,
-    isTop: store.state.editArticleModule.isTop,
-    status: store.state.editArticleModule.status,
-})
+// const hasTypeSelection = ref<number>(1)
+
 //表单校验规则
 const articleFormRules = reactive<FormRules>({
     articleCover: [
@@ -356,6 +402,7 @@ const pubArticleClick = (): void => {
 //发布文章dialog关闭事件
 const handleDialogClose = () => {
     articleForm.type = 1
+    modelSelect.value = '原创'
     articleForm.originalUrl = ''
 }
 //保存到草稿箱按钮触发事件
@@ -392,8 +439,16 @@ const topChange = (topVal: boolean) => {
     }
 }
 //选择文章类型触发事件
-const typeChange = (type: number) => {
-    articleForm.type = hasTypeSelection.value = type
+const typeChange = (type: any) => {
+    // console.log(modelSelect.value)
+    if (type === '原创') {
+        articleForm.type = 1
+    } else if (type === '转载') {
+        articleForm.type = 2
+    }
+    if (type === '翻译') {
+        articleForm.type = 3
+    }
 }
 const { tags, categories } = useState({
     tags: (state: any) => state.publishSearchModule.tags,

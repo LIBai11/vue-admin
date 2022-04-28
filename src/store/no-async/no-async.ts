@@ -1,6 +1,6 @@
 import { IRootState } from '@/store/types'
 import { Module } from 'vuex'
-import { number } from 'echarts'
+import { useSessionCache } from '@/utils/use-storage'
 
 export const noAsyncModule: Module<any, IRootState> = {
     namespaced: true,
@@ -14,6 +14,7 @@ export const noAsyncModule: Module<any, IRootState> = {
             status: null,
             isDelete: null,
             deleteIdArr: [],
+            tabs: [],
         }
     },
     mutations: {
@@ -41,6 +42,9 @@ export const noAsyncModule: Module<any, IRootState> = {
         changeDeleteIdArr(state, deleteIdArr: any[]) {
             state.deleteIdArr = deleteIdArr
         },
+        changeTabs(state, tabs) {
+            state.tabs = tabs
+        },
     },
     getters: {
         getMenuStatus(state) {
@@ -63,6 +67,11 @@ export const noAsyncModule: Module<any, IRootState> = {
         },
         getIsDeleteTitle(state) {
             return state.isDelete
+        },
+    },
+    actions: {
+        setSessionTabs({ commit }, tabs) {
+            useSessionCache.setCache('tabs', tabs)
         },
     },
 }

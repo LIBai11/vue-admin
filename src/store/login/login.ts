@@ -7,6 +7,7 @@ import { useSessionCache } from '@/utils/use-storage'
 import router from '@/router'
 import { mapMenusToRoutes } from '@/utils/use-menus'
 import { ElMessage } from 'element-plus'
+import { ref } from 'vue'
 
 export const loginModule: Module<ILoginState, IRootState> = {
     namespaced: true,
@@ -29,48 +30,48 @@ export const loginModule: Module<ILoginState, IRootState> = {
         }
     },
     mutations: {
-        // changeArticleLikeSet(state, articleLikeSet) {
-        //     state.articleLikeSet = articleLikeSet
-        // },
-        // changeAvatar(state, avatar) {
-        //     state.avatar = avatar
-        // },
-        // changeCommentLikeSet(state, commentLikeSet) {
-        //     state.commentLikeSet = commentLikeSet
-        // },
-        // changeEmail(state, email) {
-        //     state.email = email
-        // },
-        // changeId(state, id) {
-        //     state.id = id
-        // },
-        // changeIntro(state, intro) {
-        //     state.intro = intro
-        // },
-        // changeIpAddress(state, ipAddress) {
-        //     state.ipAddress = ipAddress
-        // },
-        // changeIpSource(state, ipSource) {
-        //     state.ipSource = ipSource
-        // },
-        // changeLastLoginTime(state, lastLoginTime) {
-        //     state.lastLoginTime = lastLoginTime
-        // },
-        // changeLoginType(state, loginType) {
-        //     state.loginType = loginType
-        // },
-        // changeNickname(state, nickName) {
-        //     state.nickname = nickName
-        // },
-        // changeTalkLikeSet(state, talkLikeSet) {
-        //     state.talkLikeSet = talkLikeSet
-        // },
-        // changeUserInfoId(state, userInfoId) {
-        //     state.userInfoId = userInfoId
-        // },
-        // changeUsername(state, username) {
-        //     state.username = username
-        // },
+        changeArticleLikeSet(state, articleLikeSet) {
+            state.articleLikeSet = articleLikeSet
+        },
+        changeAvatar(state, avatar) {
+            state.avatar = avatar
+        },
+        changeCommentLikeSet(state, commentLikeSet) {
+            state.commentLikeSet = commentLikeSet
+        },
+        changeEmail(state, email) {
+            state.email = email
+        },
+        changeId(state, id) {
+            state.id = id
+        },
+        changeIntro(state, intro) {
+            state.intro = intro
+        },
+        changeIpAddress(state, ipAddress) {
+            state.ipAddress = ipAddress
+        },
+        changeIpSource(state, ipSource) {
+            state.ipSource = ipSource
+        },
+        changeLastLoginTime(state, lastLoginTime) {
+            state.lastLoginTime = lastLoginTime
+        },
+        changeLoginType(state, loginType) {
+            state.loginType = loginType
+        },
+        changeNickname(state, nickName) {
+            state.nickname = nickName
+        },
+        changeTalkLikeSet(state, talkLikeSet) {
+            state.talkLikeSet = talkLikeSet
+        },
+        changeUserInfoId(state, userInfoId) {
+            state.userInfoId = userInfoId
+        },
+        changeUsername(state, username) {
+            state.username = username
+        },
     },
     getters: {},
     actions: {
@@ -78,8 +79,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
             /**
              * 登录请求
              * */
-            const { code, data, flag, message }: ICommonState<ILoginState> =
-                await accountLoginRequest(payload)
+            const { code, data }: ICommonState<ILoginState> = await accountLoginRequest(payload)
             // console.log('开始调用', loginResData.code)
             //将结果传给common
             // commit('commonModule/changeCode', loginResData.code, { root: true })
@@ -95,18 +95,26 @@ export const loginModule: Module<ILoginState, IRootState> = {
             if (code === 20000) {
                 ElMessage.success('登录成功!')
                 //将数据拼接起来
-                const cacheData: IUserData = Object.assign(
+                // 将数据存放在mutation中
+                commit('changeAvatar', data.avatar)
+                commit('changeUserInfoId', data.userInfoId)
+                commit('changeNickname', data.nickname)
+                commit('changeAvatar', data.avatar)
+                const cacheData = ref<IUserData>()
+
+                useSessionCache.setCache('userData', '')
+                cacheData.value = Object.assign(
                     {},
                     { collapse: false },
                     { avatar: data.avatar },
-                    { tabList: [{ name: '首页', path: '/' }] },
+                    // { tabList: rootState.noAsyncModule.tabs },
                     { userId: data.userInfoId },
                     { nickname: data.nickname },
                     { userMenuList: menuList.data }
                 )
-
+                useSessionCache.setCache('userData', cacheData.value)
                 //将数据存到localstorage中
-                useSessionCache.setCache('userData', cacheData)
+
                 dispatch('getLocalCache')
                 await router.push('/home')
                 // console.log(routes)

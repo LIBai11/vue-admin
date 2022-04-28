@@ -1,11 +1,14 @@
 import { Module } from 'vuex'
 import { IRootState } from '@/store/types'
 import { IQueryArticlesParams, IRecordList, ISearchArticlesState } from './types'
-import { asyncArticleByCondition } from '@/service/article'
 import {
+    asyncArticleByCondition,
+    asyncDestroyArticleById,
     asyncChangeArticleTopById,
     asyncDeleteArticleById,
-} from '@/service/article/articles/articles-search/articles-search'
+    asyncRecoverArticleById,
+} from '@/service/article'
+
 import { ElNotification } from 'element-plus'
 
 export const searchArticlesModule: Module<ISearchArticlesState, IRootState> = {
@@ -88,6 +91,7 @@ export const searchArticlesModule: Module<ISearchArticlesState, IRootState> = {
                 }
             }
         },
+        //修改置顶
         async changeArticleTop({ state, rootState }, isTopData: any) {
             const data = await asyncChangeArticleTopById(isTopData)
             if (data.code === 20000) {
@@ -97,10 +101,50 @@ export const searchArticlesModule: Module<ISearchArticlesState, IRootState> = {
                 })
             } else {
                 ElNotification({
-                    title: 'Error!',
                     message: data.message,
                     type: 'error',
                 })
+            }
+        },
+        // 通过id销毁文章
+        async destroyArticleById({ rootState }, articleId?: number[]) {
+            const payload: number[] = articleId ? articleId : rootState.noAsyncModule.deleteIdArr
+            if (payload) {
+                const data = await asyncDestroyArticleById(payload)
+                if (data.code === 20000) {
+                    ElNotification({
+                        message: '删除文章成功!',
+                        type: 'success',
+                    })
+                } else {
+                    ElNotification({
+                        title: 'Error!',
+                        message: data.message,
+                        type: 'error',
+                    })
+                }
+            }
+        },
+
+        //恢复文章
+        // 通过id删除文章
+        async recoverArticleById({ rootState }, articleId?: number[]) {
+            const payload: number[] = articleId ? [articleId] : rootState.noAsyncModule.deleteIdArr
+
+            if (payload) {
+                const data = await asyncRecoverArticleById(payload)
+                if (data.code === 20000) {
+                    ElNotification({
+                        message: '文章恢复成功!',
+                        type: 'success',
+                    })
+                } else {
+                    ElNotification({
+                        title: 'Error!',
+                        message: data.message,
+                        type: 'error',
+                    })
+                }
             }
         },
     },

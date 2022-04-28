@@ -45,8 +45,8 @@ class KXRequest {
                 if (this.isShowLoading) {
                     nprogress.done()
                 }
-                if (res.data.code !== 20000) {
-                    ElMessage.warning('系统错误,请稍后再试')
+                if (res.data.message === '用户未登录') {
+                    ElMessage.warning('当前会话已过期,请重新登录')
                     router.push('/login')
                     return res.data
                 } else {

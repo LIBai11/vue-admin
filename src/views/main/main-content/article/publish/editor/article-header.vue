@@ -62,8 +62,7 @@
                 <el-col :span="24">
                     <el-form-item label="文章类型" prop="type">
                         <el-select
-                            v-model="typeValue"
-                            model-value="原创"
+                            v-model="modelSelect"
                             @change="typeChange"
                             placeholder="请选择文章类型"
                             clearable
@@ -73,17 +72,34 @@
                                 v-for="selection in typeSelections"
                                 :key="selection.type"
                                 :label="selection.label"
-                                :value="selection.type"
+                                :value="selection.label"
                             />
                         </el-select>
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="24" v-if="hasTypeSelection == 2 || hasTypeSelection == 3">
-                    <el-form-item label="原文链接" prop="originalUrl">
-                        <el-input v-model="articleForm.originalUrl" />
-                    </el-form-item>
-                </el-col>
+                <template v-if="modelSelect === '转载'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="reprint"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
+                <template v-if="modelSelect === '翻译'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="translate"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
 
                 <el-col :span="24">
                     <el-form-item label="上传文章封面" prop="articleCover">
@@ -148,8 +164,7 @@
                 <el-col :span="24">
                     <el-form-item label="文章类型">
                         <el-select
-                            v-model="typeValue"
-                            model-value="原创"
+                            v-model="modelSelect"
                             @change="typeChange"
                             placeholder="请选择文章类型"
                             clearable
@@ -159,17 +174,34 @@
                                 v-for="selection in typeSelections"
                                 :key="selection.type"
                                 :label="selection.label"
-                                :value="selection.type"
+                                :value="selection.label"
                             />
                         </el-select>
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="24" v-if="hasTypeSelection == 2 || hasTypeSelection == 3">
-                    <el-form-item label="原文链接">
-                        <el-input v-model="articleForm.originalUrl" />
-                    </el-form-item>
-                </el-col>
+                <template v-if="modelSelect === '转载'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="reprint"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
+                <template v-if="modelSelect === '翻译'">
+                    <el-col :span="24">
+                        <el-form-item label="原文链接" prop="originalUrl">
+                            <el-input
+                                v-model="articleForm.originalUrl"
+                                key="translate"
+                                placeholder="请输入原文链接~"
+                            />
+                        </el-form-item>
+                    </el-col>
+                </template>
 
                 <el-col :span="24">
                     <el-form-item label="上传文章封面" prop="articleCover">
@@ -206,7 +238,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, ref } from 'vue'
+import { defineProps, reactive, ref, watch } from 'vue'
 import { ElMessage, ElNotification, FormInstance, FormRules } from 'element-plus'
 import { useStore } from '@/store'
 import useState from '@/utils/useState'
@@ -234,7 +266,8 @@ const isIssueDialog = ref<boolean>(false)
 const isDraftDialog = ref<boolean>(false)
 
 //文章类型
-const typeValue = ref<string>('')
+const modelSelect = ref('原创')
+
 const typeSelections = [
     {
         type: '1',
@@ -260,7 +293,7 @@ const articleStatusLabel = ref('公开')
 const articleStatus = ref(1)
 
 //定义一个响应式对象来储存文章类型改变后的type:1原创,2转载,3草稿
-const hasTypeSelection = ref<number>(1)
+// const hasTypeSelection = ref<number>(1)
 //存放表单数据
 const articleForm = reactive<IArticleForm>({
     id: null,
@@ -347,6 +380,7 @@ const pubArticleClick = (): void => {
 }
 //发布文章dialog关闭事件
 const handleDialogClose = () => {
+    modelSelect.value = '原创'
     articleForm.type = 1
     articleForm.originalUrl = ''
 }
@@ -384,8 +418,15 @@ const topChange = (topVal: boolean) => {
     }
 }
 //选择文章类型触发事件
-const typeChange = (type: number) => {
-    articleForm.type = hasTypeSelection.value = type
+const typeChange = (type: any) => {
+    if (type === '原创') {
+        articleForm.type = 1
+    } else if (type === '转载') {
+        articleForm.type = 2
+    }
+    if (type === '翻译') {
+        articleForm.type = 3
+    }
 }
 const { tags, categories } = useState({
     tags: (state: any) => state.publishSearchModule.tags,

@@ -25,6 +25,7 @@ export function asyncArticleByCondition(payload: IQueryArticlesParams) {
     })
 }
 
+//删除文章
 export function asyncDeleteArticleById(payload: number[]) {
     const deleteData = {
         idList: payload,
@@ -37,10 +38,32 @@ export function asyncDeleteArticleById(payload: number[]) {
     })
 }
 
+//修改置顶
 export function asyncChangeArticleTopById(isTopData: any) {
     return kxRequest.put<ICommonState<ISearchArticlesState>>({
         url: QueryArticles.ToppingArticleAPI,
         data: isTopData,
+        headers: { 'Content-Type': 'application/json' },
+    })
+}
+//销毁文章
+export function asyncDestroyArticleById(payload: number[]) {
+    return kxRequest.delete<ICommonState<ISearchArticlesState>>({
+        url: QueryArticles.QueryArticlesAPI,
+        data: payload,
+        headers: { 'Content-Type': 'application/json' },
+    })
+}
+
+//删除文章
+export function asyncRecoverArticleById(payload: number[]) {
+    const deleteData = {
+        idList: payload,
+        isDelete: 0,
+    }
+    return kxRequest.put<ICommonState<ISearchArticlesState>>({
+        url: QueryArticles.QueryArticlesAPI,
+        data: deleteData,
         headers: { 'Content-Type': 'application/json' },
     })
 }

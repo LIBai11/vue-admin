@@ -105,12 +105,26 @@
                 <span class="dialog-footer">
                     <el-button @click="handleDeleteDialog">取消</el-button>
                     <el-popconfirm
+                        v-if="!props.destroyBtn"
                         title="请再次确认是否删除文章!"
                         confirm-button-text="确认删除"
                         cancel-button-text="取消"
                         :icon="InfoFilled"
                         icon-color="red"
                         @confirm="handleDeleteTwiceConfirmBtn"
+                    >
+                        <template #reference>
+                            <el-button type="primary">确认删除</el-button>
+                        </template>
+                    </el-popconfirm>
+                    <el-popconfirm
+                        v-else
+                        title="请再次确认是否销毁文章!这将不可恢复"
+                        confirm-button-text="确认删除"
+                        cancel-button-text="取消"
+                        :icon="InfoFilled"
+                        icon-color="red"
+                        @confirm="handleDestroyTwiceConfirmBtn"
                     >
                         <template #reference>
                             <el-button type="primary">确认删除</el-button>
@@ -123,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, onMounted, ref, watch, defineExpose } from 'vue'
+import { computed, defineProps, onMounted, ref, watch, defineExpose, withDefaults } from 'vue'
 import { useStore } from '@/store'
 import { Delete, Search } from '@element-plus/icons-vue'
 import { ICategoryState, ITagState } from '@/store/article/publish/search/types'
@@ -131,12 +145,18 @@ import { InfoFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 const store = useStore()
-const props = defineProps<{
+
+interface IDestroyBtn {
     status?: number | undefined
     isDelete?: number | undefined
     currentPage?: number
     pageSize?: number
-}>()
+    destroyBtn?: boolean
+}
+const props = withDefaults(defineProps<IDestroyBtn>(), {
+    destroyBtn: false,
+})
+
 //获取分类和标签
 store.dispatch('publishSearchModule/getPublishSearch')
 
@@ -190,7 +210,7 @@ const asyncQueryArticle = (currentPage?: number, pageSize?: number) => {
 watch(
     () => props.currentPage,
     () => {
-        console.log(props.currentPage)
+        // console.log(props.currentPage)
         asyncQueryArticle(props.currentPage)
     }
 )
@@ -248,10 +268,18 @@ const handleDeleteDialog = () => {
     }
     deleteDialogVisible.value = !deleteDialogVisible.value
 }
-//再次确认是否删除模态框
+//再次确认是否删除的模态框
 const handleDeleteTwiceConfirmBtn = () => {
     handleDeleteArticles()
     deleteDialogVisible.value = !deleteDialogVisible.value
+}
+
+//再次确认是否销毁的模态框
+const handleDestroyTwiceConfirmBtn = () => {
+    store.dispatch('searchArticlesModule/destroyArticleById').then(() => {
+        asyncQueryArticle()
+        deleteDialogVisible.value = !deleteDialogVisible.value
+    })
 }
 
 defineExpose({

@@ -1,9 +1,9 @@
 <template>
-    <div class="tags">
+    <div class="categories">
         <kx-card :cardConfig="config">
             <template #header>
-                <div class="tags-header">
-                    <page-title title="标签管理" />
+                <div class="categories-header">
+                    <page-title title="分类管理" />
                     <el-row class="header-row">
                         <el-col
                             :xl="8"
@@ -14,7 +14,11 @@
                             style="margin-bottom: 15px"
                         >
                             <div>
-                                <el-button type="primary" :icon="Plus" @click="handleEditTagDialog">
+                                <el-button
+                                    type="primary"
+                                    :icon="Plus"
+                                    @click="handleEditCategoriesDialog"
+                                >
                                     新增
                                 </el-button>
                                 <el-button type="danger" :icon="Delete" @click="batchDelete">
@@ -27,7 +31,7 @@
                             <div>
                                 <el-input
                                     v-model="searchKeywords"
-                                    placeholder="请输入标签名"
+                                    placeholder="请输入分类名"
                                     style="width: 200px; margin-right: 15px"
                                 />
                                 <el-button
@@ -44,11 +48,11 @@
             </template>
 
             <template #body>
-                <div class="tags-content">
-                    <div class="tag-table">
-                        <tags-table
-                            ref="tagsTableRef"
-                            :data="tags"
+                <div class="categories-content">
+                    <div class="category-table">
+                        <categories-table
+                            ref="categoriesTableRef"
+                            :data="categories"
                             @handleSelect="handleSelect"
                             :current-page="currentPage"
                             :current-size="pageSize"
@@ -68,14 +72,14 @@
         </kx-card>
         <el-dialog
             v-model="deleteDialogVisible"
-            title="确认删除所选标签名?"
+            title="确认删除所选分类名?"
             close-on-press-escape
             width="300px"
         >
             <span class="dialog-footer">
                 <el-button @click="handleDeleteDialog">取消</el-button>
                 <el-popconfirm
-                    title="请再次确认是否删除选中的标签名!"
+                    title="请再次确认是否删除选中的分类名!"
                     confirm-button-text="确认删除"
                     cancel-button-text="取消"
                     :icon="InfoFilled"
@@ -93,17 +97,17 @@
 
 <script lang="ts" setup>
 import { KxPagination } from '@/components'
-import { TagsTable } from '@/components'
+import { CategoriesTable } from '@/components'
 import { Plus, Delete, Search, InfoFilled } from '@element-plus/icons-vue'
 import { config } from './kx-card-config/config'
 import { computed, ref, watch } from 'vue'
-import { ITagsRecordList } from '@/store/article/articles/tags/types'
+import { IRecordList } from '@/store/article/articles/categories/types'
 import { useStore } from '@/store'
 import { KxCard, PageTitle } from '@/base-ui/'
 import { ElMessage } from 'element-plus'
 
 const store = useStore()
-const tagsTableRef = ref<InstanceType<typeof TagsTable>>()
+const categoriesTableRef = ref<InstanceType<typeof CategoriesTable>>()
 
 //当前页码
 const currentPage = ref(1)
@@ -113,8 +117,8 @@ const pageSize = ref(10)
 //搜索数据
 const searchKeywords = ref('')
 //请取数据
-const getTags = () => {
-    store.dispatch('articleTagsModule/getTags', {
+const getCategories = () => {
+    store.dispatch('articleCategoriesModule/getCategories', {
         currentPage: currentPage.value,
         currentSize: pageSize.value,
         keywords: searchKeywords.value ? searchKeywords.value : undefined,
@@ -123,16 +127,15 @@ const getTags = () => {
 //批量删除对话框
 const deleteDialogVisible = ref(false)
 
-getTags()
+getCategories()
 //获取列表信息
-const count = computed(() => store.state.articleTagsModule.count)
-const tags = computed<ITagsRecordList>(() => {
-    return store.state.articleTagsModule.recordList
+const count = computed(() => store.state.articleCategoriesModule.count)
+const categories = computed<IRecordList>(() => {
+    return store.state.articleCategoriesModule.recordList
 })
 
-//新增标签
-const handleEditTagDialog = () => {
-    tagsTableRef.value.handleEditTagDialog()
+const handleEditCategoriesDialog = () => {
+    categoriesTableRef.value.handleEditCategoriesDialog()
 }
 //页数变化
 const handleWatchCurrent = (current: number) => {
@@ -146,14 +149,14 @@ const handleWatchSize = (size: number) => {
 watch(
     () => currentPage.value,
     () => {
-        getTags()
+        getCategories()
     }
 )
 
 watch(
     () => pageSize.value,
     () => {
-        getTags()
+        getCategories()
     }
 )
 
@@ -177,12 +180,12 @@ const batchDelete = () => {
 }
 //确认删除
 const handleDeleteTwiceConfirmBtn = () => {
-    tagsTableRef.value.handleConfirmDeleteBtn(saveDeleteIdArr.value)
+    categoriesTableRef.value.handleConfirmDeleteBtn(saveDeleteIdArr.value)
     deleteDialogVisible.value = false
 }
 //搜索
 const handleSearchBtnClick = () => {
-    getTags()
+    getCategories()
 }
 </script>
 
@@ -197,4 +200,11 @@ const handleSearchBtnClick = () => {
 }
 </style>
 
-<style></style>
+<style>
+.el-dialog__wrapper .dialog-fade-enter-active {
+    -ms-animation: none;
+}
+.el-dialog__wrapper .dialog-fade-leave-active {
+    -ms-animation: none;
+}
+</style>

@@ -9,20 +9,19 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :page-sizes="[10, 15, 20]"
-            :total="articleCounts"
+            :total="props.counts"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, defineProps, ref } from 'vue'
+import { defineEmits, defineProps, ref } from 'vue'
 import { useStore } from 'vuex'
 
-// const props = defineProps<{
-//     currentPage: number
-//     pageSize: number
-//     articleCount: number
-// }>()
+const props = defineProps<{
+    counts: number
+}>()
+const total = ref(props.counts)
 
 const emits = defineEmits(['handleWatchCurrent', 'handleWatchSize'])
 
@@ -33,7 +32,7 @@ const emits = defineEmits(['handleWatchCurrent', 'handleWatchSize'])
 const store = useStore()
 
 //获取文章数量
-const articleCounts = computed<number>(() => store.state.searchArticlesModule.count)
+// const articleCounts = computed<number>(() => store.state.searchArticlesModule.count)
 //当前页码
 const currentPage = ref(1)
 //一页展示的数据

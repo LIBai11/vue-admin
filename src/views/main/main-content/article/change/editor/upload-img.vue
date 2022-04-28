@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, onMounted, reactive, ref } from 'vue'
+import { defineEmits, onBeforeMount, onMounted, reactive, ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
 import type { UploadProps, UploadUserFile } from 'element-plus'
@@ -74,7 +74,7 @@ const getImgInfo = () => {
     }
 }
 
-onMounted(() => {
+onBeforeMount(() => {
     uploadSuccess()
 })
 const uploadSuccess = (response?: any) => {
