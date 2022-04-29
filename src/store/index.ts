@@ -10,6 +10,8 @@ import { searchArticlesModule } from '@/store/article/articles/search/articles-s
 import { editArticleModule } from '@/store/article/articles/edit/edit-article'
 import { articleCategoriesModule } from '@/store/article/articles/categories/article-categories'
 import { articleTagsModule } from '@/store/article/articles/tags/article-tags'
+//评论
+import { commentModule } from './message/index'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -23,6 +25,7 @@ export const store = createStore<IRootState>({
         editArticleModule,
         articleCategoriesModule,
         articleTagsModule,
+        commentModule,
     },
 })
 

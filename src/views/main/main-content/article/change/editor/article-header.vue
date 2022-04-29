@@ -244,7 +244,6 @@ import useState from '@/utils/useState'
 import { PageTitle } from '@/base-ui/index'
 import { UploadImg } from './index'
 import { CategoryButton, TagButton } from './publish-form/index'
-import { IArticleForm } from './publish-form/types'
 import { ICategoryState, ITagState } from '@/store/article/publish/search/types'
 import { issueArticle } from '@/service/article'
 
