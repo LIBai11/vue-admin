@@ -41,7 +41,7 @@ const commentOptions = [
         key: PrimaryComment,
     },
     {
-        name: '审核',
+        name: '审核中',
         key: VerifyComment,
     },
 ]

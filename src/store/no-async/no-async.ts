@@ -71,7 +71,9 @@ export const noAsyncModule: Module<any, IRootState> = {
     },
     actions: {
         setSessionTabs({ commit }, tabs) {
-            useSessionCache.setCache('tabs', tabs)
+            if (tabs !== {}) {
+                useSessionCache.setCache('tabs', tabs)
+            }
         },
     },
 }

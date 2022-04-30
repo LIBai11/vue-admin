@@ -37,7 +37,7 @@ module.exports = {
     },
     chainWebpack: (config) => {
         config.plugin(`html`).tap((args) => {
-            args[0].title = 'Blog博客后台管理系统'
+            args[0].title = 'Blog后台管理系统'
             return args
         })
     },

@@ -32,11 +32,3 @@ class KxNotification {
 }
 
 export const kxNotification = new KxNotification()
-
-ElNotification({
-    message: '删除标签成功!',
-    duration: 2000,
-    type: 'success',
-})
-
-kxNotification.success()

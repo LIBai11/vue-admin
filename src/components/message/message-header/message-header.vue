@@ -3,12 +3,17 @@
         <el-row :gutter="15" justify="space-between">
             <el-col :xl="8" :lg="8" :md="8" :sm="8" :xs="18">
                 <div>
-                    <el-button type="danger" style="margin-right: 10px; margin-bottom: 5px">
+                    <el-button
+                        type="danger"
+                        style="margin-right: 10px; margin-bottom: 5px"
+                        @click="batchDelete"
+                    >
                         批量删除
                     </el-button>
                     <el-button
                         type="success"
                         style="margin-left: 0 !important ; margin-bottom: 5px"
+                        @click="batchPass"
                     >
                         批量通过
                     </el-button>
@@ -18,6 +23,7 @@
             <el-col :xl="10" :lg="11" :md="11" :sm="11" :xs="18">
                 <div>
                     <el-select
+                        v-if="props.options"
                         v-model="modelSelect"
                         :placeholder="props.placeholder"
                         clearable
@@ -49,18 +55,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits, defineProps, withDefaults } from 'vue'
+import { ref, defineEmits, defineProps, withDefaults, watch } from 'vue'
 
 interface IMessageHeader {
     placeholder?: string
     isReview?: number
+    options?: boolean
 }
 
 const props = withDefaults(defineProps<IMessageHeader>(), {
     placeholder: '请输入来源',
+    options: true,
 })
 
-const emits = defineEmits(['handleSearchBtn'])
+const emits = defineEmits(['handleSearchBtn', 'handleBatchDelete', 'handleBatchPass'])
 const sources = [
     {
         value: '文章',
@@ -94,9 +102,23 @@ const sourceChange = (newSource: any) => {
     searchPayload.value.type = newSource
     // console.log(newSource)
 }
+watch(
+    () => modelSelect.value,
+    () => {
+        emits('handleSearchBtn', searchPayload.value)
+    }
+)
 //点击搜索按钮
 const searchComments = () => {
     emits('handleSearchBtn', searchPayload.value)
+}
+//点击批量删除按钮
+const batchDelete = () => {
+    emits('handleBatchDelete')
+}
+//点击批量通过按钮
+const batchPass = () => {
+    emits('handleBatchPass')
 }
 </script>
 

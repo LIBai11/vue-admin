@@ -1,6 +1,6 @@
 <template>
-    <div class="all-comment">
-        <div class="all-header">
+    <div class="primary-comment">
+        <div class="primary-comment">
             <message-header
                 :placeholder="placeholder"
                 @handleSearchBtn="handleCommentSearchBtn"
@@ -8,16 +8,16 @@
                 @handleBatchPass="handleBatchPass"
             />
         </div>
-        <div class="all-content">
-            <comment-content
-                :table-value="commentsAllInfo"
+        <div class="primary-content">
+            <words-content
+                :table-value="wordsPrimaryInfo"
                 @handleDeleteComment="handleDeleteComment"
                 @handleSelectionChange="handleSelectionChange"
             />
         </div>
         <div class="all-pagination">
             <kx-pagination
-                :counts="allCounts"
+                :counts="primaryCounts"
                 @handleWatchSize="handleWatchSize"
                 @handleWatchCurrent="handleWatchCurrent"
             />
@@ -65,58 +65,61 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { MessageHeader, CommentContent } from '@/components'
+import { MessageHeader, KxPagination, WordsContent } from '@/components'
 import { useStore } from '@/store'
 import { IMessageParams } from '@/views/main/main-content/message/comment/page-comment'
-import { ICommentRecordList } from '@/store/message/comment/types'
-import { KxPagination } from '@/components'
+import { computed, onMounted, ref } from 'vue'
+
 import { InfoFilled } from '@element-plus/icons-vue'
+import { IWordsRecordList } from '@/store/message/words/types'
 
 const store = useStore()
 const placeholder = '请输入评论来源'
 
-//发送搜索请求
-const getComments = (payload: IMessageParams) => {
-    store.dispatch('commentModule/getComments', payload)
-}
-const commentsAllInfo = computed<ICommentRecordList>(() => store.state.commentModule.recordList)
-const allCounts = computed<number>(() => store.state.commentModule.count)
-onMounted(() => {
-    getComments({})
-})
-
 //搜索参数
-const payload = ref<IMessageParams>({})
+const params = ref<IMessageParams>({})
+
+//发送搜索请求
+const getWords = (payload: IMessageParams) => {
+    params.value = payload
+    params.value.isReview = 1
+    store.dispatch('wordsModule/getWords', params.value)
+}
+const wordsPrimaryInfo = computed<IWordsRecordList>(() => store.state.wordsModule.recordList)
+const primaryCounts = computed<number>(() => store.state.wordsModule.count)
+
+onMounted(() => {
+    getWords({})
+})
 
 //评论搜索按钮emit
 const handleCommentSearchBtn = (newValue: any) => {
-    payload.value = newValue
-    getComments(payload.value)
+    getWords(newValue)
 }
 //监听每页长度变化
 const handleWatchSize = (newSize: number) => {
-    payload.value.currentSize = newSize
-    getComments(payload.value)
+    params.value.currentSize = newSize
+    getWords(params.value)
 }
 //监听当前页数
 const handleWatchCurrent = (newCurrent: number) => {
-    payload.value.currentPage = newCurrent
-    getComments(payload.value)
+    params.value.currentPage = newCurrent
+    getWords(params.value)
 }
 //监听删除按钮点击
 const handleDeleteComment = (selectId: number) => {
-    store.dispatch('commentModule/deleteComments', [selectId]).then(() => {
-        getComments(payload.value)
+    store.dispatch('wordsModule/deleteWords', [selectId]).then(() => {
+        getWords(params.value)
     })
 }
 //监听多选
 const selections = ref<number[]>([])
-const handleSelectionChange = (selectComments: ICommentRecordList[]) => {
+const handleSelectionChange = (selectComments: IWordsRecordList[]) => {
     selections.value = []
     selectComments.forEach((selectComment) => {
         selections.value.push(selectComment.id)
     })
+    console.log(selections.value)
 }
 //监听批量删除
 const deleteDialogVisible = ref(false)
@@ -129,11 +132,12 @@ const cancelDelete = () => {
 }
 //确认批量删除
 const handleDeleteTwiceConfirmBtn = () => {
-    store.dispatch('commentModule/deleteComments', selections.value).then(() => {
+    store.dispatch('wordsModule/deleteWords', selections.value).then(() => {
         deleteDialogVisible.value = false
-        getComments(payload.value)
+        getWords(params.value)
     })
 }
+
 //点击批量通过按钮-对话框弹出
 const passDialogVisible = ref(false)
 const handleBatchPass = () => {
@@ -145,10 +149,10 @@ const cancelPass = () => {
 }
 const handlePassConfirmBtn = () => {
     store
-        .dispatch('commentModule/passComments', selections.value)
+        .dispatch('wordsModule/passWords', selections.value)
         .then(() => {
             passDialogVisible.value = false
-            getComments(payload.value)
+            getWords(params.value)
         })
         .catch(() => {
             passDialogVisible.value = false

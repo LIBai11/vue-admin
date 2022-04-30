@@ -1,7 +1,7 @@
 import AllComment from './all/all-comment.vue'
 import PrimaryComment from './primary/primary-comment.vue'
 import VerifyComment from './verify/verify-comment.vue'
-import { ICommentParams } from './types'
+import { IMessageParams } from './types'
 
-export { ICommentParams }
+export { IMessageParams }
 export { AllComment, PrimaryComment, VerifyComment }

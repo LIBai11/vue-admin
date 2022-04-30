@@ -16,27 +16,27 @@
             </template>
         </el-table-column>
         <el-table-column
-            label="评论人"
+            label="留言人"
             align="center"
             prop="nickname"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-            label="回复人"
+            label="留言内容"
             align="center"
-            prop="replyNickname"
+            prop="messageContent"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-            label="文章标题"
+            label="IP地址"
             align="center"
-            prop="articleTitle"
+            prop="ipAddress"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-            label="评论内容"
+            label="IP来源"
             align="center"
-            prop="commentContent"
+            prop="ipSource"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column label="评论时间" align="center" prop="createTime" show-overflow-tooltip>
@@ -50,17 +50,7 @@
                 <el-tag v-else type="info">审核中</el-tag>
             </template>
         </el-table-column>
-        <el-table-column label="来源" align="center" prop="type" show-overflow-tooltip>
-            <template #default="scope">
-                <el-tag v-if="scope.row.type === 1" effect="plain" round type="success">
-                    文章
-                </el-tag>
-                <el-tag v-if="scope.row.type === 2" effect="plain" round type="warning">
-                    友链
-                </el-tag>
-                <el-tag v-if="scope.row.type === 3" effect="plain" round type="danger">说说</el-tag>
-            </template>
-        </el-table-column>
+
         <el-table-column label="操作" align="center" show-overflow-tooltip>
             <template #default="scope">
                 <el-popconfirm
@@ -84,9 +74,10 @@
 import { defineProps, defineEmits } from 'vue'
 import { InfoFilled } from '@element-plus/icons-vue'
 import { ICommentRecordList } from '@/store/message/comment/types'
+import { IWordsRecordList } from '@/store/message/words/types'
 
 const props = defineProps<{
-    tableValue: ICommentRecordList
+    tableValue: IWordsRecordList
 }>()
 
 const emits = defineEmits(['handleDeleteComment', 'handleSelectionChange'])
