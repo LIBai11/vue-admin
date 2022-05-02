@@ -1,14 +1,14 @@
 <template>
     <div class="upload-img">
         <el-upload
-            action="http://localhost:5000/api/admin/articles/images"
-            list-type="picture-card"
             :auto-upload="true"
             :limit="limit"
-            :on-success="uploadSuccess"
-            :on-remove="handleRemove"
-            :on-preview="handlePictureCardPreview"
             :on-error="handleError"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-success="uploadSuccess"
+            action="http://localhost:5000/api/admin/articles/images"
+            list-type="picture-card"
         >
             <el-icon class="icon">
                 <Plus />
@@ -16,16 +16,16 @@
         </el-upload>
 
         <el-dialog
-            title="预览图片"
-            destroy-on-close
             v-model="dialogVisible"
             :width="imgInfo.width + 'px'"
             append-to-body
+            destroy-on-close
+            title="预览图片"
         >
             <div class="imgPreviewDiv">
                 <img
-                    :style="{ width: imgInfo.width + 'px', height: imgInfo.height + 'px' }"
                     :src="dialogImageUrl"
+                    :style="{ width: imgInfo.width + 'px', height: imgInfo.height + 'px' }"
                     alt=""
                 />
             </div>
@@ -33,11 +33,11 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineEmits, reactive, ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
-import type { UploadFile, UploadProps } from 'element-plus'
+import type { UploadProps } from 'element-plus'
 import { ElMessage } from 'element-plus'
 
 //向父组件传值
@@ -87,16 +87,18 @@ const handleError = () => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .imgPreviewDiv {
     display: flex;
     flex: 1;
     justify-content: center;
 }
+
 .icon {
     margin-top: 40%;
     margin-left: 40%;
 }
+
 .img {
     width: v-bind('imgInfo.width') px;
     height: v-bind('imgInfo.height') px;

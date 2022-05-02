@@ -2,6 +2,7 @@ export interface ICommentState {
     recordList: ICommentRecordList[]
     count: number
 }
+
 export interface ICommentRecordList {
     id: number
     avatar: string

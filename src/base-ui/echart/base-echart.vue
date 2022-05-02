@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineProps, onMounted, ref, watchEffect, withDefaults } from 'vue'
 import { EChartsOption } from 'echarts'
 import useEchart from '@/utils/use-echart'
@@ -33,4 +33,4 @@ onMounted(() => {
 })
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

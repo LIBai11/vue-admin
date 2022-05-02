@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "node --max_old_space_size=10240 node_modules/@vue/cli-service/bin/vue-cli-service.js serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "analyze": "cross-env NODE_ENV=production npm_config_report=true npm run build"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.20.0-0",

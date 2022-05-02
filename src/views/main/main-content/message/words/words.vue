@@ -4,12 +4,12 @@
             <template #header>
                 <page-title title="留言管理"></page-title>
                 <el-link
-                    target="_blank"
                     v-for="(option, index) in commentOptions"
                     :key="option.key"
-                    @click="handleLink(index)"
-                    class="words-status"
                     :class="{ bold: checked === index }"
+                    class="words-status"
+                    target="_blank"
+                    @click="handleLink(index)"
                 >
                     {{ option.name }}
                 </el-link>
@@ -56,6 +56,7 @@ const handleLink = (index: number) => {
     margin-right: 20px;
     margin-bottom: -20px;
 }
+
 .bold {
     font-weight: bold;
 }

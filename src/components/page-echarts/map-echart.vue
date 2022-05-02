@@ -1,8 +1,8 @@
 <template>
-    <base-echart :options="option" width="100%" height="500px"></base-echart>
+    <base-echart :options="option" height="500px" width="100%"></base-echart>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { BaseEchart } from '@/base-ui/index'
 import { computed, defineProps } from 'vue'
 import { IUserArea } from '@/store/main/user/types'
@@ -86,4 +86,4 @@ const option = computed<any>(() => {
 })
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

@@ -3,8 +3,8 @@
         <el-row :gutter="10">
             <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
-                    shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
+                    shadow="always"
                 >
                     <div>
                         <el-icon :size="60" color="#5FBC21">
@@ -19,8 +19,8 @@
             </el-col>
             <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
-                    shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
+                    shadow="always"
                 >
                     <el-icon :size="60" color="#FF0000">
                         <user-filled />
@@ -33,8 +33,8 @@
             </el-col>
             <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
-                    shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
+                    shadow="always"
                 >
                     <el-icon :size="60" color="#FFD663">
                         <document-checked />
@@ -47,8 +47,8 @@
             </el-col>
             <el-col :lg="6" :md="12" :sm="12" :xs="24">
                 <el-card
-                    shadow="always"
                     :body-style="{ display: 'flex', justifyContent: 'space-between' }"
+                    shadow="always"
                 >
                     <el-icon :size="60" color="blue">
                         <chat-dot-square />
@@ -98,8 +98,10 @@ const { viewCounts, userCount, articleCount, messageCount } = useState({
     font-size: 20px;
     color: #aaabaa;
 }
+
 .cards-header {
 }
+
 .el-card {
     margin-bottom: 10px;
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="menus">
-        <n-layout has-sider v-once>
+        <n-layout v-once has-sider>
             <n-layout-sider
                 :bordered="menuConfig.bordered || true"
                 :collapsed="collapsed"
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineEmits, defineProps, onMounted, PropType, ref } from 'vue'
+import { defineEmits, defineProps, onMounted, PropType, ref } from 'vue'
 import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { IMenuConfig } from '@/views/main/config/menu-config/type'
 import { MenuInst } from 'naive-ui'
@@ -51,12 +51,11 @@ const handleFoldMenu = () => {
 
 const router = useRouter()
 const collapsed = ref<boolean>(false)
-const activeKey = ref<number | null>(null)
+const activeKey = ref()
 //getCurrent->route->state
 //getCache->state->
 const handleUpdateValue = (key: any, item: any) => {
     sessionStorage.setItem('_MENU_KEY', key)
-    // console.log(activeKey.value)
     router.push({
         path: item.href ?? 'not-found',
     })
@@ -67,7 +66,7 @@ height.value = document.documentElement.clientWidth
 
 //菜单选中状态更新
 const updateSelectManu = () => {
-    const currentKey = Number(sessionStorage.getItem('_MENU_KEY'))
+    const currentKey = String(sessionStorage.getItem('_MENU_KEY'))
     activeKey.value = currentKey
     menuInstRef.value?.showOption(currentKey)
 }
@@ -98,9 +97,11 @@ onMounted(() => {
 .menus {
     float: right;
 }
+
 :deep(.el-icon) {
     margin-left: 15px;
 }
+
 :deep(.n-layout-toggle-button) {
     margin-right: 5px !important;
 }

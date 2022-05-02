@@ -3,37 +3,36 @@
         <el-form :model="cateForm" @submit.prevent="subCategory">
             <el-form-item>
                 <el-autocomplete
-                    size="large"
                     v-model="cateForm.categoryName"
-                    placeholder="键入以搜索或新建"
-                    @select="handleQuerySelect"
                     :fetch-suggestions="queryCategories"
+                    placeholder="键入以搜索或新建"
+                    size="large"
                     value-key="categoryName"
+                    @select="handleQuerySelect"
                 />
             </el-form-item>
             <el-form-item>
                 <el-table
-                    class="category-data-table"
                     ref="categoryTableRef"
                     :data="props.categoryData"
-                    highlight-current-row
                     :show-header="isShowTableHeader"
-                    @current-change="handleCurrentChange"
+                    class="category-data-table"
                     fit
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
                 >
-                    <el-table-column property="categoryName" align="center" />
+                    <el-table-column align="center" property="categoryName" />
                 </el-table>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
-<script setup lang="ts">
-import { ref, defineProps, defineEmits, watchEffect } from 'vue'
+<script lang="ts" setup>
+import { defineEmits, defineProps, ref, watchEffect } from 'vue'
 import { ICategoryState } from '@/store/article/publish/search/types'
-import { ElTable } from 'element-plus'
+import { ElNotification, ElTable } from 'element-plus'
 import { searchCategories } from '@/service/category'
-import { ElNotification } from 'element-plus'
 
 //获取父组件信息
 const props = defineProps<{
@@ -111,7 +110,7 @@ const handleCurrentChange = (currentRow: any) => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .category-data-table {
     cursor: pointer;
 }

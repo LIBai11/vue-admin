@@ -2,7 +2,7 @@
     <div class="contribute-chart">
         <el-row>
             <el-col :span="24">
-                <kx-card :title="contributeTitle" :cardConfig="config">
+                <kx-card :cardConfig="config" :title="contributeTitle">
                     <template #body>
                         <heat-map :heatMapData="heatMapData"></heat-map>
                     </template>
@@ -12,7 +12,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { KxCard } from '@/base-ui'
 import { HeatMap } from '@/components/index'
 import { useStore } from '@/store'
@@ -39,7 +39,7 @@ const heatMapData = computed<IHeatMapData[]>(() => {
 })
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .contribute-chart {
     margin-bottom: 15px;
 }

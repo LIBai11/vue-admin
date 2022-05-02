@@ -8,6 +8,7 @@ class KxNotification {
             type: 'success',
         })
     }
+
     warning(message?: string, duration?: number) {
         ElNotification({
             message: message,
@@ -15,6 +16,7 @@ class KxNotification {
             type: 'warning',
         })
     }
+
     error(message?: string, duration?: number) {
         ElNotification({
             message: message,
@@ -22,6 +24,7 @@ class KxNotification {
             type: 'error',
         })
     }
+
     info(message?: string, duration?: number) {
         ElNotification({
             message: message,

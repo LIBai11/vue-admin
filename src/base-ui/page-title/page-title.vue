@@ -1,12 +1,12 @@
 <template>
     <div style="position: relative">
-        <n-h5 type="success" prefix="bar">
+        <n-h5 prefix="bar" type="success">
             <n-text type="primary">{{ props.title }}</n-text>
         </n-h5>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineProps } from 'vue'
 
 const props = defineProps<{
@@ -14,4 +14,4 @@ const props = defineProps<{
 }>()
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

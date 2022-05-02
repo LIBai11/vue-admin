@@ -12,6 +12,7 @@ export function homeBaseData() {
         url: HomeAPI.Admin,
     })
 }
+
 export function toUserAreaList(type: number) {
     return kxRequest.get<ICommonState<IHomeBseState>>({
         url: `${HomeAPI.Area}?type=${type}`,

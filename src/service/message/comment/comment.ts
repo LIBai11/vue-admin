@@ -36,6 +36,7 @@ export function asyncDeleteComments(payload: IMessageParams) {
         },
     })
 }
+
 export function asyncPassComments(payload: IMessageParams) {
     return kxRequest.put<ICommonState<ICommentState>>({
         url: CommentAPI.isReview,

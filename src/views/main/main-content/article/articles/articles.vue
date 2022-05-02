@@ -5,12 +5,12 @@
                 <template #header>
                     <page-title title="文章列表"></page-title>
                     <el-link
-                        target="_blank"
                         v-for="(option, index) in articleOptions"
                         :key="option.key"
-                        @click="handleLink(index)"
-                        class="articles-status"
                         :class="{ bold: checked === index }"
+                        class="articles-status"
+                        target="_blank"
+                        @click="handleLink(index)"
                     >
                         {{ option.name }}
                     </el-link>
@@ -30,9 +30,9 @@ import { KxCard, PageTitle } from '@/base-ui/index'
 import {
     AllArticles,
     DraftArticles,
+    PublicArticles,
     RecycleArticles,
     SecretArticles,
-    PublicArticles,
 } from './page-content/index'
 import { ref } from 'vue'
 
@@ -73,6 +73,7 @@ const handleLink = (index: number) => {
     margin-right: 20px;
     margin-bottom: -20px;
 }
+
 .bold {
     font-weight: bold;
 }

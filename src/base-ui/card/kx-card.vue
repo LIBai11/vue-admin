@@ -1,9 +1,9 @@
 <template>
     <el-card
-        class="box-card"
+        ref="bar"
         :body-style="props.cardConfig?.bodyStyle"
         :shadow="props.cardConfig?.shadow"
-        ref="bar"
+        class="box-card"
     >
         <template #header>
             <div class="card-header">
@@ -17,7 +17,7 @@
     </el-card>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { IkxCard } from '@/views/main/main-content/home/home-panel/base-data/types'
 
@@ -32,4 +32,4 @@ const title = ref(props.title)
 // console.log(cardConfig.value)
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

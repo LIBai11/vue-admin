@@ -3,9 +3,9 @@
         <div class="primary-comment">
             <message-header
                 :placeholder="placeholder"
-                @handleSearchBtn="handleCommentSearchBtn"
                 @handleBatchDelete="handleBatchDelete"
                 @handleBatchPass="handleBatchPass"
+                @handleSearchBtn="handleCommentSearchBtn"
             />
         </div>
         <div class="primary-content">
@@ -18,27 +18,27 @@
         <div class="all-pagination">
             <kx-pagination
                 :counts="primaryCounts"
-                @handleWatchSize="handleWatchSize"
                 @handleWatchCurrent="handleWatchCurrent"
+                @handleWatchSize="handleWatchSize"
             />
         </div>
     </div>
     <!--删除对话框-->
     <el-dialog
         v-model="deleteDialogVisible"
-        title="确认删除所选文章?"
         close-on-press-escape
+        title="确认删除所选文章?"
         width="30%"
     >
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="cancelDelete">取消</el-button>
                 <el-popconfirm
-                    title="请再次确认是否删除文章!"
-                    confirm-button-text="确认删除"
-                    cancel-button-text="取消"
                     :icon="InfoFilled"
+                    cancel-button-text="取消"
+                    confirm-button-text="确认删除"
                     icon-color="red"
+                    title="请再次确认是否删除文章!"
                     @confirm="handleDeleteTwiceConfirmBtn"
                 >
                     <template #reference>
@@ -51,8 +51,8 @@
     <!--通过对话框-->
     <el-dialog
         v-model="passDialogVisible"
-        title="确认将所选评论通过审核?"
         close-on-press-escape
+        title="确认将所选评论通过审核?"
         width="30%"
     >
         <template #footer>
@@ -64,8 +64,8 @@
     </el-dialog>
 </template>
 
-<script setup lang="ts">
-import { MessageHeader, KxPagination, WordsContent } from '@/components'
+<script lang="ts" setup>
+import { KxPagination, MessageHeader, WordsContent } from '@/components'
 import { useStore } from '@/store'
 import { IMessageParams } from '@/views/main/main-content/message/comment/page-comment'
 import { computed, onMounted, ref } from 'vue'
@@ -160,4 +160,4 @@ const handlePassConfirmBtn = () => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

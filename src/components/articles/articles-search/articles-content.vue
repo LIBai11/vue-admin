@@ -3,37 +3,37 @@
         <el-table
             :data="articleList"
             border
-            stripe
             fit
+            stripe
             @selection-change="handleSelectColumn"
             @select-all="handleSelectColumn"
         >
-            <el-table-column type="selection" width="50" align="center"></el-table-column>
-            <el-table-column prop="articleCover" label="文章封面" align="center" width="220">
+            <el-table-column align="center" type="selection" width="50"></el-table-column>
+            <el-table-column align="center" label="文章封面" prop="articleCover" width="220">
                 <template #default="scope">
                     <div>
                         <el-image
                             :preview-src-list="[scope.row.articleCover]"
                             :src="scope.row.articleCover"
-                            preview-teleported
                             hide-on-click-modal
+                            preview-teleported
                         />
                     </div>
                 </template>
             </el-table-column>
             <el-table-column
-                prop="articleTitle"
-                label="标题"
-                show-overflow-tooltip
                 align="center"
+                label="标题"
+                prop="articleTitle"
+                show-overflow-tooltip
             ></el-table-column>
             <el-table-column
-                prop="categoryName"
-                label="分类"
-                width="100"
                 align="center"
+                label="分类"
+                prop="categoryName"
+                width="100"
             ></el-table-column>
-            <el-table-column prop="tagDTOList" label="标签" width="95" align="center">
+            <el-table-column align="center" label="标签" prop="tagDTOList" width="95">
                 <template #default="scope">
                     <span>
                         <el-tag v-for="tag in scope.row.tagDTOList" :key="tag">
@@ -43,34 +43,34 @@
                 </template>
             </el-table-column>
             <el-table-column
-                prop="viewsCount"
+                align="center"
                 label="浏览量"
+                prop="viewsCount"
                 width="80"
-                align="center"
             ></el-table-column>
             <el-table-column
-                prop="likeCount"
+                align="center"
                 label="点赞量"
+                prop="likeCount"
                 width="80"
-                align="center"
             ></el-table-column>
             <el-table-column
-                prop="type"
-                label="类型"
-                width="80"
                 :formatter="formatType"
                 align="center"
+                label="类型"
+                prop="type"
+                width="80"
             >
                 <template #default="scope">
                     {{ formatType(scope.row.type) }}
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="发表时间" width="140" align="center">
+            <el-table-column align="center" label="发表时间" prop="createTime" width="140">
                 <template #default="scope">
                     <span>{{ $filters.formatTime(scope.row.createTime) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="isTop" label="置顶" width="85" align="center">
+            <el-table-column align="center" label="置顶" prop="isTop" width="85">
                 <template #default="scope">
                     <el-switch
                         v-model="scope.row.isTop"
@@ -81,67 +81,67 @@
                     ></el-switch>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" align="center">
+            <el-table-column align="center" label="操作">
                 <!--非删除界面-->
-                <template #default="scope" v-if="!props.destroyBtn">
+                <template v-if="!props.destroyBtn" #default="scope">
                     <el-popconfirm
-                        confirm-button-text="确认"
-                        cancel-button-text="取消"
                         :icon="InfoFilled"
+                        cancel-button-text="取消"
+                        confirm-button-text="确认"
                         icon-color="red"
                         title="确认删除这篇文章吗?"
                         @confirm="handleConfirmDeleteBtn(scope.row.id)"
                     >
                         <template #reference>
                             <el-button
-                                class="delete-btn"
-                                type="danger"
-                                size="small"
                                 :icon="Delete"
+                                class="delete-btn"
                                 round
+                                size="small"
+                                type="danger"
                             />
                         </template>
                     </el-popconfirm>
 
                     <el-button
-                        type="success"
-                        size="small"
                         :icon="Edit"
                         round
+                        size="small"
+                        type="success"
                         @click="handleEditArticle(scope.row.id)"
                     />
                 </template>
                 <!--删除界面-->
-                <template #default="scope" v-else>
+                <template v-else #default="scope">
                     <el-popconfirm
-                        confirm-button-text="确认"
-                        cancel-button-text="取消"
                         :icon="InfoFilled"
+                        cancel-button-text="取消"
+                        confirm-button-text="确认"
                         icon-color="red"
                         title="确认永久删除这篇文章吗?这将不可恢复!"
                         @confirm="handleDestroyBtn(scope.row.id)"
                     >
                         <template #reference>
                             <el-button
-                                class="delete-btn"
-                                type="danger"
-                                size="small"
                                 :icon="Delete"
+                                class="delete-btn"
                                 round
+                                size="small"
+                                type="danger"
                             />
                         </template>
                     </el-popconfirm>
                     <!--编辑按钮-->
                     <el-popconfirm
-                        confirm-button-text="确认"
-                        cancel-button-text="取消"
                         :icon="InfoFilled"
+                        cancel-button-text="取消"
+                        confirm-button-text="确认"
                         icon-color="red"
                         title="确认恢复这篇文章吗?"
                         @confirm="handleRecoverBtn(scope.row.id)"
                     >
                         <template #reference>
-                            <el-button type="success" size="small" :icon="Select" round />
+                            <el-button :icon="Select" round size="small" type="success" />
                         </template>
                     </el-popconfirm>
                 </template>
@@ -150,7 +150,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useStore } from 'vuex'
 import { computed, defineEmits, defineProps, withDefaults } from 'vue'
 import { IRecordList } from '@/store/article/articles/search/types'
@@ -158,9 +158,11 @@ import { Delete, Edit, InfoFilled, Select } from '@element-plus/icons-vue'
 import router from '@/router'
 
 const emits = defineEmits(['handleDelete'])
+
 interface IDestroyBtn {
     destroyBtn?: boolean
 }
+
 const props = withDefaults(defineProps<IDestroyBtn>(), {
     destroyBtn: false,
 })
@@ -227,10 +229,11 @@ const handleEditArticle = (articleId: number) => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .delete-btn {
     margin-left: 13px;
 }
+
 :deep(.el-tag) {
     margin: 3px;
 }

@@ -2,23 +2,23 @@
     <div class="publish-header">
         <page-title title="发布文章" />
         <el-row class="head">
-            <el-col :lg="18" :sm="18" :md="24" :xs="24" :xl="18">
+            <el-col :lg="18" :md="24" :sm="18" :xl="18" :xs="24">
                 <div>
                     <el-input
+                        v-model="header"
                         class="article-title"
                         placeholder="请输入文章标题"
-                        v-model="header"
                         @input="inputArticleHeader"
                     >
                         <template #prepend>{{ nowDate }}</template>
                     </el-input>
                 </div>
             </el-col>
-            <el-col :lg="4" :sm="4" :md="24" :xs="24" :xl="4">
+            <el-col :lg="4" :md="24" :sm="4" :xl="4" :xs="24">
                 <div>
                     <n-button
-                        type="tertiary"
                         style="margin-right: 10px; margin-bottom: 10px"
+                        type="tertiary"
                         @click="articleDraftClick"
                     >
                         保存草稿
@@ -31,18 +31,18 @@
     <!--发布的dialog-->
     <el-dialog
         v-model="isIssueDialog"
-        @closed="handleDialogClose"
         custom-class="publishDialog"
         destroy-on-close
         draggable
         title="发布文章"
+        @closed="handleDialogClose"
     >
         <el-form
+            ref="articleFormRef"
             :model="articleForm"
             :rules="articleFormRules"
-            ref="articleFormRef"
-            label-width="120px"
             class="form"
+            label-width="120px"
         >
             <el-row>
                 <el-col :span="24">
@@ -63,10 +63,10 @@
                     <el-form-item label="文章类型" prop="type">
                         <el-select
                             v-model="modelSelect"
-                            @change="typeChange"
-                            placeholder="请选择文章类型"
                             clearable
+                            placeholder="请选择文章类型"
                             size="large"
+                            @change="typeChange"
                         >
                             <el-option
                                 v-for="selection in typeSelections"
@@ -81,8 +81,8 @@
                     <el-col :span="24">
                         <el-form-item label="原文链接" prop="originalUrl">
                             <el-input
-                                v-model="defaultOriginalUrl"
                                 key="reprint"
+                                v-model="defaultOriginalUrl"
                                 placeholder="请输入原文链接~"
                             />
                         </el-form-item>
@@ -92,8 +92,8 @@
                     <el-col :span="24">
                         <el-form-item label="原文链接" prop="originalUrl">
                             <el-input
-                                v-model="articleForm.originalUrl"
                                 key="translate"
+                                v-model="articleForm.originalUrl"
                                 placeholder="请输入原文链接~"
                             />
                         </el-form-item>
@@ -107,7 +107,7 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="是否置顶">
-                        <el-switch v-model="isTop" @change="topChange" active-color="#13ce66" />
+                        <el-switch v-model="isTop" active-color="#13ce66" @change="topChange" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
@@ -138,13 +138,13 @@
     <!--草稿的dialog-->
     <el-dialog
         v-model="isDraftDialog"
-        @closed="handleDialogClose"
         custom-class="publishDialog"
         destroy-on-close
         draggable
         title="保存草稿"
+        @closed="handleDialogClose"
     >
-        <el-form label-width="120px" class="form" :rules="articleFormRules">
+        <el-form :rules="articleFormRules" class="form" label-width="120px">
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="文章分类">
@@ -165,10 +165,10 @@
                     <el-form-item label="文章类型" prop="type">
                         <el-select
                             v-model="modelSelect"
-                            @change="typeChange"
-                            placeholder="请选择文章类型"
                             clearable
+                            placeholder="请选择文章类型"
                             size="large"
+                            @change="typeChange"
                         >
                             <el-option
                                 v-for="selection in typeSelections"
@@ -183,8 +183,8 @@
                     <el-col :span="24">
                         <el-form-item label="原文链接" prop="originalUrl">
                             <el-input
-                                v-model="articleForm.originalUrl"
                                 key="reprint"
+                                v-model="articleForm.originalUrl"
                                 placeholder="请输入原文链接~"
                             />
                         </el-form-item>
@@ -194,8 +194,8 @@
                     <el-col :span="24">
                         <el-form-item label="原文链接" prop="originalUrl">
                             <el-input
-                                v-model="articleForm.originalUrl"
                                 key="translate"
+                                v-model="articleForm.originalUrl"
                                 placeholder="请输入原文链接~"
                             />
                         </el-form-item>
@@ -209,16 +209,16 @@
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="是否置顶">
-                        <el-switch v-model="isTop" @change="topChange" active-color="#13ce66" />
+                        <el-switch v-model="isTop" active-color="#13ce66" @change="topChange" />
                     </el-form-item>
                 </el-col>
                 <el-col :span="24">
                     <el-form-item label="发布形式">
                         <el-radio-group
                             v-model="articleStatusLabel"
+                            disabled
                             size="small"
                             @change="statusChange"
-                            disabled
                         >
                             <el-radio-button label="草稿箱" name="3" />
                         </el-radio-group>
@@ -236,7 +236,7 @@
     </el-dialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineProps, reactive, ref, watch } from 'vue'
 import { ElMessage, ElNotification, FormInstance, FormRules } from 'element-plus'
 import { useStore } from '@/store'
@@ -507,7 +507,7 @@ const articleFormReset = (formEl: FormInstance | undefined) => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .title {
     font-size: 20px;
     font-weight: bold;

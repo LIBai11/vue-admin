@@ -3,12 +3,12 @@
         <el-form>
             <el-form-item>
                 <el-row :gutter="15">
-                    <el-col :xs="0" :sm="6" :md="4" :lg="3" :xl="4">
-                        <el-button type="danger" :icon="Delete" round @click="handleDeleteDialog">
+                    <el-col :lg="3" :md="4" :sm="6" :xl="4" :xs="0">
+                        <el-button :icon="Delete" round type="danger" @click="handleDeleteDialog">
                             批量删除
                         </el-button>
                     </el-col>
-                    <el-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
+                    <el-col :lg="4" :md="4" :sm="6" :xl="4" :xs="24">
                         <el-form-item>
                             <el-select
                                 v-model="typeId"
@@ -25,13 +25,13 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
+                    <el-col :lg="4" :md="4" :sm="6" :xl="4" :xs="24">
                         <el-form-item>
                             <el-select
                                 v-model="categoryId"
-                                @change="handleChangeCategory"
                                 clearable
                                 placeholder="请选择分类"
+                                @change="handleChangeCategory"
                             >
                                 <el-option
                                     v-for="category in categoryList"
@@ -43,13 +43,13 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
+                    <el-col :lg="4" :md="4" :sm="6" :xl="4" :xs="24">
                         <el-form-item>
                             <el-select
                                 v-model="tagId"
-                                @change="handleChangeTag"
                                 clearable
                                 placeholder="请选择标签"
+                                @change="handleChangeTag"
                             >
                                 <el-option
                                     v-for="tag in tagsList"
@@ -61,7 +61,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :xs="24" :sm="6" :md="4" :lg="4" :xl="4">
+                    <el-col :lg="4" :md="4" :sm="6" :xl="4" :xs="24">
                         <el-form-item>
                             <el-input
                                 v-model="articleTitle"
@@ -71,25 +71,25 @@
                             ></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :xs="0" :sm="6" :md="4" :lg="3" :xl="4">
+                    <el-col :lg="3" :md="4" :sm="6" :xl="4" :xs="0">
                         <el-button
-                            type="success"
                             :icon="Search"
                             round
+                            type="success"
                             @click="handleSearchBtnClick"
                         >
                             搜索
                         </el-button>
                     </el-col>
-                    <el-col :xs="6" :sm="0" :md="0" :lg="0" :xl="0">
-                        <el-button type="danger" :icon="Delete" round @click="handleDeleteDialog" />
+                    <el-col :lg="0" :md="0" :sm="0" :xl="0" :xs="6">
+                        <el-button :icon="Delete" round type="danger" @click="handleDeleteDialog" />
                     </el-col>
-                    <el-col :xs="6" :sm="0" :md="0" :lg="0" :xl="0">
+                    <el-col :lg="0" :md="0" :sm="0" :xl="0" :xs="6">
                         <el-button
-                            type="success"
                             :icon="Search"
-                            @click="handleSearchBtnClick"
                             round
+                            type="success"
+                            @click="handleSearchBtnClick"
                         />
                     </el-col>
                 </el-row>
@@ -97,8 +97,8 @@
         </el-form>
         <el-dialog
             v-model="deleteDialogVisible"
-            title="确认删除所选文章?"
             close-on-press-escape
+            title="确认删除所选文章?"
             width="30%"
         >
             <template #footer>
@@ -106,11 +106,11 @@
                     <el-button @click="handleDeleteDialog">取消</el-button>
                     <el-popconfirm
                         v-if="!props.destroyBtn"
-                        title="请再次确认是否删除文章!"
-                        confirm-button-text="确认删除"
-                        cancel-button-text="取消"
                         :icon="InfoFilled"
+                        cancel-button-text="取消"
+                        confirm-button-text="确认删除"
                         icon-color="red"
+                        title="请再次确认是否删除文章!"
                         @confirm="handleDeleteTwiceConfirmBtn"
                     >
                         <template #reference>
@@ -119,11 +119,11 @@
                     </el-popconfirm>
                     <el-popconfirm
                         v-else
-                        title="请再次确认是否销毁文章!这将不可恢复"
-                        confirm-button-text="确认删除"
-                        cancel-button-text="取消"
                         :icon="InfoFilled"
+                        cancel-button-text="取消"
+                        confirm-button-text="确认删除"
                         icon-color="red"
+                        title="请再次确认是否销毁文章!这将不可恢复"
                         @confirm="handleDestroyTwiceConfirmBtn"
                     >
                         <template #reference>
@@ -136,12 +136,11 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { computed, defineProps, onMounted, ref, watch, defineExpose, withDefaults } from 'vue'
+<script lang="ts" setup>
+import { computed, defineExpose, defineProps, onMounted, ref, watch, withDefaults } from 'vue'
 import { useStore } from '@/store'
-import { Delete, Search } from '@element-plus/icons-vue'
+import { Delete, InfoFilled, Search } from '@element-plus/icons-vue'
 import { ICategoryState, ITagState } from '@/store/article/publish/search/types'
-import { InfoFilled } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 const store = useStore()
@@ -153,6 +152,7 @@ interface IDestroyBtn {
     pageSize?: number
     destroyBtn?: boolean
 }
+
 const props = withDefaults(defineProps<IDestroyBtn>(), {
     destroyBtn: false,
 })
@@ -287,7 +287,7 @@ defineExpose({
 })
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 :deep(.el-icon) {
     margin-left: 1px;
 }

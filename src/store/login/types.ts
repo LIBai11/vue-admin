@@ -15,19 +15,24 @@ export interface ILoginState {
     username: string
 }
 
-export type IMenuState = RootObjectChild[]
+export type IUserMenusState = IUserChild[]
 
-export interface RootObjectChild {
-    id: number
+export interface IChildChildren {
     name: string
     path: string
     component: string
     icon: string
-    createTime: string
-    orderNum: number
-    isDisable?: any
-    isHidden: number
-    children: any[]
+    hidden?: any
+    children?: any
+}
+
+export interface IUserChild {
+    name?: any
+    path: string
+    component: string
+    icon?: any
+    hidden: boolean
+    children: IChildChildren[]
 }
 
 export interface IUserData {
@@ -36,23 +41,10 @@ export interface IUserData {
     tabList: RootObjectTabList[]
     userId: number
     nickname: string
-    userMenuList: RootObjectUserMenuList[]
+    userMenuList: IUserMenusState
 }
 
 interface RootObjectTabList {
     name: string
     path: string
-}
-
-interface RootObjectUserMenuList {
-    id: number
-    name: string
-    path: string
-    component: string
-    icon: string
-    createTime: string
-    orderNum: number
-    isDisable?: any
-    isHidden: number
-    children: any[]
 }

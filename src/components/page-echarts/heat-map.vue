@@ -2,7 +2,7 @@
     <base-echart :options="options"></base-echart>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, defineProps } from 'vue'
 import { BaseEchart } from '@/base-ui'
 import { EChartsOption } from 'echarts'
@@ -59,4 +59,4 @@ const options = computed<EChartsOption>(() => {
 })
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

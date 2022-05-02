@@ -13,9 +13,18 @@ import TagsTable from './articles/articles-tags/tags-table.vue'
 import MessageHeader from './message/message-header/message-header.vue'
 import CommentContent from './message/comment-conent/comment-content.vue'
 import WordsContent from './message/words-content/words-content.vue'
+//用户相关
+import UsersHeader from './users/users-header/users-header.vue'
+//菜单
+import PermissionHeader from './permission/permission-header/permission-header.vue'
 
 export { LineEchart, HeatMap, BarEchart, PieEchart, MapEchart, TagCloud }
 export { ArticlesSearch, ArticlesContent, KxPagination }
 export { CategoriesTable, TagsTable }
 //评论
 export { MessageHeader, CommentContent, WordsContent }
+//用户
+export { UsersHeader }
+
+//菜单
+export { PermissionHeader }

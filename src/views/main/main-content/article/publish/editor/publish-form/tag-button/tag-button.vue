@@ -1,52 +1,56 @@
 <template>
     <div class="tab-btn">
         <el-popover
-            placement="right"
-            :width="400"
-            trigger="click"
-            title="请选择标签"
             :disabled="isPopActive"
+            :width="400"
+            placement="right"
+            title="请选择标签"
             transition="el-zoom-in-top"
+            trigger="click"
         >
             <template #reference>
                 <div v-if="tagsIn.length !== 0">
                     <el-tag
                         v-for="tag in tagsIn"
                         :key="tag"
-                        @close="handleCloseTag(tag)"
+                        class="tag"
                         closable
+                        disable-transitions
+                        effect="light"
+                        hit
+                        round
                         size="large"
                         type="warning"
-                        effect="light"
-                        disable-transitions
-                        round
-                        hit
-                        class="tag"
+                        @close="handleCloseTag(tag)"
                     >
                         {{ tag.tagName }}
                     </el-tag>
                     <el-tag
+                        v-if="tagsIn.length < 3"
                         checked
                         class="add-tag"
-                        type="success"
                         effect="light"
                         size="default"
-                        v-if="tagsIn.length < 3"
+                        type="success"
                     >
-                        <n-icon><add-circle /></n-icon>
+                        <n-icon>
+                            <add-circle />
+                        </n-icon>
                     </el-tag>
                 </div>
                 <div v-if="tagsIn.length < 2">
-                    <n-button strong secondary round type="primary">
+                    <n-button round secondary strong type="primary">
                         <template #icon>
-                            <n-icon><pricetags /></n-icon>
+                            <n-icon>
+                                <pricetags />
+                            </n-icon>
                         </template>
                         添加标签
                     </n-button>
                 </div>
             </template>
             <el-row>
-                <el-col :xs="12" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="12">
                     <tag-form :tagData="props.tagData" @handleClickSelect="handleCateChange" />
                 </el-col>
             </el-row>
@@ -54,9 +58,9 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import TagForm from './tag-form.vue'
-import { Pricetags, AddCircle } from '@vicons/ionicons5'
+import { AddCircle, Pricetags } from '@vicons/ionicons5'
 import { defineEmits, defineProps, ref } from 'vue'
 import { ITagState } from '@/store/article/publish/search/types'
 
@@ -95,10 +99,11 @@ const handleCloseTag = (tag: ITagState) => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .tag {
     margin-right: 15px;
 }
+
 .add-tag {
     position: absolute;
     top: 5px;

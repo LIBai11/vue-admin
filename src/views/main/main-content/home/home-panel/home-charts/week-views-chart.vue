@@ -1,5 +1,5 @@
 <template>
-    <div class="week-views" v-once>
+    <div v-once class="week-views">
         <el-row :gutter="10">
             <el-col :span="24">
                 <kx-card :title="weekViewTitle">

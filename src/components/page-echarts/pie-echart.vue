@@ -2,7 +2,7 @@
     <base-echart :options="options"></base-echart>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, defineProps, watchEffect } from 'vue'
 import { BaseEchart } from '@/base-ui/index'
 import { EChartsOption } from 'echarts'
@@ -41,4 +41,4 @@ watchEffect(() => {
 })
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

@@ -1,54 +1,58 @@
-import { IMenuState } from '@/store/login/types'
+import { IUserMenusState } from '@/store/login/types'
 import { h } from 'vue'
 import { ElIcon } from 'element-plus'
 import { RouteRecordRaw } from 'vue-router'
 
 const naiMenuList: any = []
 
-export function getAssetsImages(iconName: string) {
-    const iconComponent = require('@vicons/ionicons5/' + iconName).default
-    return iconComponent
+export function getAssetsIcon(iconName: string) {
+    iconName = iconName.substring(0, 1).toLowerCase() + iconName.substring(1)
+    const icon = iconName.replace(/([A-Z])/g, '-$1').toLowerCase()
+    return require('@element-plus/icons-vue/dist/es/' + icon).default
 }
 
-getAssetsImages('Albums')
+// getAssetsImages('Albums')
 
-function renderIcon(icon: any) {
+export function renderIcon(icon: any) {
     return () => h(ElIcon, null, { default: () => h(icon) })
 }
 
 //循环实现
-export function getMenuList(userMenus: IMenuState) {
+export function getMenuList(userMenus: IUserMenusState) {
     for (const menuC of userMenus) {
-        if (menuC.children.length === 0 && menuC.isHidden === 0) {
-            naiMenuList.push({
-                label: menuC.name,
-                key: menuC.id,
-                href: menuC.path,
-                icon: renderIcon(getAssetsImages(menuC.icon)),
-            })
-        } else if (menuC.children.length !== 0 && menuC.isHidden === 0) {
+        if (menuC.name === null && !menuC.hidden) {
+            for (const menuCC of menuC.children) {
+                naiMenuList.push({
+                    label: menuCC.name,
+                    key: menuCC.name,
+                    href: menuC.path,
+                    icon: renderIcon(getAssetsIcon(menuCC.icon)),
+                })
+            }
+        } else if (menuC.name !== null && !menuC.hidden) {
+            // console.log(menuC)
             const index = naiMenuList.length
             naiMenuList.push({
                 label: menuC.name,
-                key: menuC.id,
+                key: menuC.name,
                 href: menuC.path,
-                icon: renderIcon(getAssetsImages(menuC.icon)),
+                icon: renderIcon(getAssetsIcon(menuC.icon)),
                 children: [],
             })
             //遍历二级菜单
             for (const menuCC of menuC.children) {
-                if (menuCC.isHidden === 0) {
+                if (!menuCC.hidden) {
+                    // console.log(menuCC)
                     naiMenuList[index].children.push({
                         label: menuCC.name,
-                        key: menuCC.id,
+                        key: menuCC.name,
                         href: menuCC.path,
-                        icon: renderIcon(getAssetsImages(menuCC.icon)),
+                        icon: renderIcon(getAssetsIcon(menuCC.icon)),
                     })
                 }
             }
         }
     }
-    // console.log(menuList)
     return naiMenuList
 }
 
@@ -69,7 +73,7 @@ function getArray(params: any) {
     return array
 }
 
-export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
+export function mapMenusToRoutes(userMenuList: IUserMenusState): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = []
 
     //1.先加载默认所有的routes
@@ -85,7 +89,8 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
     })
 
     //2.根据菜单获取需要添加的routes
-    const _recurseGetRoute = (menus: IMenuState) => {
+    const _recurseGetRoute = (menus: any) => {
+        // console.log(menus)
         for (const menu of menus) {
             if (menu.children === null) {
                 //find:找到后停止
@@ -93,7 +98,8 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
                 if (route) {
                     routes.push(route)
                 }
-            } else if (menu.children.length === 0) {
+            } else if (menu.name === null) {
+                // console.log(menu)
                 const route = allRoutes.find((route) => route.path === menu.path)
                 if (route) {
                     routes.push(route)
@@ -111,7 +117,7 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
 /*
         if (menu.type === 1) {
           console.log(menu.children)
-          const findMenu = pathMapToMenu(menu.cildren ?? [], currentPath)
+          const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
           if (findMenu) {
             return findMenu
           }
@@ -121,17 +127,16 @@ export function mapMenusToRoutes(userMenuList: IMenuState): RouteRecordRaw[] {
         */
 
 //获取面包屑数据
-export function pathMapToMenu(menus: IMenuState, currentPath: string) {
+export function pathMapToMenu(menus: IUserMenusState, currentPath: string) {
     for (const menuC of menus) {
-        if (menuC.children.length === 0) {
+        if (menuC.name === null) {
             if (menuC.path == currentPath) {
                 return menuC
             }
-        } else if (menuC.children.length !== 0) {
+        } else {
             if (menuC.path == currentPath) {
                 return menuC
             }
-            //遍历二级菜单
             for (const menuCC of menuC.children) {
                 if (menuCC.path == currentPath) {
                     return menuCC

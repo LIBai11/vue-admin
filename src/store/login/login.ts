@@ -1,5 +1,5 @@
 import { Module } from 'vuex'
-import { ILoginState, IMenuState, IUserData } from '@/store/login/types'
+import { ILoginState, IUserData, IUserMenusState } from '@/store/login/types'
 import { ICommonState, IRootState } from '@/store/types'
 import { ILoginData } from '@/views/login/types'
 import { accountLoginRequest, browserFresh, menuListRequest } from '@/service/login/login'
@@ -90,7 +90,7 @@ export const loginModule: Module<ILoginState, IRootState> = {
             /**
              *  获取菜单
              **/
-            const menuList: ICommonState<IMenuState> = await menuListRequest()
+            const menuList: ICommonState<IUserMenusState> = await menuListRequest()
             // console.log(menuList.data)
             if (code === 20000) {
                 ElMessage.success('登录成功!')
@@ -124,7 +124,8 @@ export const loginModule: Module<ILoginState, IRootState> = {
         async getLocalCache() {
             if (useSessionCache.getCache('userData')) {
                 const userData: IUserData = useSessionCache.getCache('userData')
-                const menuListData: IMenuState = userData.userMenuList
+                const menuListData: IUserMenusState = userData.userMenuList
+                // console.log(menuListData)
                 const routes = mapMenusToRoutes(menuListData)
                 routes.forEach((route) => {
                     router.addRoute('main', route)

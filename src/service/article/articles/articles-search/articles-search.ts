@@ -46,6 +46,7 @@ export function asyncChangeArticleTopById(isTopData: any) {
         headers: { 'Content-Type': 'application/json' },
     })
 }
+
 //销毁文章
 export function asyncDestroyArticleById(payload: number[]) {
     return kxRequest.delete<ICommonState<ISearchArticlesState>>({

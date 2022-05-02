@@ -36,6 +36,7 @@ export function asyncDeleteWords(payload: IMessageParams) {
         },
     })
 }
+
 export function asyncPassWords(payload: IMessageParams) {
     return kxRequest.put<ICommonState<IWordsState>>({
         url: WordsAPI.isReview,

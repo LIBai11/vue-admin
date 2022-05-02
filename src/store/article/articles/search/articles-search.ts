@@ -3,9 +3,9 @@ import { IRootState } from '@/store/types'
 import { IQueryArticlesParams, IRecordList, ISearchArticlesState } from './types'
 import {
     asyncArticleByCondition,
-    asyncDestroyArticleById,
     asyncChangeArticleTopById,
     asyncDeleteArticleById,
+    asyncDestroyArticleById,
     asyncRecoverArticleById,
 } from '@/service/article'
 

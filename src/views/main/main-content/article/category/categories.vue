@@ -6,28 +6,28 @@
                     <page-title title="分类管理" />
                     <el-row class="header-row">
                         <el-col
-                            :xl="8"
                             :lg="8"
                             :md="12"
                             :sm="12"
+                            :xl="8"
                             :xs="18"
                             style="margin-bottom: 15px"
                         >
                             <div>
                                 <el-button
-                                    type="primary"
                                     :icon="Plus"
+                                    type="primary"
                                     @click="handleEditCategoriesDialog"
                                 >
                                     新增
                                 </el-button>
-                                <el-button type="danger" :icon="Delete" @click="batchDelete">
+                                <el-button :icon="Delete" type="danger" @click="batchDelete">
                                     批量删除
                                 </el-button>
                             </div>
                         </el-col>
 
-                        <el-col :xl="8" :lg="8" :md="12" :sm="18" :xs="24">
+                        <el-col :lg="8" :md="12" :sm="18" :xl="8" :xs="24">
                             <div>
                                 <el-input
                                     v-model="searchKeywords"
@@ -35,8 +35,8 @@
                                     style="width: 200px; margin-right: 15px"
                                 />
                                 <el-button
-                                    type="success"
                                     :icon="Search"
+                                    type="success"
                                     @click="handleSearchBtnClick"
                                 >
                                     搜索
@@ -52,11 +52,11 @@
                     <div class="category-table">
                         <categories-table
                             ref="categoriesTableRef"
-                            :data="categories"
-                            @handleSelect="handleSelect"
                             :current-page="currentPage"
                             :current-size="pageSize"
+                            :data="categories"
                             :search-keywords="searchKeywords"
+                            @handleSelect="handleSelect"
                         />
                     </div>
 
@@ -72,18 +72,18 @@
         </kx-card>
         <el-dialog
             v-model="deleteDialogVisible"
-            title="确认删除所选分类名?"
             close-on-press-escape
+            title="确认删除所选分类名?"
             width="300px"
         >
             <span class="dialog-footer">
                 <el-button @click="handleDeleteDialog">取消</el-button>
                 <el-popconfirm
-                    title="请再次确认是否删除选中的分类名!"
-                    confirm-button-text="确认删除"
-                    cancel-button-text="取消"
                     :icon="InfoFilled"
+                    cancel-button-text="取消"
+                    confirm-button-text="确认删除"
                     icon-color="red"
+                    title="请再次确认是否删除选中的分类名!"
                     @confirm="handleDeleteTwiceConfirmBtn"
                 >
                     <template #reference>
@@ -96,9 +96,8 @@
 </template>
 
 <script lang="ts" setup>
-import { KxPagination } from '@/components'
-import { CategoriesTable } from '@/components'
-import { Plus, Delete, Search, InfoFilled } from '@element-plus/icons-vue'
+import { CategoriesTable, KxPagination } from '@/components'
+import { Delete, InfoFilled, Plus, Search } from '@element-plus/icons-vue'
 import { config } from './kx-card-config/config'
 import { computed, ref, watch } from 'vue'
 import { IRecordList } from '@/store/article/articles/categories/types'
@@ -194,9 +193,10 @@ const handleSearchBtnClick = () => {
     display: flex;
     justify-content: space-between;
 }
+
 .dialog-footer {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 </style>
 
@@ -204,6 +204,7 @@ const handleSearchBtnClick = () => {
 .el-dialog__wrapper .dialog-fade-enter-active {
     -ms-animation: none;
 }
+
 .el-dialog__wrapper .dialog-fade-leave-active {
     -ms-animation: none;
 }

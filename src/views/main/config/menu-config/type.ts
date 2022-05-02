@@ -1,7 +1,7 @@
-import { IMenuState } from '@/store/login/types'
+import { IUserMenusState } from '@/store/login/types'
 
 export interface IMenuConfig {
-    options: IMenuState
+    options: IUserMenusState
     width?: number
     collapsedWidth?: number
     collapsedIconSize?: number

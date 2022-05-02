@@ -1,17 +1,19 @@
 <template>
     <div class="category-btn">
         <el-popover
-            placement="right"
-            :width="400"
-            trigger="click"
-            title="请选择文章分类名称"
             :disabled="isPopActive"
+            :width="400"
+            placement="right"
+            title="请选择文章分类名称"
             transition="el-zoom-in-top"
+            trigger="click"
         >
             <template #reference>
-                <n-button strong secondary round type="info" v-if="categoryNameIn === ''">
+                <n-button v-if="categoryNameIn === ''" round secondary strong type="info">
                     <template #icon>
-                        <n-icon><duplicate /></n-icon>
+                        <n-icon>
+                            <duplicate />
+                        </n-icon>
                     </template>
                     添加分类
                 </n-button>
@@ -19,19 +21,19 @@
                 <el-tag
                     v-else
                     :key="categoryIdIn"
-                    @close="handleCloseTag"
                     closable
-                    size="large"
-                    effect="light"
                     disable-transitions
-                    round
+                    effect="light"
                     hit
+                    round
+                    size="large"
+                    @close="handleCloseTag"
                 >
                     {{ categoryNameIn }}
                 </el-tag>
             </template>
             <el-row>
-                <el-col :xs="12" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-col :lg="24" :md="24" :sm="24" :xl="24" :xs="12">
                     <category-form
                         :categoryData="props.categoryData"
                         @handleClickSelect="handleCateChange"
@@ -42,8 +44,8 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { defineProps, ref, defineEmits } from 'vue'
+<script lang="ts" setup>
+import { defineEmits, defineProps, ref } from 'vue'
 import { Duplicate } from '@vicons/ionicons5'
 import CategoryForm from './category-form.vue'
 import { ICategoryState } from '@/store/article/publish/search/types'
@@ -86,4 +88,4 @@ const handleCloseTag = () => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

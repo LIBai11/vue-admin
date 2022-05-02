@@ -1,15 +1,15 @@
 <template>
     <div class="upload-img">
         <el-upload
+            :auto-upload="true"
+            :file-list="fileList"
+            :limit="limit"
+            :on-error="handleError"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-success="uploadSuccess"
             action="http://localhost:5000/api/admin/articles/images"
             list-type="picture-card"
-            :auto-upload="true"
-            :limit="limit"
-            :on-success="uploadSuccess"
-            :on-remove="handleRemove"
-            :on-preview="handlePictureCardPreview"
-            :on-error="handleError"
-            :file-list="fileList"
         >
             <el-icon class="icon">
                 <Plus />
@@ -17,16 +17,16 @@
         </el-upload>
 
         <el-dialog
-            title="预览图片"
-            destroy-on-close
             v-model="dialogVisible"
             :width="imgInfo.width + 'px'"
             append-to-body
+            destroy-on-close
+            title="预览图片"
         >
             <div class="imgPreviewDiv">
                 <img
-                    :style="{ width: imgInfo.width + 'px', height: imgInfo.height + 'px' }"
                     :src="dialogImageUrl"
+                    :style="{ width: imgInfo.width + 'px', height: imgInfo.height + 'px' }"
                     alt=""
                 />
             </div>
@@ -34,8 +34,8 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { defineEmits, onBeforeMount, onMounted, reactive, ref } from 'vue'
+<script lang="ts" setup>
+import { defineEmits, onBeforeMount, reactive, ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
 import type { UploadProps, UploadUserFile } from 'element-plus'
@@ -99,16 +99,18 @@ const handleError = () => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .imgPreviewDiv {
     display: flex;
     flex: 1;
     justify-content: center;
 }
+
 .icon {
     margin-top: 40%;
     margin-left: 40%;
 }
+
 .img {
     width: v-bind('imgInfo.width') px;
     height: v-bind('imgInfo.height') px;

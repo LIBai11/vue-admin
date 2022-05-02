@@ -1,18 +1,20 @@
 <template>
     <div class="header">
         <el-row :gutter="15" justify="space-between">
-            <el-col :xl="8" :lg="8" :md="8" :sm="8" :xs="18">
+            <el-col :lg="8" :md="8" :sm="8" :xl="8" :xs="18">
                 <div>
                     <el-button
-                        type="danger"
+                        v-if="props.deleteBtn"
                         style="margin-right: 10px; margin-bottom: 5px"
+                        type="danger"
                         @click="batchDelete"
                     >
                         批量删除
                     </el-button>
                     <el-button
-                        type="success"
+                        v-if="props.passBtn"
                         style="margin-left: 0 !important ; margin-bottom: 5px"
+                        type="success"
                         @click="batchPass"
                     >
                         批量通过
@@ -20,14 +22,14 @@
                 </div>
             </el-col>
 
-            <el-col :xl="10" :lg="11" :md="11" :sm="11" :xs="18">
+            <el-col :lg="11" :md="11" :sm="11" :xl="10" :xs="18">
                 <div>
                     <el-select
                         v-if="props.options"
                         v-model="modelSelect"
                         :placeholder="props.placeholder"
-                        clearable
                         class="source"
+                        clearable
                         @change="sourceChange"
                     >
                         <el-option
@@ -40,12 +42,12 @@
 
                     <el-input
                         v-model="nameValue"
-                        placeholder="请输入用户昵称"
                         class="source"
+                        placeholder="请输入用户昵称"
                         @change="nameChange"
                     />
 
-                    <el-button type="primary" style="margin-top: -3px" @click="searchComments">
+                    <el-button style="margin-top: -3px" type="primary" @click="searchComments">
                         搜索
                     </el-button>
                 </div>
@@ -54,18 +56,22 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { ref, defineEmits, defineProps, withDefaults, watch } from 'vue'
+<script lang="ts" setup>
+import { defineEmits, defineProps, ref, watch, withDefaults } from 'vue'
 
 interface IMessageHeader {
     placeholder?: string
     isReview?: number
     options?: boolean
+    deleteBtn?: boolean
+    passBtn?: boolean
 }
 
 const props = withDefaults(defineProps<IMessageHeader>(), {
     placeholder: '请输入来源',
     options: true,
+    deleteBtn: true,
+    passBtn: true,
 })
 
 const emits = defineEmits(['handleSearchBtn', 'handleBatchDelete', 'handleBatchPass'])
@@ -122,7 +128,7 @@ const batchPass = () => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .source {
     margin-right: 15px;
     width: 190px;

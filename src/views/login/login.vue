@@ -13,7 +13,7 @@ import LoginPanel from './loginPanel/login-panel.vue'
 <style lang="less" scoped>
 .bac {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     margin-top: 50px;
     margin-right: 50px;

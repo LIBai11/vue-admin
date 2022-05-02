@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { IMenuState, IUserData } from '@/store/login/types'
+import { IUserData, IUserMenusState } from '@/store/login/types'
 import { useSessionCache } from '@/utils/use-storage'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
@@ -56,7 +56,7 @@ const userData: IUserData = useSessionCache.getCache('userData')
 const avatar = userData.avatar
 
 //菜单
-const userMenuList: IMenuState = userData.userMenuList
+const userMenuList: IUserMenusState = userData.userMenuList
 const currentPageUrl = ref(route.path)
 
 //二级菜单
@@ -97,8 +97,9 @@ watch(
 
         //添加tab导航
         if (JSON.stringify(currentTabs.value).indexOf(JSON.stringify(newTab.value)) == -1) {
-            currentTabs.value.push(newTab.value) // 进行动态的操作
+            // console.log(newTab.value)
             if (newTab.value.name !== null) {
+                currentTabs.value.push(newTab.value) // 进行动态的操作
                 store.dispatch('noAsyncModule/setSessionTabs', currentTabs.value)
             }
         }
@@ -134,7 +135,9 @@ const handleCloseTabsBtn = () => {
             path: '/home',
         },
     ]
-    router.push('/home')
+    router.push('/home').then(() => {
+        useSessionCache.setCache('tabs', currentTabs.value)
+    })
 }
 
 const handleTabChange = (handle: string) => {

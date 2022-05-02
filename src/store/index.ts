@@ -12,6 +12,11 @@ import { articleCategoriesModule } from '@/store/article/articles/categories/art
 import { articleTagsModule } from '@/store/article/articles/tags/article-tags'
 //消息管理
 import { commentModule, wordsModule } from './message/index'
+//用户
+import { userListModule } from '@/store/users/user-list/user-list'
+import { userRolesModule } from '@/store/users/user-list/user-roles'
+import { activeUsersModule } from '@/store/users/active-users/active-users'
+import { menuModule } from '@/store/permission'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -27,6 +32,10 @@ export const store = createStore<IRootState>({
         articleTagsModule,
         commentModule,
         wordsModule,
+        userListModule,
+        userRolesModule,
+        activeUsersModule,
+        menuModule,
     },
 })
 

@@ -19,7 +19,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { KxCard } from '@/base-ui/index'
 import { BarEchart } from '@/components/index'
 import { PieEchart } from '@/components'
@@ -59,7 +59,7 @@ watchEffect(() => {
 })
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .el-card {
     margin-bottom: 10px;
 }

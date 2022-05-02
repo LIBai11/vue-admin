@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { IRootState } from '@/store/types'
 import { IArticleTagsState, ITagsRecordList } from './types'
-import { asyncGetTags, asyncChangeTag, asyncDeleteTags } from '@/service/article'
+import { asyncChangeTag, asyncDeleteTags, asyncGetTags } from '@/service/article'
 import { ElNotification } from 'element-plus'
 
 export const articleTagsModule: Module<IArticleTagsState, IRootState> = {

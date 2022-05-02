@@ -3,23 +3,23 @@
         <el-form :model="tagForm" @submit.prevent="subTag">
             <el-form-item>
                 <el-autocomplete
-                    size="large"
                     v-model="tagForm.tagName"
-                    placeholder="键入以搜索或新建"
-                    @select="handleQuerySelect"
                     :fetch-suggestions="queryTags"
+                    placeholder="键入以搜索或新建"
+                    size="large"
                     value-key="tagName"
+                    @select="handleQuerySelect"
                 />
             </el-form-item>
             <el-form-item>
-                <el-card class="box-card" v-if="hasAddTags.length !== 0">
+                <el-card v-if="hasAddTags.length !== 0" class="box-card">
                     <div>
                         <el-tag
                             v-for="tag in hasAddTags"
                             :key="tag"
                             class="tag-preview"
-                            @close="handleCloseTag(tag)"
                             closable
+                            @close="handleCloseTag(tag)"
                         >
                             {{ tag }}
                         </el-tag>
@@ -30,24 +30,23 @@
                 <el-table
                     ref="tagTableRef"
                     :data="props.tagData"
-                    highlight-current-row
                     :show-header="isShowTableHeader"
-                    @current-change="handleCurrentChange"
                     fit
+                    highlight-current-row
+                    @current-change="handleCurrentChange"
                 >
-                    <el-table-column property="tagName" align="center" />
+                    <el-table-column align="center" property="tagName" />
                 </el-table>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
-<script setup lang="ts">
-import { computed, defineEmits, defineProps, ref } from 'vue'
-import { ElTable } from 'element-plus'
+<script lang="ts" setup>
+import { defineEmits, defineProps, ref } from 'vue'
+import { ElNotification, ElTable } from 'element-plus'
 import { ITagState } from '@/store/article/publish/search/types'
 import { searchTags } from '@/service/tags'
-import { ElNotification } from 'element-plus'
 import { useStore } from '@/store'
 
 const store = useStore()
@@ -144,7 +143,7 @@ const handleCloseTag = (tag: ITagState) => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .tag-preview {
     margin-right: 15px;
 }

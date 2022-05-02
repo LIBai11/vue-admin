@@ -2,6 +2,7 @@ export interface IWordsState {
     recordList: IWordsRecordList[]
     count: number
 }
+
 export interface IWordsRecordList {
     id: number
     ipAddress: string

@@ -22,6 +22,7 @@ export interface IRecordListTagDTOList {
     id: number
     tagName: string
 }
+
 //定义传入异步查询的payload的类型
 export interface IQueryArticlesParams {
     current?: number

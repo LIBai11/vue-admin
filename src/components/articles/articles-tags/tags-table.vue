@@ -3,34 +3,34 @@
         <el-table
             :data="props.data"
             border
-            stripe
             fit
+            stripe
             table-layout="auto"
             @select="handleSelectionChange"
             @select-all="handleSelectionChange"
         >
-            <el-table-column type="selection" align="center"></el-table-column>
+            <el-table-column align="center" type="selection"></el-table-column>
 
             <el-table-column
-                prop="tagName"
-                label="标签名"
-                align="center"
-                table-layout="auto"
-                :max-height="400"
                 :height="300"
+                :max-height="400"
+                align="center"
+                label="标签名"
+                prop="tagName"
+                table-layout="auto"
             >
                 <template #default="scope">
                     <span v-if="scope.row.tagName === ''">
                         <el-popover
-                            placement="top-start"
-                            title="注意"
                             :width="200"
-                            trigger="hover"
                             content="这个标签并没有名称
                                         请修改或在该标签不存在文章的情况下进行删除"
+                            placement="top-start"
+                            title="注意"
+                            trigger="hover"
                         >
                             <template #reference>
-                                <el-button type="warning" plain>注意</el-button>
+                                <el-button plain type="warning">注意</el-button>
                             </template>
                         </el-popover>
                     </span>
@@ -41,49 +41,49 @@
             </el-table-column>
 
             <el-table-column
-                prop="articleCount"
-                label="所在的文章数量"
                 align="center"
+                label="所在的文章数量"
+                prop="articleCount"
             ></el-table-column>
 
-            <el-table-column prop="createTime" label="创建时间" align="center">
+            <el-table-column align="center" label="创建时间" prop="createTime">
                 <template #default="scope">
                     <span>{{ $filters.formatTime(scope.row.createTime) }}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column label="操作" align="center">
+            <el-table-column align="center" label="操作">
                 <template #default="scope">
                     <el-popconfirm
-                        confirm-button-text="确认"
-                        cancel-button-text="取消"
                         :icon="InfoFilled"
+                        cancel-button-text="取消"
+                        confirm-button-text="确认"
                         icon-color="red"
                         title="确认删除这篇标签吗?"
                         @confirm="handleConfirmDeleteBtn(scope.row.id)"
                     >
                         <template #reference>
                             <el-button
-                                class="delete-btn"
-                                type="danger"
-                                size="small"
                                 :icon="Delete"
+                                class="delete-btn"
                                 round
+                                size="small"
+                                type="danger"
                             />
                         </template>
                     </el-popconfirm>
 
                     <el-button
-                        type="success"
-                        size="small"
                         :icon="Edit"
                         round
+                        size="small"
+                        type="success"
                         @click="handleEditTagDialog(scope.row)"
                     />
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog v-model="editDialogVisible" title="编辑标签名" width="400px" destroy-on-close>
+        <el-dialog v-model="editDialogVisible" destroy-on-close title="编辑标签名" width="400px">
             <el-form ref="editTagFormRef" :model="newTagData" :rules="editTagRules">
                 <el-form-item label="新名称" prop="newTagNameValue">
                     <el-input
@@ -104,7 +104,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineEmits, defineExpose, defineProps, reactive, ref } from 'vue'
 import { Delete, Edit, InfoFilled } from '@element-plus/icons-vue'
 import { FormInstance, FormRules } from 'element-plus'
@@ -204,7 +204,7 @@ defineExpose({
 })
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .delete-btn {
     margin-left: 13px;
 }

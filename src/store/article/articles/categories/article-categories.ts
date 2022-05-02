@@ -1,7 +1,7 @@
 import { Module } from 'vuex'
 import { IRootState } from '@/store/types'
 import { IArticleCategoriesState, IRecordList } from './types'
-import { asyncGetCategories, asyncChangeCategory, asyncDeleteCategory } from '@/service/article'
+import { asyncChangeCategory, asyncDeleteCategory, asyncGetCategories } from '@/service/article'
 import { ElNotification } from 'element-plus'
 
 export const articleCategoriesModule: Module<IArticleCategoriesState, IRootState> = {

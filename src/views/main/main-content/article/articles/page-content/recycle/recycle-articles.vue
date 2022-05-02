@@ -3,14 +3,14 @@
         <div class="content-header">
             <articles-search
                 ref="articlesSearchRef"
-                :isDelete="isDelete"
                 :currentPage="currentPage"
-                :pageSize="pageSize"
                 :destroyBtn="true"
+                :isDelete="isDelete"
+                :pageSize="pageSize"
             />
         </div>
         <div class="articles-content">
-            <articles-content @handleDelete="handleDelete" :destroyBtn="true" />
+            <articles-content :destroyBtn="true" @handleDelete="handleDelete" />
         </div>
         <div class="content-pagination">
             <kx-pagination
@@ -22,9 +22,9 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { ArticlesSearch, ArticlesContent, KxPagination } from '@/components'
+import { ArticlesContent, ArticlesSearch, KxPagination } from '@/components'
 import { useStore } from '@/store'
 
 const store = useStore()
@@ -53,4 +53,4 @@ const handleDelete = () => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>

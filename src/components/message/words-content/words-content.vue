@@ -1,12 +1,12 @@
 <template>
-    <el-table :data="props.tableValue" border stripe fit @selection-change="handleSelectionChange">
+    <el-table :data="props.tableValue" border fit stripe @selection-change="handleSelectionChange">
         <el-table-column
-            type="selection"
-            width="40"
             align="center"
             show-overflow-tooltip
+            type="selection"
+            width="40"
         ></el-table-column>
-        <el-table-column label="头像" align="center" prop="avatar">
+        <el-table-column align="center" label="头像" prop="avatar">
             <template #default="scope">
                 <el-image
                     :src="scope.row.avatar"
@@ -16,47 +16,47 @@
             </template>
         </el-table-column>
         <el-table-column
-            label="留言人"
             align="center"
+            label="留言人"
             prop="nickname"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-            label="留言内容"
             align="center"
+            label="留言内容"
             prop="messageContent"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-            label="IP地址"
             align="center"
+            label="IP地址"
             prop="ipAddress"
             show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-            label="IP来源"
             align="center"
+            label="IP来源"
             prop="ipSource"
             show-overflow-tooltip
         ></el-table-column>
-        <el-table-column label="评论时间" align="center" prop="createTime" show-overflow-tooltip>
+        <el-table-column align="center" label="评论时间" prop="createTime" show-overflow-tooltip>
             <template #default="scope">
                 <span>{{ $filters.formatTime(scope.row.createTime) }}</span>
             </template>
         </el-table-column>
-        <el-table-column label="状态" align="center" prop="isReview" show-overflow-tooltip>
+        <el-table-column align="center" label="状态" prop="isReview" show-overflow-tooltip>
             <template #default="scope">
                 <el-tag v-if="scope.row.isReview === 1">正常</el-tag>
                 <el-tag v-else type="info">审核中</el-tag>
             </template>
         </el-table-column>
 
-        <el-table-column label="操作" align="center" show-overflow-tooltip>
+        <el-table-column align="center" label="操作" show-overflow-tooltip>
             <template #default="scope">
                 <el-popconfirm
-                    confirm-button-text="确认"
-                    cancel-button-text="取消"
                     :icon="InfoFilled"
+                    cancel-button-text="取消"
+                    confirm-button-text="确认"
                     icon-color="red"
                     title="确认删除这篇标签吗?"
                     @confirm="handleConfirmDeleteBtn(scope.row.id)"
@@ -70,10 +70,9 @@
     </el-table>
 </template>
 
-<script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+<script lang="ts" setup>
+import { defineEmits, defineProps } from 'vue'
 import { InfoFilled } from '@element-plus/icons-vue'
-import { ICommentRecordList } from '@/store/message/comment/types'
 import { IWordsRecordList } from '@/store/message/words/types'
 
 const props = defineProps<{
@@ -91,7 +90,7 @@ const handleSelectionChange = (selections: any) => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .content-avatar {
     width: 40px;
     height: 40px;

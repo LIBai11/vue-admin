@@ -1,20 +1,20 @@
 <template>
     <div class="article-pagination">
         <el-pagination
-            small
-            background
-            layout="total, sizes, prev, pager, next"
             v-model:currentPage="currentPage"
             v-model:page-size="pageSize"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :page-sizes="[10, 15, 20]"
             :total="props.counts"
+            background
+            layout="total, sizes, prev, pager, next"
+            small
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
         />
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineEmits, defineProps, ref } from 'vue'
 import { useStore } from 'vuex'
 
@@ -49,4 +49,4 @@ const handleCurrentChange = (newCurrent: number) => {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped></style>
