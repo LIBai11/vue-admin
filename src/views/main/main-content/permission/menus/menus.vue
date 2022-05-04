@@ -7,13 +7,19 @@
             <template #body>
                 <div class="user-header">
                     <div class="user-header">
-                        <permission-header :options="false" @handleSearchBtn="handleSearchBtn" />
+                        <permission-header
+                            :options="false"
+                            placeholder="请输入菜单名称"
+                            @handleSearchBtn="handleSearchBtn"
+                        />
                     </div>
                 </div>
                 <div class="user-content">
                     <menus-content
                         :table-value="manageMenus"
                         @handleUpdateBtnClick="handleUpdateBtnClick"
+                        @handleAddBtnClick="handleAddBtnClick"
+                        @handleDeleteBtnClick="handleDeleteBtnClick"
                     />
                 </div>
             </template>
@@ -43,7 +49,7 @@
                 <el-form-item label="显示排序">
                     <el-input-number v-model="menuInfoForm.orderNum" size="small" :min="1" />
                 </el-form-item>
-                <el-form-item label="是否显示">
+                <el-form-item label="是否隐藏">
                     <el-switch
                         v-model="menuInfoForm.isHidden"
                         :active-value="1"
@@ -59,7 +65,13 @@
 
             <template #footer>
                 <el-button type="info" @click="editDialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="postNewMenu">提交修改</el-button>
+                <el-button
+                    type="primary"
+                    :loading="buttonLoading"
+                    @click="postNewMenu(editFormRef)"
+                >
+                    提交修改
+                </el-button>
             </template>
         </el-dialog>
         <el-popover
@@ -68,17 +80,20 @@
             trigger="click"
             title="请选择一个标签"
             virtual-triggering
-            style="width: 340px"
+            width="210px"
         >
             <div class="icon-popover">
                 <el-select-v2
                     v-model="menuInfoForm.icon"
                     filterable
                     :options="selectIconData"
-                    placeholder="Please select"
+                    placeholder="请选择一个图标"
+                    style="width: 200px"
                 >
                     <template #default="{ item }">
-                        <el-link disabled :icon="item.value" style="color: #000"></el-link>
+                        <el-link :icon="item.value" style="color: #000">
+                            &nbsp;&nbsp; {{ item.value }}
+                        </el-link>
                     </template>
                 </el-select-v2>
             </div>
@@ -97,6 +112,7 @@ import { IQueryManageMenusParams } from '@/service/permission'
 import { FormInstance, FormRules } from 'element-plus'
 import { ClickOutside as vClickOutside } from 'element-plus'
 import icons from './content/icon-list/icons.json'
+import { ElMessage } from 'element-plus/es'
 
 const store = useStore()
 const queryManageMenusParams: IQueryManageMenusParams = {}
@@ -145,6 +161,7 @@ let menuInfoForm = reactive<IManageMenu>({
     isHidden: 0,
     children: [],
 })
+//新增二级菜单
 //校验规则
 const editFormRules = reactive<FormRules>({
     name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
@@ -161,16 +178,49 @@ const handleUpdateBtnClick = (menuInfo: IManageMenu) => {
     menuInfoForm.isHidden = menuInfo.isHidden
     menuInfoForm.component = menuInfo.component
     menuInfoForm.icon = menuInfo.icon
-
+    menuInfoForm.parentId = undefined
+    editDialogVisible.value = true
+}
+//新增二级菜单
+const handleAddBtnClick = (menuId: number) => {
+    menuInfoForm.name = ''
+    menuInfoForm.path = ''
+    menuInfoForm.id = null
+    menuInfoForm.orderNum = 1
+    menuInfoForm.isHidden = 0
+    menuInfoForm.component = ''
+    menuInfoForm.icon = ''
+    menuInfoForm.parentId = menuId
     editDialogVisible.value = true
 }
 //选择图标
 const onInputIcon = () => {
-    unref(iconPopoverRef).popperRef?.delayHide?.()
+    unref(iconPopoverRef)?.popperRef?.delayHide?.()
 }
 //提交表单
-const postNewMenu = () => {
-    editDialogVisible.value = false
+const buttonLoading = ref(false)
+const postNewMenu = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    await formEl.validate((valid) => {
+        if (valid) {
+            buttonLoading.value = true
+            store.dispatch('menuModule/updateMenu', menuInfoForm).then(() => {
+                buttonLoading.value = false
+                getManageMenuList(queryManageMenusParams)
+                editDialogVisible.value = false
+            })
+        } else {
+            ElMessage.warning('请完成表单再提交')
+        }
+    })
+}
+/**
+ * 删除操作
+ */
+const handleDeleteBtnClick = (apiId: number) => {
+    store.dispatch('apiModule/deleteApi', apiId).then(() => {
+        getManageMenuList(queryManageMenusParams)
+    })
 }
 </script>
 

@@ -5,7 +5,7 @@
         :shadow="props.cardConfig?.shadow"
         class="box-card"
     >
-        <template #header>
+        <template #header v-if="!isShow">
             <div class="card-header">
                 <span>{{ title }}</span>
                 <slot name="header"></slot>
@@ -25,6 +25,7 @@ import { IkxCard } from '@/views/main/main-content/home/home-panel/base-data/typ
 const props = defineProps<{
     title?: string
     cardConfig?: IkxCard
+    isShow?: boolean
 }>()
 const bar = ref()
 // console.log(bar)

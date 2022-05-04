@@ -1,6 +1,6 @@
 // export type IManageMenuState = IManageMenu[]
 export interface IManageMenu {
-    id: number
+    id: number | null
     name: string
     path: string
     component: string
@@ -10,6 +10,7 @@ export interface IManageMenu {
     isDisable?: any
     isHidden: number
     children: any[]
+    parentId?: number
 }
 export interface IManageMenuState {
     data: IManageMenu[]

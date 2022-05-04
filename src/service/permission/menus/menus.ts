@@ -28,3 +28,10 @@ export function asyncDeleteMenu(payload: number) {
 }
 
 //编辑菜单
+export function asyncUpdateMenu(payload: IManageMenu) {
+    return kxRequest.post<ICommonState<IManageMenu[]>>({
+        url: MenusAPI.manageMenus,
+        data: payload,
+        headers: { 'Content-Type': 'application/json' },
+    })
+}

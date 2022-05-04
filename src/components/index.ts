@@ -28,3 +28,7 @@ export { UsersHeader }
 
 //菜单
 export { PermissionHeader }
+
+//系统图片
+import UploadImg from './system/upload-img.vue'
+export { UploadImg }

@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <el-row :gutter="15" justify="space-between">
-            <el-col v-if="props.deleteBtn" :lg="8" :md="8" :sm="8" :xl="8" :xs="18">
+            <el-col v-if="props.deleteBtn" :lg="8" :md="8" :sm="8" :xl="8" :xs="24">
                 <div>
                     <el-button
                         v-if="props.deleteBtn"
@@ -9,7 +9,7 @@
                         type="danger"
                         @click="batchDelete"
                     >
-                        批量删除
+                        {{ props.deleteValue }}
                     </el-button>
                     <el-button
                         v-if="props.passBtn"
@@ -17,12 +17,12 @@
                         type="success"
                         @click="batchPass"
                     >
-                        批量通过
+                        {{ props.passValue }}
                     </el-button>
                 </div>
             </el-col>
 
-            <el-col>
+            <el-col :lg="8" :md="10" :sm="10" :xl="10" :xs="24">
                 <div>
                     <el-select
                         v-if="props.options"
@@ -61,6 +61,8 @@ import { defineEmits, defineProps, ref, watch, withDefaults } from 'vue'
 
 interface IMessageHeader {
     placeholder?: string
+    deleteValue?: string
+    passValue?: string
     isReview?: number
     options?: boolean
     deleteBtn?: boolean
@@ -73,6 +75,8 @@ const props = withDefaults(defineProps<IMessageHeader>(), {
     deleteBtn: false,
     passBtn: false,
     select: true,
+    deleteValue: '批量删除',
+    passValue: '批量通过',
 })
 
 const emits = defineEmits(['handleSearchBtn', 'handleBatchDelete', 'handleBatchPass'])

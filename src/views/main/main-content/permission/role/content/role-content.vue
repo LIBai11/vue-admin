@@ -1,50 +1,48 @@
 <template>
     <div class="menus-content">
-        <el-table :data="props.tableValue" row-key="id" height="400" lazy fit>
+        <el-table
+            :data="props.tableValue"
+            height="300"
+            border
+            stripe
+            fit
+            @select="handleSelection"
+            @select-all="handleSelection"
+        >
+            <el-table-column type="selection"></el-table-column>
             <el-table-column
-                label="菜单名称"
-                prop="name"
+                label="角色名"
+                prop="roleName"
+                align="center"
+                show-overflow-tooltip
+            ></el-table-column>
+            <el-table-column
+                label="权限标签"
+                prop="roleLabel"
                 align="center"
                 width="200px"
                 show-overflow-tooltip
-            ></el-table-column>
-            <el-table-column label="图标" prop="icon" align="center" show-overflow-tooltip>
+            >
                 <template #default="scope">
-                    <el-button v-if="scope.row.children !== null" :icon="scope.row.icon" circle />
-                    <el-button v-else :icon="scope.row.icon" type="info" circle plain />
+                    <el-button color="#BB97A1" plain>
+                        {{ scope.row.roleLabel }}
+                    </el-button>
                 </template>
             </el-table-column>
-            <el-table-column
-                label="次序"
-                prop="orderNum"
-                align="center"
-                show-overflow-tooltip
-            ></el-table-column>
-            <el-table-column
-                label="路由路径"
-                prop="path"
-                align="center"
-                show-overflow-tooltip
-            ></el-table-column>
-            <el-table-column
-                label="组件路径"
-                prop="component"
-                align="center"
-                width="200px"
-                show-overflow-tooltip
-            ></el-table-column>
-            <el-table-column label="隐藏" prop="isHidden" align="center" show-overflow-tooltip>
+            <el-table-column label="禁用" prop="requestMethod" align="center" width="90px">
                 <template #default="scope">
                     <el-switch
-                        v-model="scope.row.isHidden"
+                        v-model="scope.row.isDisable"
                         active-color="#13ce66"
                         inactive-color="#ff4949"
                         :active-value="1"
                         :inactive-value="0"
-                        disabled
+                        :loading="props.switchLoading"
+                        @change="switchChange(scope.row)"
                     />
                 </template>
             </el-table-column>
+
             <el-table-column
                 label="创建时间"
                 prop="createTime"
@@ -55,17 +53,8 @@
                     <span>{{ $filters.formatTime(scope.row.createTime) }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" align="center" width="190px" show-overflow-tooltip>
+            <el-table-column label="操作" align="center" fixed="right">
                 <template #default="scope">
-                    <el-link
-                        v-if="scope.row.children !== null"
-                        class="link-option"
-                        type="success"
-                        :icon="Plus"
-                        @click="addChildMenu(scope.row.id)"
-                    >
-                        新增
-                    </el-link>
                     <el-link
                         class="link-option"
                         type="primary"
@@ -94,27 +83,49 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps } from 'vue'
-import { IManageMenu } from '@/store/permission/menus/type'
+import { defineEmits, defineProps, defineExpose } from 'vue'
 import { Plus, Edit, Delete, InfoFilled } from '@element-plus/icons-vue'
 
+import { IRoleRecordList } from '@/store/permission/role/types'
+
 const props = defineProps<{
-    tableValue: IManageMenu[]
+    tableValue: IRoleRecordList
+    switchLoading?: boolean
 }>()
-const emits = defineEmits(['handleUpdateBtnClick', 'handleDeleteBtnClick', 'handleAddBtnClick'])
+const emits = defineEmits([
+    'handleUpdateBtnClick',
+    'handleDeleteBtnClick',
+    'handleAddBtnClick',
+    'handleSwitchChange',
+    'handleSelectionChange',
+])
 
 //编辑按钮
-const updateBtn = (menuInfo: IManageMenu) => {
-    emits('handleUpdateBtnClick', menuInfo)
+const updateBtn = (roleInfo: IRoleRecordList) => {
+    emits('handleUpdateBtnClick', roleInfo)
 }
 //删除按钮
-const deleteBtn = (menuId: number) => {
-    emits('handleDeleteBtnClick', menuId)
+const deleteBtn = (roleId: number) => {
+    emits('handleDeleteBtnClick', roleId)
 }
 //新增按钮
-const addChildMenu = (menuId: number) => {
-    emits('handleAddBtnClick', menuId)
+const addChildMenu = (roleId: number) => {
+    emits('handleAddBtnClick', roleId)
 }
+//更新状态
+const switchChange = (roleInfo: IRoleRecordList) => {
+    emits('handleSwitchChange', roleInfo)
+}
+//多选
+const handleSelection = (selection: IRoleRecordList[]) => {
+    const selectIdArr = selection.map((role: IRoleRecordList) => {
+        return role.id
+    })
+    emits('handleSelectionChange', selectIdArr)
+}
+defineExpose({
+    switchChange,
+})
 </script>
 
 <style scoped lang="less">

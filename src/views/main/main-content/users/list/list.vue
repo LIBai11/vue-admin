@@ -132,7 +132,7 @@ const handleWatchSize = (currentSize: number) => {
 const handleSwitchChange = (switchInfo: IUserListRecordList) => {
     const disableParams = {
         id: switchInfo.id,
-        isDisable: switchInfo.isDisable ? 0 : 1,
+        isDisable: switchInfo.isDisable ? 1 : 0,
     }
     store.dispatch('userListModule/changeUserDisable', disableParams)
 }

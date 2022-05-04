@@ -16,7 +16,14 @@ import { commentModule, wordsModule } from './message/index'
 import { userListModule } from '@/store/users/user-list/user-list'
 import { userRolesModule } from '@/store/users/user-list/user-roles'
 import { activeUsersModule } from '@/store/users/active-users/active-users'
-import { menuModule } from '@/store/permission'
+import {
+    apiModule,
+    menuModule,
+    roleMenuModule,
+    roleModule,
+    roleResourceModule,
+} from '@/store/permission'
+import { websiteModule } from '@/store/system'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -36,6 +43,11 @@ export const store = createStore<IRootState>({
         userRolesModule,
         activeUsersModule,
         menuModule,
+        apiModule,
+        roleModule,
+        roleMenuModule,
+        roleResourceModule,
+        websiteModule,
     },
 })
 

@@ -5,6 +5,7 @@ import { kxNotification } from '@/base-ui'
 import {
     asyncDeleteMenu,
     asyncGetMenuList,
+    asyncUpdateMenu,
     IQueryManageMenusParams,
 } from '@/service/permission/menus/menus'
 
@@ -22,6 +23,7 @@ export const menuModule: Module<IManageMenuState, IRootState> = {
     },
     getters: {},
     actions: {
+        //获取菜单
         async getMangeMenuList({ commit }, payload: IQueryManageMenusParams) {
             const data = await asyncGetMenuList(payload)
             if (data.code === 20000) {
@@ -36,7 +38,16 @@ export const menuModule: Module<IManageMenuState, IRootState> = {
             const data = await asyncDeleteMenu(payload)
             if (data.code === 20000) {
                 commit('changeMenu', data)
-                kxNotification.success('菜单获取成功')
+                kxNotification.success('删除菜单成功')
+            } else {
+                kxNotification.error(data.message)
+            }
+        },
+        //编辑菜单
+        async updateMenu({ commit }, payload: IManageMenu) {
+            const data = await asyncUpdateMenu(payload)
+            if (data.code === 20000) {
+                kxNotification.success('修改成功')
             } else {
                 kxNotification.error(data.message)
             }
