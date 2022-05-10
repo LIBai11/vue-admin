@@ -23,7 +23,11 @@ import {
     roleModule,
     roleResourceModule,
 } from '@/store/permission'
-import { websiteModule } from '@/store/system'
+//关于我
+import { linkModule, pageModule, websiteModule } from '@/store/system'
+import { aboutModule } from '@/store/system/about/about'
+//相册
+import { imagesModule, photoModule } from '@/store/images'
 
 export const store = createStore<IRootState>({
     modules: {
@@ -48,6 +52,11 @@ export const store = createStore<IRootState>({
         roleMenuModule,
         roleResourceModule,
         websiteModule,
+        pageModule,
+        linkModule,
+        aboutModule,
+        imagesModule,
+        photoModule,
     },
 })
 

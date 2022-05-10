@@ -87,7 +87,6 @@ export function mapMenusToRoutes(userMenuList: IUserMenusState): RouteRecordRaw[
     allRoutes.forEach((item, index) => {
         allRoutes[index].path = item.path?.split('/main/main-content')[1]
     })
-
     //2.根据菜单获取需要添加的routes
     const _recurseGetRoute = (menus: any) => {
         // console.log(menus)
@@ -99,7 +98,6 @@ export function mapMenusToRoutes(userMenuList: IUserMenusState): RouteRecordRaw[
                     routes.push(route)
                 }
             } else if (menu.name === null) {
-                // console.log(menu)
                 const route = allRoutes.find((route) => route.path === menu.path)
                 if (route) {
                     routes.push(route)
@@ -110,7 +108,7 @@ export function mapMenusToRoutes(userMenuList: IUserMenusState): RouteRecordRaw[
         }
     }
     _recurseGetRoute(userMenuList)
-
+    // console.log(routes)
     return routes
 }
 

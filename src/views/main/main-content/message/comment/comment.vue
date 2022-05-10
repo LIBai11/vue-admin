@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { AllComment, PrimaryComment, VerifyComment } from './page-comment/index'
 import { KxCard, PageTitle } from '@/base-ui/index'
-import { ref } from 'vue'
 
 const currentCommentComponent = [AllComment, PrimaryComment, VerifyComment]
 const linkIndex = ref(0)

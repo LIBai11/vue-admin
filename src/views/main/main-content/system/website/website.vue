@@ -1,9 +1,9 @@
 <template>
-    <div class="words-header">
+    <div class="website">
         <kx-card :isShow="true">
             <template #body>
-                <page-title title="留言管理"></page-title>
-                <div class="articles-content">
+                <page-title title="留言管理" />
+                <div class="website-content">
                     <el-tabs class="tab-pane" tab-position="left">
                         <el-tab-pane label="网站信息" lazy><site-info /></el-tab-pane>
                         <el-tab-pane label="社交信息" lazy><social-info /></el-tab-pane>

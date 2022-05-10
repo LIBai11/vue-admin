@@ -3,7 +3,7 @@
         <el-form style="width: 500px" label-width="120px">
             <el-form-item label="QQ">
                 <el-input v-model="siteConfigForm.qq" placeholder="请输入QQ号码" />
-                <span>是否展示</span>
+                <span class="switch-title">是否展示</span>
                 <el-switch
                     v-model="qqChecked"
                     active-value="qq"
@@ -15,7 +15,7 @@
             </el-form-item>
             <el-form-item label="GitHub">
                 <el-input v-model="siteConfigForm.github" placeholder="请输入Github地址" />
-                <span>是否展示</span>
+                <span class="switch-title">是否展示</span>
                 <el-switch
                     v-model="githubChecked"
                     active-value="github"
@@ -27,7 +27,7 @@
             </el-form-item>
             <el-form-item label="Gitee">
                 <el-input v-model="siteConfigForm.gitee" placeholder="请输入Gitee地址" />
-                <span>是否展示</span>
+                <span class="switch-title">是否展示</span>
                 <el-switch
                     v-model="giteeChecked"
                     active-value="gitee"
@@ -162,6 +162,8 @@ const putConfigBtn = () => {
 </script>
 
 <style scoped lang="less">
-.social-info {
+.switch-title {
+    margin-right: 10px;
+    font-size: x-small;
 }
 </style>

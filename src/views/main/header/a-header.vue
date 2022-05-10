@@ -13,12 +13,7 @@
         </div>
     </div>
     <div class="header-tabs">
-        <el-tabs
-            v-model="handleTab.path"
-            stretch
-            @tab-change="handleTabChange"
-            @tab-remove="removeTab"
-        >
+        <el-tabs v-model="handleTab.path" @tab-click="handleTabChange" @tab-remove="removeTab">
             <el-tab-pane
                 v-for="tab in currentTabs"
                 :key="tab.path"
@@ -47,6 +42,7 @@ import { ref, watch } from 'vue'
 import { pathMapToMenu } from '@/utils/use-menus'
 import { ITab } from '@/views/main/header/types'
 import { useStore } from '@/store'
+import { TabPanelName, TabsPaneContext } from 'element-plus'
 
 const store = useStore()
 const route = useRoute()
@@ -140,8 +136,10 @@ const handleCloseTabsBtn = () => {
     })
 }
 
-const handleTabChange = (handle: string) => {
-    router.push(handle)
+const handleTabChange = (name: TabsPaneContext) => {
+    console.log(name.paneName)
+
+    router.push(String(name.paneName))
 }
 </script>
 

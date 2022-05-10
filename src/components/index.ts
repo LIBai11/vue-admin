@@ -32,3 +32,7 @@ export { PermissionHeader }
 //系统图片
 import UploadImg from './system/upload-img.vue'
 export { UploadImg }
+
+//图片裁剪
+import ImgCut from './img-cut/img-cut.vue'
+export { ImgCut }

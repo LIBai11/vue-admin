@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import { useSessionCache } from '@/utils/use-storage'
 import { ElMessage } from 'element-plus'
 
+const photo = () => import('@/views/main/main-content/images/photo/photo.vue')
+
 const routes: RouteRecordRaw[] = [
     {
         path: '/',

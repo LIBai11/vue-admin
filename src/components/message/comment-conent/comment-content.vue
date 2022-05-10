@@ -84,6 +84,7 @@
 import { defineEmits, defineProps } from 'vue'
 import { InfoFilled } from '@element-plus/icons-vue/'
 import { ICommentRecordList } from '@/store/message/comment/types'
+import { ILinkRecordList } from '@/store/system'
 
 const props = defineProps<{
     tableValue: ICommentRecordList

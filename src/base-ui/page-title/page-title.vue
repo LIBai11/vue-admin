@@ -2,6 +2,7 @@
     <div style="position: relative">
         <n-h5 prefix="bar" type="success">
             <n-text type="primary">{{ props.title }}</n-text>
+            <slot name="header"></slot>
         </n-h5>
     </div>
 </template>

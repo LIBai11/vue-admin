@@ -17,7 +17,7 @@
                         type="success"
                         @click="batchPass"
                     >
-                        批量通过
+                        {{ props.passBtnPlaceholder }}
                     </el-button>
                 </div>
             </el-col>
@@ -65,6 +65,8 @@ interface IMessageHeader {
     options?: boolean
     deleteBtn?: boolean
     passBtn?: boolean
+    inputPlaceholder?: string
+    passBtnPlaceholder?: string
 }
 
 const props = withDefaults(defineProps<IMessageHeader>(), {
@@ -72,6 +74,8 @@ const props = withDefaults(defineProps<IMessageHeader>(), {
     options: true,
     deleteBtn: true,
     passBtn: true,
+    inputPlaceholder: '请输入用户昵称',
+    passBtnPlaceholder: '批量通过',
 })
 
 const emits = defineEmits(['handleSearchBtn', 'handleBatchDelete', 'handleBatchPass'])
